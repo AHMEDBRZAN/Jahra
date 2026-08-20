@@ -97,6 +97,7 @@ button,input,select{font:inherit}
 .badge-n{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
 .badge-n.in{background:var(--rowIn);color:var(--green-600)}
 .badge-n.out{background:var(--rowOut);color:var(--red-600)}
+.badge-n.sh{background:#eef1ea;color:#5c6b62}
 .mini-actions{display:flex;gap:8px;margin-inline-start:auto;flex-wrap:wrap}
 .btn-mini{padding:9px 14px;border-radius:11px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--pine-800);transition:.18s;display:inline-flex;gap:6px;align-items:center}
 .btn-mini:hover{background:var(--pine-900);color:#fff;border-color:var(--pine-900);transform:translateY(-2px)}
@@ -152,7 +153,6 @@ table{width:100%;border-collapse:collapse;min-width:880px}
 thead th{position:sticky;top:0;background:var(--pine-900);color:#e8efe9;font-size:12.5px;font-weight:600;padding:12px;text-align:right;white-space:nowrap;z-index:2}
 tbody td{padding:10px 12px;border-top:1px solid rgba(0,0,0,.05);font-size:14px;vertical-align:middle}
 tbody tr{animation:rise .35s both;transition:background .15s}
-/* ألوان الصفوف مثل الإكسل: إيراد أخضر فاتح / صرف أحمر فاتح */
 tr.in-row{background:var(--rowIn)}
 tr.in-row:hover{background:var(--rowInH)}
 tr.out-row{background:var(--rowOut)}
@@ -198,6 +198,10 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
 .m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;transition:.15s}
 .m-x:hover{background:rgba(255,255,255,.3)}
 .m-body{padding:18px 20px;display:grid;gap:14px;max-height:70vh;overflow:auto}
+.sheet-sel{background:var(--gold-100);border:1.5px solid var(--gold-500);border-radius:12px;padding:12px 14px}
+.sheet-sel label{font-size:12.5px;font-weight:800;color:#7c6320;display:flex;gap:6px;align-items:center;margin-bottom:8px}
+.sheet-sel select{width:100%;padding:11px 12px;border:1.5px solid var(--gold-600);border-radius:10px;background:#fff;font-size:14px;font-weight:700;color:var(--pine-900);cursor:pointer}
+.sheet-sel select:focus{outline:none;box-shadow:0 0 0 4px rgba(224,166,60,.2)}
 .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .map-grid select{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fbfcf9;font-size:13.5px}
 .map-grid select:focus{outline:none;border-color:var(--green-600)}
@@ -241,9 +245,9 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l6-4v3l6-4v18M9 21V8m6 13V7m-9 5h.01M6 15h.01M15 10h.01M15 14h.01M15 18h.01" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/><path d="M2 21h20" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/></svg>
       </div>
       <h1>نظام المجمع السكني<br>للإيرادات والصرفيات</h1>
-      <p>عرض وتحليل بيانات Sheet1 من ملف الإكسل مباشرة</p>
+      <p>عرض وتحليل بيانات ملف الإكسل مباشرة</p>
       <ul class="l-feats">
-        <li>قراءة ملفات <b>.xlsm</b> — ورقة Sheet1</li>
+        <li>قراءة ملفات <b>.xlsm</b> مع <b>اختيار أي ورقة (Sheet)</b></li>
         <li>فرز تلقائي: إيراد (أخضر) / صرف (أحمر)</li>
         <li>تقارير اليوم والأسبوع والشهر مع المجاميع</li>
         <li>التاريخ بنسق 21-08-2026 في كل التقارير</li>
@@ -291,13 +295,14 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
   <section class="file-card" id="fileCard">
     <div class="drop admin-only" id="dropZone">
       <b id="dropTitle">📂 اسحب ملف الإكسل هنا أو اضغط للاختيار</b>
-      <small>الصيغ المدعومة: .xlsm / .xlsx — سيتم قراءة ورقة Sheet1</small>
+      <small>الصيغ: .xlsm / .xlsx — وبعد الرفع تختار الورقة (Sheet) التي تريدها</small>
     </div>
     <div class="file-info" id="fileInfo" hidden>
       <div class="fn" id="fiName">—</div>
       <div class="fi-row">عدد السجلات: <b id="fiCount">0</b>
         <span class="badge-n in" id="fiIn">0 إيراد</span>
         <span class="badge-n out" id="fiOut">0 صرف</span>
+        <span class="badge-n sh" id="fiSheet">—</span>
       </div>
       <div class="fi-row">آخر تحديث: <b id="fiDate">—</b> <span id="fiBy"></span></div>
     </div>
@@ -376,23 +381,27 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
 </main>
 </div>
 
-<!-- نافذة ربط الأعمدة -->
+<!-- نافذة اختيار الورقة + ربط الأعمدة -->
 <div class="ov" id="mapOv">
   <div class="modal">
-    <div class="m-head"><span>ربط أعمدة الملف — <span id="mapFile">file</span></span><button class="m-x" id="mapCancel1">✕</button></div>
+    <div class="m-head"><span>📑 <span id="mapFile">file</span></span><button class="m-x" id="mapCancel1">✕</button></div>
     <div class="m-body">
-      <p style="font-size:13px;color:var(--muted)">تم العثور على <b id="mapRows" style="color:var(--pine-800)">0</b> صف بيانات. تأكد من ربط كل حقل بالعمود الصحيح (الصف الأخضر = إيراد، الوردي = صرف):</p>
+      <div class="sheet-sel">
+        <label> اختر الورقة (Sheet) المراد قراءتها — الملف يحتوي على <span id="sheetCount">1</span> ورقة</label>
+        <select id="mSheet"></select>
+      </div>
+      <p style="font-size:13px;color:var(--muted)">تم العثور على <b id="mapRows" style="color:var(--pine-800)">0</b> صف بيانات في الورقة المختارة. تأكد من ربط الحقول بالأعمدة الصحيحة:</p>
       <div class="map-grid">
         <div class="field"><label>ت (التسلسل)</label><select id="mSeq"></select></div>
         <div class="field"><label>الوصول (رقم الوصل)</label><select id="mReceipt"></select></div>
         <div class="field"><label>التاريخ *</label><select id="mDate"></select></div>
         <div class="field"><label>الاسم *</label><select id="mName"></select></div>
         <div class="field"><label>التفاصيل</label><select id="mDetails"></select></div>
-        <div class="field"><label>مبلغ الصرف (عمود F)</label><select id="mAmtOut"></select></div>
-        <div class="field"><label>مبلغ الإيراد (عمود G)</label><select id="mAmtIn"></select></div>
+        <div class="field"><label>مبلغ الصرف</label><select id="mAmtOut"></select></div>
+        <div class="field"><label>مبلغ الإيراد</label><select id="mAmtIn"></select></div>
       </div>
       <div>
-        <label style="font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">معاينة أول صفوف الملف:</label>
+        <label style="font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">معاينة أول صفوف الورقة المختارة:</label>
         <div class="pv-wrap"><table id="pvTable"></table></div>
       </div>
     </div>
@@ -427,12 +436,12 @@ const USERS = [
 const CUR = 'د.ع.'; // العملة
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const LS_DATA='cmpx_xldata_v2', SS_SESS='cmpx_sess_v1';
+const LS_DATA='cmpx_xldata_v3', SS_SESS='cmpx_sess_v1';
 
 let DB = JSON.parse(localStorage.getItem(LS_DATA)||'null');
 let session = JSON.parse(sessionStorage.getItem(SS_SESS)||'null');
 const state = { cat:'out', range:'today', month:ym(new Date()), q:'' };
-let RAW=null, HEADERS=[], HEAD_DET=[], HROW=-1, PENDING_FILE='';
+let WB=null, RAW=null, CUR_SHEET='', HEADERS=[], HEAD_DET=[], HROW=-1, PENDING_FILE='';
 
 /* ── أدوات ─ */
 function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
@@ -440,7 +449,6 @@ function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0
 function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
 function startOfWeek(d){const x=new Date(d);x.setDate(x.getDate()-x.getDay());return x}
 const TODAY = dstr(new Date());
-/* نسق التاريخ المعتمد: 21-08-2026 */
 function fmtD(iso){if(!iso)return '—';const p=iso.split('-');return p[2]+'-'+p[1]+'-'+p[0]}
 function money(n){return (+n).toLocaleString('en-US',{maximumFractionDigits:2})}
 function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
@@ -451,7 +459,7 @@ function animNum(el,to){const from=parseFloat(el.dataset.v||0),t0=performance.no
     if(p<1)requestAnimationFrame(step);else el.dataset.v=to;}
   requestAnimationFrame(step);}
 
-/* ── الساعة: نسق موحّد ── */
+/* ── الساعة ── */
 function tick(){const n=new Date();
   $('#clockNow').textContent=n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   $('#dateNow').textContent=wdLong(dstr(n))+' '+fmtD(dstr(n));}
@@ -476,7 +484,7 @@ function enterApp(){
   renderAll();
 }
 
-/* ══ رفع الملف ══ */
+/* ══ رفع الملف وقراءة الورقة المختارة ══ */
 const drop=$('#dropZone');
 drop.onclick=()=>$('#fileInput').click();
 $('#replaceBtn').onclick=()=>$('#fileInput').click();
@@ -490,17 +498,24 @@ async function handleFile(file){
   if(session.role!=='admin'){showToast('رفع الملفات متاح للمدير فقط',1);return;}
   try{
     const buf=await file.arrayBuffer();
-    const wb=XLSX.read(buf,{type:'array',cellDates:true});
-    const ws=wb.Sheets['Sheet1']||wb.Sheets[wb.SheetNames[0]];
-    if(!ws){showToast('لم يتم العثور على ورقة Sheet1 في الملف',1);return;}
-    RAW=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:true});
-    if(!RAW.length){showToast('الملف فارغ',1);return;}
+    WB=XLSX.read(buf,{type:'array',cellDates:true});
+    if(!WB.SheetNames.length){showToast('الملف لا يحتوي على أي أوراق',1);return;}
     PENDING_FILE=file.name;
-    detectAndOpen();
+    // الورقة الافتراضية: Sheet1 إن وجدت وإلا الأولى
+    openSheet(WB.SheetNames.includes('Sheet1')?'Sheet1':WB.SheetNames[0]);
+    $('#mapOv').classList.add('show');
   }catch(err){console.error(err);showToast('تعذّر قراءة الملف — تأكد أنه ملف إكسل سليم',1);}
 }
 
-/* اكتشاف العناوين — يطابق هيكل ملفك (ت/الوصول/التاريخ/الاسم/التفاصيل/مبلغ الصرف/مبلغ الإيراد) */
+/* فتح ورقة معينة وإعادة بناء المعاينة والربط */
+function openSheet(name){
+  CUR_SHEET=name;
+  RAW=XLSX.utils.sheet_to_json(WB.Sheets[name],{header:1,defval:'',raw:true})||[];
+  detectColumns();
+}
+$('#mSheet').addEventListener('change',e=>openSheet(e.target.value));
+
+/* اكتشاف العناوين */
 const DICT={
   seq:[/^ت$/,/تسلسل/,/^م$/],
   receipt:[/الوصول/,/الوصل/,/رقم\s*(ال)?وصل/,/رقم\s*(ال)?سند/],
@@ -511,14 +526,31 @@ const DICT={
   amountIn:[/مبلغ\s*(ال)?[أاإ]?يراد/,/الإيرادات|الإيراد|ايرادات|ايراد|إيراد/]
 };
 function cellMatch(v,arr){v=String(v||'').trim();if(!v)return false;return arr.some(rx=>rx.test(v))}
-function detectAndOpen(){
+
+function buildSheetSelect(){
+  const s=$('#mSheet');s.innerHTML='';
+  WB.SheetNames.forEach(n=>s.add(new Option('ورقة: '+n+'  ('+(XLSX.utils.sheet_to_json(WB.Sheets[n],{header:1}).length)+' صف)',n)));
+  s.value=CUR_SHEET;
+  $('#sheetCount').textContent=WB.SheetNames.length;
+}
+
+function detectColumns(){
+  buildSheetSelect();
   let best=-1,bScore=0;
   for(let r=0;r<Math.min(20,RAW.length);r++){
     let sc=0;const row=RAW[r]||[];
     for(const k in DICT){if(row.some(c=>cellMatch(c,DICT[k])))sc++;}
     if(sc>bScore){bScore=sc;best=r;}
   }
-  if(best<0||bScore<2){showToast('لم يتم التعرف على عناوين الأعمدة في الملف',1);return;}
+  if(best<0||bScore<2){
+    HROW=-1;HEADERS=[];HEAD_DET=[];
+    $('#mapRows').textContent=0;
+    $('#pvTable').innerHTML='<tbody><tr><td style="padding:14px;color:var(--muted)">هذه الورقة فارغة أو لا تحتوي على عناوين معروفة — اختر ورقة أخرى من القائمة بالأعلى</td></tr></tbody>';
+    ['mSeq','mReceipt','mDate','mName','mDetails','mAmtOut','mAmtIn'].forEach(id=>fillSelect($('#'+id),-1,id==='mDate'||id==='mName'));
+    $('#mapFile').textContent=PENDING_FILE;
+    showToast('لم يتم التعرف على عناوين ورقة "'+CUR_SHEET+'" — جرّب ورقة أخرى',1);
+    return;
+  }
   HROW=best;
   HEADERS=(RAW[HROW]||[]).map((c,i)=>{
     let s=String(c??'').trim();
@@ -540,7 +572,6 @@ function detectAndOpen(){
   pv.innerHTML=html+'</tbody>';
   $('#mapFile').textContent=PENDING_FILE;
   $('#mapRows').textContent=Math.max(0,RAW.length-HROW-1);
-  $('#mapOv').classList.add('show');
 }
 function fillSelect(sel,auto,required){
   sel.innerHTML='';sel.add(new Option(required?'— اختر العمود —':'— بدون —','-1'));
@@ -550,23 +581,24 @@ function fillSelect(sel,auto,required){
 $('#mapCancel1').onclick=$('#mapCancel2').onclick=()=>$('#mapOv').classList.remove('show');
 
 $('#mapConfirm').onclick=()=>{
+  if(HROW<0){showToast('اختر ورقة تحتوي على بيانات أولًا',1);return;}
   const g=id=>parseInt($(id).value);
   const iD=g('#mDate'),iN=g('#mName'),iAO=g('#mAmtOut'),iAI=g('#mAmtIn');
   if(iD<0||iN<0){showToast('عمودا التاريخ والاسم إلزاميان',1);return;}
   if(iAO<0&&iAI<0){showToast('يجب ربط عمود مبلغ الصرف أو مبلغ الإيراد على الأقل',1);return;}
   const iS=g('#mSeq'),iR=g('#mReceipt'),iDt=g('#mDetails');
-  const records=[];let skipped=0;
+  const records=[];
   for(let r=HROW+1;r<RAW.length;r++){
     const row=RAW[r]||[];
     const name=String(row[iN]??'').trim();
     const details=iDt>=0?String(row[iDt]??'').trim():'';
     const date=parseDate(row[iD]);
-    if(!name&&!date){continue;}
-    if(/اجمالي|إجمالي|مجموع|المجموع|total|رصيد/i.test(name)||/رصيد\s*(قا)?/i.test(details)){skipped++;continue;}
-    if(!date){skipped++;continue;}
+    if(!name&&!date)continue;
+    if(/اجمالي|إجمالي|مجموع|المجموع|total|رصيد/i.test(name)||/رصيد\s*(قا)?/i.test(details))continue;
+    if(!date)continue;
     const aO=iAO>=0?parseAmount(row[iAO]):NaN;
     const aI=iAI>=0?parseAmount(row[iAI]):NaN;
-    if((isNaN(aO)||aO<=0)&&(isNaN(aI)||aI<=0)){skipped++;continue;}
+    if((isNaN(aO)||aO<=0)&&(isNaN(aI)||aI<=0))continue;
     const base={
       seq:iS>=0?String(row[iS]??'').trim():String(r-HROW),
       receipt:iR>=0?String(row[iR]??'').trim():'',
@@ -575,16 +607,16 @@ $('#mapConfirm').onclick=()=>{
     if(!isNaN(aO)&&aO>0)records.push(Object.assign({},base,{amount:aO,type:'out'}));
     if(!isNaN(aI)&&aI>0)records.push(Object.assign({},base,{amount:aI,type:'in'}));
   }
-  if(!records.length){showToast('لم يتم العثور على بيانات صالحة — راجع ربط الأعمدة',1);return;}
+  if(!records.length){showToast('لم يتم العثور على بيانات صالحة في هذه الورقة — راجع ربط الأعمدة',1);return;}
   const doSave=()=>{
-    DB={records,meta:{file:PENDING_FILE,at:Date.now(),by:session.name}};
+    DB={records,meta:{file:PENDING_FILE,sheet:CUR_SHEET,at:Date.now(),by:session.name}};
     localStorage.setItem(LS_DATA,JSON.stringify(DB));
     $('#mapOv').classList.remove('show');
     const nIn=records.filter(x=>x.type==='in').length;
-    showToast(`✓ تم الاستيراد: ${records.length} سجل (${nIn} إيراد / ${records.length-nIn} صرف)`);
+    showToast(`✓ تم استيراد ${records.length} سجل من ورقة "${CUR_SHEET}" (${nIn} إيراد / ${records.length-nIn} صرف)`);
     renderAll();
   };
-  if(DB&&DB.records&&DB.records.length){confirmBox('سيتم استبدال البيانات الحالية ('+DB.records.length+' سجل) ببيانات الملف الجديد. متابعة؟',doSave);}
+  if(DB&&DB.records&&DB.records.length){confirmBox('سيتم استبدال البيانات الحالية ('+DB.records.length+' سجل) ببيانات ورقة "'+CUR_SHEET+'". متابعة؟',doSave);}
   else doSave();
 };
 
@@ -599,7 +631,7 @@ function parseDate(v){
 }
 function parseAmount(v){
   if(typeof v==='number')return v;
-  let s=String(v??'').replace(/[٠-٩]/g,d=>'٠١٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d.\-]/g,'');
+  let s=String(v??'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d.\-]/g,'');
   const n=parseFloat(s);return isNaN(n)?NaN:n;
 }
 
@@ -634,6 +666,7 @@ function renderFileInfo(){
   const nIn=DB.records.filter(r=>r.type==='in').length;
   $('#fiCount').textContent=DB.records.length;
   $('#fiIn').textContent=nIn+' إيراد';$('#fiOut').textContent=(DB.records.length-nIn)+' صرف';
+  $('#fiSheet').textContent='📑 '+(DB.meta.sheet||'Sheet1');
   const d=new Date(DB.meta.at);
   $('#fiDate').textContent=fmtD(dstr(d))+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   $('#fiBy').textContent='· بواسطة: '+DB.meta.by;
@@ -724,14 +757,14 @@ $('#cfNo').onclick=$('#cfX').onclick=()=>$('#confirmOv').classList.remove('show'
 function currentRows(){const q=state.q;return (DB?.records||[]).filter(r=>r.type===state.cat&&inRange(r.date)&&(!q||r.name.includes(q)||r.details.includes(q)||String(r.receipt).includes(q)))}
 $('#csvBtn').onclick=()=>{
   const rows=currentRows();if(!rows.length){showToast('لا توجد بيانات للتصدير',1);return;}
-  let csv='\uFEFFت,الوصول,التاريخ,الاسم,التفاصيل,المبلغ ('+CUR+'),النوع\n';
-  rows.forEach(r=>{csv+=[r.seq,r.receipt,fmtD(r.date),r.name,r.details,r.amount,r.type==='in'?'إيراد':'صرف'].map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')+'\n';});
+  let csv='\uFEFFت,الوصول,التاريخ,الاسم,التفاصيل,المبلغ ('+CUR+'),النوع,الورقة\n';
+  rows.forEach(r=>{csv+=[r.seq,r.receipt,fmtD(r.date),r.name,r.details,r.amount,r.type==='in'?'إيراد':'صرف',DB.meta.sheet||''].map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')+'\n';});
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download=(state.cat==='in'?'ايرادات':'صرفيات')+'-'+state.range+'.csv';a.click();showToast('تم تصدير الملف ✓');
 };
 $('#printBtn').onclick=()=>{
   const rows=currentRows();if(!rows.length){showToast('لا توجد بيانات للطباعة',1);return;}
-  $('#printHead').textContent='كشف '+(state.cat==='in'?'الإيرادات':'الصرفيات')+' — '+$('#capTitle').textContent.replace(/<[^>]+>/g,'')+'  (المبالغ: '+CUR+')';
+  $('#printHead').textContent='كشف '+(state.cat==='in'?'الإيرادات':'الصرفيات')+' — '+$('#capTitle').textContent.replace(/<[^>]+>/g,'')+' — الورقة: '+(DB.meta.sheet||'')+'  (المبالغ: '+CUR+')';
   window.print();
 };
 
