@@ -119,7 +119,7 @@ button,input,select{font:inherit}
 .daypick .cur:hover{background:var(--go1)}
 .grow{flex:1}
 .search{position:relative}
-.search input{width:220px;padding:10px 42px 10px 36px;border:1.5px solid var(--lin);border-radius:11px;font-size:13px;transition:.2s}
+.search input{width:230px;padding:10px 42px 10px 36px;border:1.5px solid var(--lin);border-radius:11px;font-size:13px;transition:.2s}
 .search input:focus{outline:none;border-color:var(--g6);box-shadow:0 0 0 3px rgba(20,122,84,.1)}
 .search .s-icon{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:var(--mut);pointer-events:none}
 .search .s-clear{position:absolute;inset-inline-end:8px;top:50%;transform:translateY(-50%);background:transparent;border:none;color:var(--mut);cursor:pointer;padding:4px 8px;border-radius:6px;font-size:14px;display:none}
@@ -133,13 +133,13 @@ button,input,select{font:inherit}
 .caption .dt{direction:ltr;display:inline-block;unicode-bidi:embed}
 .hint{font-size:11px;color:var(--mut);background:#f4f6ef;border:1px dashed var(--lin);padding:3px 10px;border-radius:99px}
 
-/* ══ الجدول مع خطوط فاصلة ══ */
+/* ══ جدول مُخطّط: خطوط أفقية وعمودية تفصل كل الخلايا ══ */
 .table-wrap{margin:10px 14px 14px;border:1px solid var(--lin);border-radius:12px;overflow:hidden;background:#fff}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
-thead th{background:var(--p9);color:#e8efe9;font-size:12.5px;font-weight:600;padding:12px;text-align:right;white-space:nowrap;border-bottom:2px solid var(--go)}
-th.c-rcpt{width:150px}
-th.c-amt{width:200px}
-tbody td{padding:11px 12px;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-bottom:1px solid #e3e9df;border-top:1px solid rgba(0,0,0,.04)}
+thead th{background:var(--p9);color:#e8efe9;font-size:12.5px;font-weight:600;padding:12px;text-align:right;white-space:nowrap;border-bottom:2px solid var(--go);border-inline-end:1px solid rgba(255,255,255,.18)}
+thead th:last-child{border-inline-end:none}
+tbody td{padding:11px 12px;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-bottom:1px solid #cfd9cb;border-inline-end:1px solid #cfd9cb}
+tbody td:last-child{border-inline-end:none}
 tbody tr{animation:rise .35s both;cursor:pointer;transition:background .15s,box-shadow .15s}
 tr.in-row{background:var(--rin)}
 tr.in-row:hover{background:var(--rinH);box-shadow:inset 3px 0 0 var(--g6)}
@@ -155,8 +155,8 @@ tr.in-row .amt{color:var(--g6)}
 tr.in-row .amt .cur{color:#2a7053}
 tr.out-row .amt{color:var(--r6)}
 tr.out-row .amt .cur{color:#8a3820}
-/* فوتر متجاوب — يمنع خروج الرقم + تصغير تلقائي */
-tfoot td{background:#f4f6ef;font-weight:700;padding:14px 12px;border-top:2px solid var(--p9);font-size:13px;color:var(--p8)}
+tfoot td{background:#f4f6ef;font-weight:700;padding:14px 12px;border-top:2px solid var(--p9);font-size:13px;color:var(--p8);border-inline-end:1px solid var(--lin)}
+tfoot td:last-child{border-inline-end:none}
 tfoot .amt-wrap{display:flex;align-items:center;justify-content:flex-end;gap:6px;flex-wrap:wrap}
 tfoot .amt{font-size:clamp(14px,2.2vw,18px);line-height:1.2;word-break:break-all}
 tfoot .amt .cur{font-size:12px;font-weight:700;color:var(--p8)}
@@ -206,14 +206,13 @@ mark{background:var(--go1);color:var(--p9);padding:0 3px;border-radius:3px;font-
 .map-grid select{width:100%;padding:10px 12px;border:1.5px solid var(--lin);border-radius:10px;background:#fbfcf9;font-size:13.5px}
 .pv-wrap{overflow:auto;border:1px solid var(--lin);border-radius:10px;max-height:160px}
 .pv-wrap table{min-width:100%;table-layout:auto}
-.pv-wrap th{background:#f0f3ec;color:var(--p8);font-size:11px;padding:7px 9px}
-.pv-wrap td{font-size:11.5px;padding:6px 9px;border-top:1px solid #eef1e9;white-space:nowrap}
+.pv-wrap th{background:#f0f3ec;color:var(--p8);font-size:11px;padding:7px 9px;border-inline-end:1px solid #e2e8dd}
+.pv-wrap td{font-size:11.5px;padding:6px 9px;border-top:1px solid #eef1e9;white-space:nowrap;border-inline-end:1px solid #eef1e9}
 .m-foot{display:flex;gap:10px;justify-content:flex-end;padding:0 20px 20px}
 .btn-p{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:'Changa';font-size:15px;font-weight:700;cursor:pointer}
 .btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}
 .confirm-txt{font-size:14px;line-height:1.9}
 
-/* Toast محسّن — يختفي تلقائياً بسرعة */
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--p9);color:#fff;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.28);border-inline-start:4px solid var(--go);z-index:99;transition:transform .35s,opacity .35s;max-width:90vw;opacity:0;pointer-events:none}
 .toast.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
 .toast.err{border-inline-start-color:var(--r6)}
@@ -228,7 +227,8 @@ mark{background:var(--go1);color:var(--p9);padding:0 3px;border-radius:3px;font-
   .topbar,.kpis,.subbar,.tabs,.chart-card,.credits,.file-card,.bg-grid,.glow,.no-print,.hint{display:none!important}
   .panel{box-shadow:none;border:none;margin:0}
   .table-wrap{margin:0;border:none}
-  thead th{background:#fff;color:#000;border-bottom:2px solid #000}
+  thead th{background:#fff;color:#000;border-bottom:2px solid #000;border-inline-end:1px solid #999}
+  tbody td{border-bottom:1px solid #bbb;border-inline-end:1px solid #bbb}
   tbody tr{animation:none;cursor:default}
   #printHead{display:block;font-family:'Changa';font-size:20px;font-weight:800;margin-bottom:12px}
 }
@@ -248,7 +248,7 @@ mark{background:var(--go1);color:var(--p9);padding:0 3px;border-radius:3px;font-
     <ul class="l-feats">
       <li>قراءة ملفات <b>.xlsm</b> مع اختيار أي ورقة (Sheet)</li>
       <li>فرز تلقائي: إيراد (أخضر) / صرف (أحمر)</li>
-      <li>تحديد يوم/أسبوع/شهر مع بحث ذكي</li>
+      <li>بحث ذكي يتجاهل الهمزات والتشكيل</li>
       <li>التاريخ بنسق 21-08-2026 في كل التقارير</li>
     </ul>
   </aside>
@@ -324,7 +324,7 @@ mark{background:var(--go1);color:var(--p9);padding:0 3px;border-radius:3px;font-
       <div class="grow"></div>
       <div class="search">
         <svg class="s-icon" width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg>
-        <input type="search" id="searchIn" placeholder="ابحث: اسم، وصول، مبلغ، تفاصيل…" inputmode="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <input type="search" id="searchIn" placeholder="بحث ذكي: احمد = أحمد، حسام = حسّام…" inputmode="search" enterkeyhint="search" autocomplete="off" autocapitalize="off" spellcheck="false">
         <button class="s-clear" id="searchClear" title="مسح البحث">✕</button>
       </div>
       <button class="iconbtn no-print" id="csvBtn" title="تصدير CSV">⬇</button>
@@ -411,7 +411,6 @@ function addDays(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
 function startOfWeek(d){var x=new Date(d);x.setDate(x.getDate()-x.getDay());return x}
 var TODAY=dstr(new Date());
 function fmtD(iso){if(!iso)return '—';var p=iso.split('-');return p[2]+'-'+p[1]+'-'+p[0]}
-/* money مع عملة مدمجة */
 function money(n,withCur){
   var num=Number(n)||0;
   var s=num.toLocaleString('en-US',{maximumFractionDigits:2});
@@ -420,7 +419,44 @@ function money(n,withCur){
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function wdLong(ds){try{return new Intl.DateTimeFormat('ar',{weekday:'long'}).format(new Date(ds+'T00:00:00'))}catch(e){return ''}}
 
-/* Toast محسّن — يختفي بسرعة مع شريط تقدم */
+/* ══ تطبيع عربي ذكي: أ/إ/آ→ا، ى/ئ→ي، ة→ه، حذف التشكيل والتطويل ══ */
+function norm(s){
+  return String(s==null?'':s)
+    .replace(/[\u064B-\u0652\u0670\u0640]/g,'')
+    .replace(/[أإآٱ]/g,'ا')
+    .replace(/[ىئ]/g,'ي')
+    .replace(/ؤ/g,'و')
+    .replace(/ة/g,'ه')
+    .replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)})
+    .toLowerCase();
+}
+/* بناء Regex يطابق النص الأصلي بكل أشكال الحروف (للتمييز الأصفر) */
+function smartRx(q){
+  var nq=norm(q),parts=[];
+  for(var i=0;i<nq.length;i++){
+    var ch=nq[i];
+    if(ch==='ا')parts.push('[اأإآٱ]');
+    else if(ch==='ي')parts.push('[يىئ]');
+    else if(ch==='ه')parts.push('[هة]');
+    else if(ch==='و')parts.push('[وؤ]');
+    else parts.push(ch.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'));
+  }
+  return new RegExp('('+parts.join('')+')','g');
+}
+function hi(txt,q){
+  var raw=String(txt==null?'':txt);
+  if(!q)return esc(raw);
+  var rx;try{rx=smartRx(q)}catch(e){return esc(raw)}
+  var out='',last=0,m;rx.lastIndex=0;
+  while((m=rx.exec(raw))){
+    out+=esc(raw.slice(last,m.index))+'<mark>'+esc(m[0])+'</mark>';
+    last=m.index+m[0].length;
+    if(m[0].length===0)rx.lastIndex++;
+  }
+  out+=esc(raw.slice(last));
+  return out;
+}
+
 var toastTimer=null;
 function showToast(msg,err,dur){
   dur=dur||2200;
@@ -596,7 +632,6 @@ $('#dayInput').value=state.day;
 $('#dayInput').onchange=function(e){state.day=e.target.value||dstr(new Date());renderAll()};
 $('#dayToday').onclick=function(){state.day=TODAY;$('#dayInput').value=TODAY;renderAll()};
 
-/* بحث ذكي مع debounce وإغلاق الكيبورد */
 var sIn=$('#searchIn');
 sIn.addEventListener('input',function(){
   state.q=sIn.value.trim();
@@ -609,7 +644,6 @@ sIn.addEventListener('keydown',function(e){
   if(e.key==='Escape'){sIn.value='';state.q='';sIn.blur();$('#searchClear').classList.remove('show');renderTable();}
 });
 $('#searchClear').onclick=function(){sIn.value='';state.q='';sIn.focus();$('#searchClear').classList.remove('show');renderTable()};
-/* إغلاق الكيبورد عند النقر خارج الحقل (بشكل طبيعي عبر blur) */
 document.addEventListener('click',function(e){
   if(!e.target.closest('.search')&&document.activeElement===sIn){sIn.blur();}
 });
@@ -686,26 +720,17 @@ function renderCaption(){
   else per='الشهر <span class="dt">'+state.month.split('-')[1]+'-'+state.month.split('-')[0]+'</span>';
   $('#capTitle').innerHTML='<b>'+c+'</b> — '+per;}
 
-/* تسليط الضوء على النص المطابق */
-function hi(txt,q){
-  if(!q)return esc(txt);
-  var e=esc(txt);
-  try{
-    var rx=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
-    return e.replace(rx,'<mark>$1</mark>');
-  }catch(ex){return e;}
-}
 function renderTable(){
   if(!(DB&&DB.records))return;
-  var q=state.q.toLowerCase();
+  var nq=norm(state.q);
   VIEW_ROWS=DB.records.filter(function(r){
     if(r.type!==state.cat||!inRange(r.date))return false;
-    if(!q)return true;
-    return (r.name||'').toLowerCase().indexOf(q)>=0||
-           (r.details||'').toLowerCase().indexOf(q)>=0||
-           String(r.receipt).toLowerCase().indexOf(q)>=0||
-           String(r.seq).toLowerCase().indexOf(q)>=0||
-           String(Math.round(r.amount)).indexOf(q)>=0;
+    if(!nq)return true;
+    return norm(r.name).indexOf(nq)>=0||
+           norm(r.details).indexOf(nq)>=0||
+           norm(r.receipt).indexOf(nq)>=0||
+           norm(r.seq).indexOf(nq)>=0||
+           norm(String(Math.round(r.amount))).indexOf(nq)>=0;
   });
   var tb=$('#tbody');
   if(!VIEW_ROWS.length){tb.innerHTML='<tr style="cursor:default"><td colspan="3"><div class="empty"><div class="ei">📭</div><p>لا توجد سجلات في هذه الفترة</p><small>'+(state.q?'جرّب كلمة بحث أخرى':'غيّر الفترة أو التصنيف')+'</small></div></td></tr>';}
