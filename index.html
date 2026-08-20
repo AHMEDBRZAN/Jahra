@@ -5,24 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>نظام المجمع السكني — الإيرادات والصرفيات</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --pine-900:#0b2e24; --pine-800:#0e3b2e; --pine-700:#12503e;
-  --green-600:#147a54; --green-500:#2fae7d;
-  --red-600:#b2472f; --red-700:#7e2d1c;
-  --gold-500:#e0a63c; --gold-600:#c98f26; --gold-100:#f6efdc;
-  --paper:#eef1ea; --card:#ffffff; --line:#dde4d9;
-  --ink:#1e2b26; --muted:#6b7a72;
-  --rowIn:#e9f4ea; --rowInH:#dcefe0; --rowOut:#fbeceb; --rowOutH:#f6ddd9;
-}
+:root{--pine-900:#0b2e24;--pine-800:#0e3b2e;--pine-700:#12503e;--green-600:#147a54;--green-500:#2fae7d;--red-600:#b2472f;--red-700:#7e2d1c;--gold-500:#e0a63c;--gold-600:#c98f26;--gold-100:#f6efdc;--paper:#eef1ea;--card:#fff;--line:#dde4d9;--ink:#1e2b26;--muted:#6b7a72;--rowIn:#e9f4ea;--rowInH:#dcefe0;--rowOut:#fbeceb;--rowOutH:#f6ddd9}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;background:var(--paper);color:var(--ink);min-height:100vh}
 button,input,select{font:inherit}
-
-.bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:repeating-linear-gradient(135deg,rgba(18,80,62,.04) 0 1px,transparent 1px 26px)}
+.bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:repeating-linear-gradient(135deg,rgba(18,80,62,.04) 0 1px,transparent 1px 26px)}
 .glow{position:fixed;border-radius:50%;filter:blur(90px);z-index:-2;pointer-events:none}
 .g1{width:520px;height:520px;background:#d7e7d0;top:-160px;inset-inline-start:-120px;opacity:.6;animation:drift1 16s ease-in-out infinite alternate}
 .g2{width:620px;height:620px;background:#f2e2ba;bottom:-240px;inset-inline-end:-160px;opacity:.55;animation:drift2 20s ease-in-out infinite alternate}
@@ -32,11 +21,8 @@ button,input,select{font:inherit}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 @keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
 @keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-6px)}40%,60%{transform:translateX(6px)}}
-
-/* ═══ شاشة الدخول ═══ */
 .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
-.login-card{display:grid;grid-template-columns:1.1fr 1fr;width:min(900px,100%);border-radius:20px;overflow:hidden;background:#fff;
-  box-shadow:0 30px 80px rgba(11,46,36,.25);animation:pop .5s cubic-bezier(.2,.9,.3,1.15)}
+.login-card{display:grid;grid-template-columns:1.1fr 1fr;width:min(900px,100%);border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 30px 80px rgba(11,46,36,.25);animation:pop .5s cubic-bezier(.2,.9,.3,1.15)}
 .login-card.shake{animation:shake .5s}
 .l-brand{background:linear-gradient(150deg,var(--pine-900),var(--pine-700) 70%,#0d4433);color:#fff;padding:44px 36px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden}
 .l-brand::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 16px,rgba(255,255,255,.035) 16px 17px)}
@@ -51,24 +37,20 @@ button,input,select{font:inherit}
 .field label{display:block;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:6px}
 .field input{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fbfcf9;transition:.2s;font-size:15px}
 .field input:focus{outline:none;border-color:var(--green-600);box-shadow:0 0 0 4px rgba(20,122,84,.12);background:#fff}
-.pw-wrap{position:relative}
-.pw-wrap input{padding-inline-end:46px}
-.eye{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:var(--muted);padding:8px;border-radius:8px;transition:.15s}
-.eye:hover{color:var(--pine-700);background:#f0f3ec}
+.pw-wrap{position:relative}.pw-wrap input{padding-inline-end:46px}
+.eye{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);border:none;background:none;cursor:pointer;color:var(--muted);padding:8px;border-radius:8px}
 .err{display:none;background:#fdeeea;color:var(--red-600);border:1px solid #f2cfc6;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600}
 .err.show{display:block;animation:rise .3s}
-.btn-login{margin-top:6px;background:linear-gradient(135deg,var(--pine-800),var(--green-600));color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Changa';font-size:17px;font-weight:700;cursor:pointer;transition:.2s;letter-spacing:.3px}
+.btn-login{margin-top:6px;background:linear-gradient(135deg,var(--pine-800),var(--green-600));color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Changa';font-size:17px;font-weight:700;cursor:pointer;transition:.2s}
 .btn-login:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(18,80,62,.35)}
 .l-note{font-size:11.5px;color:var(--muted);text-align:center}
-
-/* ═══ الشريط العلوي ═══ */
 .topbar{background:linear-gradient(135deg,var(--pine-900),var(--pine-800) 60%,#0c332a);color:#fff;border-bottom:3px solid var(--gold-500);position:relative;overflow:hidden}
 .topbar::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 14px,rgba(255,255,255,.03) 14px 15px)}
 .tb-in{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:14px;position:relative;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:12px}
 .logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--gold-500),var(--gold-600));display:grid;place-items:center;box-shadow:0 6px 16px rgba(224,166,60,.3)}
 .brand h1{font-family:'Changa';font-size:20px;font-weight:800;line-height:1.2}
-.brand small{color:#bcd3c5;font-size:11.5px;font-weight:500}
+.brand small{color:#bcd3c5;font-size:11.5px}
 .tb-side{margin-inline-start:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .clock{text-align:left;line-height:1.35}
 .clock b{font-size:13px;display:block}
@@ -78,12 +60,9 @@ button,input,select{font:inherit}
 .user-chip .nm{font-size:13px;font-weight:700}
 .role-b{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--gold-100);color:#7c6320}
 .role-b.admin{background:var(--gold-500);color:var(--pine-900)}
-.btn-out{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:12.5px;font-weight:600;transition:.18s}
+.btn-out{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:12.5px;font-weight:600}
 .btn-out:hover{background:var(--red-600);border-color:var(--red-600)}
-
 .wrap{max-width:1200px;margin:auto;padding:20px}
-
-/* بطاقة الملف */
 .file-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(15,50,38,.07);display:flex;gap:16px;align-items:center;flex-wrap:wrap;animation:rise .4s both}
 .drop{flex:1;min-width:260px;border:2px dashed #c9d6c4;border-radius:14px;padding:22px;text-align:center;cursor:pointer;transition:.2s;background:#fbfcf8}
 .drop:hover,.drop.over{border-color:var(--green-600);background:#f2f8f1;transform:translateY(-2px)}
@@ -102,11 +81,8 @@ button,input,select{font:inherit}
 .btn-mini{padding:9px 14px;border-radius:11px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--pine-800);transition:.18s;display:inline-flex;gap:6px;align-items:center}
 .btn-mini:hover{background:var(--pine-900);color:#fff;border-color:var(--pine-900);transform:translateY(-2px)}
 .btn-mini.gold{background:linear-gradient(135deg,var(--gold-500),var(--gold-600));border:none;color:var(--pine-900)}
-.btn-mini.gold:hover{box-shadow:0 8px 18px rgba(224,166,60,.4)}
-
-/* KPI */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:18px}
-.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px rgba(20,60,45,.06);transition:.22s;animation:rise .45s both;overflow:hidden}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;display:flex;gap:12px;align-items:center;box-shadow:0 6px 18px rgba(20,60,45,.06);transition:.22s;animation:rise .45s both}
 .kpi:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(20,60,45,.12)}
 .kpi .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex-shrink:0}
 .kpi .v{font-family:'Changa';font-weight:800;font-size:22px;line-height:1.15;white-space:nowrap;direction:ltr;text-align:right}
@@ -115,8 +91,6 @@ button,input,select{font:inherit}
 .k-out{border-inline-start:4px solid var(--red-600)}.k-out .ic{background:var(--rowOut);color:var(--red-600)}
 .k-net{border-inline-start:4px solid var(--gold-500)}.k-net .ic{background:var(--gold-100);color:var(--gold-600)}
 .k-netm{border-inline-start:4px solid var(--pine-700)}.k-netm .ic{background:#e5ece6;color:var(--pine-700)}
-
-/* اللوحة */
 .panel{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 14px 40px rgba(15,50,38,.08);overflow:hidden;margin-top:18px;animation:rise .5s .1s both}
 .tabs{display:flex;gap:8px;padding:14px 16px 0;border-bottom:1px solid var(--line);background:linear-gradient(#fdfdfb,#f7f9f4);flex-wrap:wrap}
 .tab{border:1px solid transparent;background:transparent;padding:10px 20px;border-radius:12px 12px 0 0;font-family:'Changa';font-weight:700;font-size:17px;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:9px;transition:.2s}
@@ -136,48 +110,37 @@ button,input,select{font:inherit}
 .subbar.out .pill.on small{color:#f6d7cd}.subbar.out .pill.on b{color:#ffd9a3}
 .monthpick{display:none;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted)}
 .monthpick.show{display:inline-flex;animation:rise .25s}
-.monthpick input{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:13px;color:var(--ink)}
-.monthpick input:focus{outline:none;border-color:var(--gold-500)}
+.monthpick input{padding:8px 10px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font-size:13px}
 .grow{flex:1}
 .search{position:relative}
-.search input{width:220px;padding:10px 38px 10px 12px;border:1.5px solid var(--line);border-radius:11px;background:#fbfcf9;transition:.2s;font-size:13px}
+.search input{width:220px;padding:10px 38px 10px 12px;border:1.5px solid var(--line);border-radius:11px;background:#fbfcf9;font-size:13px}
 .search input:focus{outline:none;border-color:var(--green-600);background:#fff;box-shadow:0 0 0 4px rgba(20,122,84,.1)}
 .search svg{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);color:var(--muted)}
 .iconbtn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:#fff;color:#41504a;display:grid;place-items:center;cursor:pointer;transition:.18s}
-.iconbtn:hover{border-color:var(--green-600);color:var(--green-600);transform:translateY(-2px);box-shadow:0 6px 12px rgba(0,0,0,.08)}
+.iconbtn:hover{border-color:var(--green-600);color:var(--green-600);transform:translateY(-2px)}
 .caption{padding:12px 18px 0;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
 .caption b{color:var(--pine-800);font-family:'Changa';font-size:15px}
 .caption .dt{direction:ltr;display:inline-block;unicode-bidi:embed}
 .hint{font-size:11px;color:var(--muted);background:#f4f6ef;border:1px dashed var(--line);padding:3px 10px;border-radius:99px}
-
-/* ══ الجدول المختصر — ثابت بدون تمرير ══ */
 .table-wrap{margin:10px 14px 14px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
 thead th{background:var(--pine-900);color:#e8efe9;font-size:12.5px;font-weight:600;padding:12px;text-align:right;white-space:nowrap}
-th.c-rcpt{width:120px}th.c-date{width:150px}th.c-amt{width:160px}
+th.c-rcpt{width:150px}th.c-amt{width:190px}
 tbody td{padding:11px 12px;border-top:1px solid rgba(0,0,0,.05);font-size:14px;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 tbody tr{animation:rise .35s both;transition:background .15s,box-shadow .15s;cursor:pointer}
-tr.in-row{background:var(--rowIn)}
-tr.in-row:hover{background:var(--rowInH);box-shadow:inset 0 0 0 1.5px var(--green-600)}
-tr.out-row{background:var(--rowOut)}
-tr.out-row:hover{background:var(--rowOutH);box-shadow:inset 0 0 0 1.5px var(--red-600)}
+tr.in-row{background:var(--rowIn)}tr.in-row:hover{background:var(--rowInH);box-shadow:inset 0 0 0 1.5px var(--green-600)}
+tr.out-row{background:var(--rowOut)}tr.out-row:hover{background:var(--rowOutH);box-shadow:inset 0 0 0 1.5px var(--red-600)}
 tr:active{filter:brightness(.97)}
 .rcpt{font-family:'Changa';background:#fff;border:1px dashed #cbb878;color:#7c6320;padding:2px 10px;border-radius:8px;font-size:13px;font-weight:700;white-space:nowrap}
 tr.out-row .rcpt{border-color:#e0a79b;color:#8f3524}
-.dcell b{display:block;font-weight:600;font-size:13.5px;direction:ltr;text-align:right}
-.dcell small{color:var(--muted);font-size:11px}
 td.nm{font-weight:600}
 .amt{font-family:'Changa';font-weight:800;font-size:15.5px;white-space:nowrap;direction:ltr;display:inline-block}
-tr.in-row .amt{color:var(--green-600)}
-tr.out-row .amt{color:var(--red-600)}
+tr.in-row .amt{color:var(--green-600)}tr.out-row .amt{color:var(--red-600)}
 tfoot td{background:#f4f6ef;font-weight:700;padding:13px 12px;border-top:2px solid var(--line);font-size:14px}
 tfoot .amt{font-size:18px;color:var(--pine-800)}
 .empty{padding:50px 20px;text-align:center;color:var(--muted)}
 .empty .ei{font-size:44px;margin-bottom:10px;opacity:.6}
-.empty p{font-weight:600}
-.empty small{display:block;margin-top:6px;font-size:12px}
-
-/* نافذة التفاصيل الكاملة */
+.empty p{font-weight:600}.empty small{display:block;margin-top:6px;font-size:12px}
 .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .det-item{background:#f7f9f4;border:1px solid var(--line);border-radius:10px;padding:10px 12px;min-width:0}
 .det-item.full{grid-column:1/-1}
@@ -185,9 +148,7 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
 .det-item b{font-size:14.5px;word-break:break-word}
 .det-item .dt-ltr{direction:ltr;display:inline-block}
 .det-item .amt-big{font-family:'Changa';font-size:24px;font-weight:800}
-.det-item p{font-size:13.5px;line-height:1.9;color:var(--ink);word-break:break-word;white-space:normal}
-
-/* الرسم */
+.det-item p{font-size:13.5px;line-height:1.9;word-break:break-word;white-space:normal}
 .chart-card{margin-top:16px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(15,50,38,.07);animation:rise .5s .15s both}
 .ch-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:8px}
 .ch-head h3{font-family:'Changa';font-size:16px;color:var(--pine-800)}
@@ -202,63 +163,43 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
 .day span{font-size:11px;color:var(--muted);font-weight:600}
 .day.today span{color:var(--pine-800);font-weight:800}
 .day.today .cols{box-shadow:inset 0 -3px 0 var(--gold-500)}
-
 .credits{margin:20px 0 34px;text-align:center;font-size:12px;color:var(--muted)}
-
-/* نوافذ */
 .ov{position:fixed;inset:0;background:rgba(7,22,16,.55);backdrop-filter:blur(3px);display:none;place-items:center;z-index:50;padding:16px}
 .ov.show{display:grid;animation:fade .2s}
 .modal{width:min(600px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s cubic-bezier(.2,.9,.3,1.15)}
 .m-head{padding:14px 20px;color:#fff;font-family:'Changa';font-size:17px;font-weight:700;background:linear-gradient(135deg,var(--pine-800),var(--green-600));display:flex;justify-content:space-between;align-items:center;gap:10px}
-.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;transition:.15s;flex-shrink:0}
-.m-x:hover{background:rgba(255,255,255,.3)}
+.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:15px;flex-shrink:0}
 .m-body{padding:18px 20px;display:grid;gap:14px;max-height:70vh;overflow:auto}
 .sheet-sel{background:var(--gold-100);border:1.5px solid var(--gold-500);border-radius:12px;padding:12px 14px}
 .sheet-sel label{font-size:12.5px;font-weight:800;color:#7c6320;display:flex;gap:6px;align-items:center;margin-bottom:8px}
 .sheet-sel select{width:100%;padding:11px 12px;border:1.5px solid var(--gold-600);border-radius:10px;background:#fff;font-size:14px;font-weight:700;color:var(--pine-900);cursor:pointer}
-.sheet-sel select:focus{outline:none;box-shadow:0 0 0 4px rgba(224,166,60,.2)}
 .map-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .map-grid select{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:#fbfcf9;font-size:13.5px}
-.map-grid select:focus{outline:none;border-color:var(--green-600)}
 .pv-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px;max-height:160px}
 .pv-wrap table{min-width:100%;table-layout:auto}
 .pv-wrap th{background:#f0f3ec;color:var(--pine-800);font-size:11px;padding:7px 9px}
-.pv-wrap td{font-size:11.5px;padding:6px 9px;border-top:1px solid #eef1e9;white-space:nowrap;overflow:visible}
+.pv-wrap td{font-size:11.5px;padding:6px 9px;border-top:1px solid #eef1e9;white-space:nowrap}
 .m-foot{display:flex;gap:10px;justify-content:flex-end;padding:0 20px 20px}
 .btn-p{background:linear-gradient(135deg,var(--pine-800),var(--green-600));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:'Changa';font-size:15px;font-weight:700;cursor:pointer;transition:.2s}
 .btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(18,80,62,.3)}
-.btn-c{background:#fff;border:1px solid var(--line);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--muted);transition:.15s}
-.btn-c:hover{background:#f0f3ec}
-.confirm-txt{font-size:14px;line-height:1.9;color:var(--ink)}
-
+.btn-c{background:#fff;border:1px solid var(--line);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--muted)}
+.confirm-txt{font-size:14px;line-height:1.9}
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--pine-900);color:#fff;padding:13px 22px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.28);border-inline-start:4px solid var(--gold-500);z-index:99;transition:transform .35s cubic-bezier(.2,.9,.3,1.2);max-width:90vw}
 .toast.show{transform:translate(-50%,0)}
 .toast.err{border-inline-start-color:var(--red-600)}
-
 #printHead{display:none}
-@media print{
-  body{background:#fff}
-  .topbar,.kpis,.subbar,.tabs,.chart-card,.credits,.file-card,.bg-grid,.glow,.no-print,.hint{display:none!important}
-  .panel{box-shadow:none;border:none;margin-top:0}
-  .table-wrap{margin:0;border:none}
-  thead th{background:#fff;color:#000;border-bottom:2px solid #000}
-  tbody tr{animation:none;cursor:default}
-  #printHead{display:block;font-family:'Changa';font-size:20px;font-weight:800;margin-bottom:12px;color:#000}
-}
-@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.login-card{grid-template-columns:1fr}.l-brand{padding:30px}th.c-rcpt{width:90px}th.c-date{width:120px}th.c-amt{width:120px}}
-@media(max-width:560px){.kpi .v{font-size:17px}.search input{width:100%}.map-grid{grid-template-columns:1fr}th.c-rcpt{width:70px}th.c-date{width:105px}th.c-amt{width:105px}.det-grid{grid-template-columns:1fr}}
+@media print{body{background:#fff}.topbar,.kpis,.subbar,.tabs,.chart-card,.credits,.file-card,.bg-grid,.glow,.no-print,.hint{display:none!important}.panel{box-shadow:none;border:none;margin-top:0}.table-wrap{margin:0;border:none}thead th{background:#fff;color:#000;border-bottom:2px solid #000}tbody tr{animation:none;cursor:default}#printHead{display:block;font-family:'Changa';font-size:20px;font-weight:800;margin-bottom:12px;color:#000}}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.login-card{grid-template-columns:1fr}.l-brand{padding:30px}th.c-rcpt{width:110px}th.c-amt{width:140px}}
+@media(max-width:560px){.kpi .v{font-size:17px}.search input{width:100%}.map-grid{grid-template-columns:1fr}th.c-rcpt{width:90px}th.c-amt{width:115px}.det-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="bg-grid"></div><div class="glow g1"></div><div class="glow g2"></div>
 
-<!-- ═══ شاشة الدخول ═══ -->
 <section class="login-wrap" id="loginView">
   <div class="login-card" id="loginCard">
     <aside class="l-brand">
-      <div class="l-logo">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l6-4v3l6-4v18M9 21V8m6 13V7m-9 5h.01M6 15h.01M15 10h.01M15 14h.01M15 18h.01" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/><path d="M2 21h20" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/></svg>
-      </div>
+      <div class="l-logo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V8l6-4v3l6-4v18M9 21V8m6 13V7m-9 5h.01M6 15h.01M15 10h.01M15 14h.01M15 18h.01" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/><path d="M2 21h20" stroke="#0b2e24" stroke-width="1.8" stroke-linecap="round"/></svg></div>
       <h1>نظام المجمع السكني<br>للإيرادات والصرفيات</h1>
       <p>عرض وتحليل بيانات ملف الإكسل مباشرة</p>
       <ul class="l-feats">
@@ -274,9 +215,7 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
       <div class="field"><label>كلمة المرور</label>
         <div class="pw-wrap">
           <input type="password" id="lp" required placeholder="••••••">
-          <button type="button" class="eye" id="eyeBtn" title="إظهار كلمة المرور">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg>
-          </button>
+          <button type="button" class="eye" id="eyeBtn" title="إظهار كلمة المرور"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.7"/></svg></button>
         </div>
       </div>
       <div class="err" id="loginErr">اسم المستخدم أو كلمة المرور غير صحيحة</div>
@@ -286,7 +225,6 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
   </div>
 </section>
 
-<!-- ═══ النظام ═══ -->
 <div id="appView" hidden>
 <header class="topbar">
   <div class="tb-in">
@@ -296,18 +234,13 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
     </div>
     <div class="tb-side">
       <div class="clock"><b id="dateNow"></b><span id="clockNow"></span></div>
-      <div class="user-chip">
-        <div class="avatar" id="uAvatar">ح</div>
-        <div class="nm" id="uName">—</div>
-        <span class="role-b admin" id="uRole">مدير</span>
-      </div>
+      <div class="user-chip"><div class="avatar" id="uAvatar">ح</div><div class="nm" id="uName">—</div><span class="role-b admin" id="uRole">مدير</span></div>
       <button class="btn-out" id="logoutBtn">تسجيل خروج</button>
     </div>
   </div>
 </header>
-
 <main class="wrap">
-  <section class="file-card" id="fileCard">
+  <section class="file-card">
     <div class="drop admin-only" id="dropZone">
       <b id="dropTitle">📂 اسحب ملف الإكسل هنا أو اضغط للاختيار</b>
       <small>الصيغ: .xlsm / .xlsx — وبعد الرفع تختار الورقة (Sheet) التي تريدها</small>
@@ -328,19 +261,16 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
   </section>
 
   <section class="panel" id="noData" style="margin-top:18px" hidden>
-    <div class="empty">
-      <div class="ei">🗂️</div>
-      <p id="noDataTxt">لا توجد بيانات بعد — ارفع ملف الإكسل للبدء</p>
-      <small>أعمدة الملف المتوقع: ت — الوصول — التاريخ — الاسم — التفاصيل — مبلغ الصرف — مبلغ الإيراد</small>
-    </div>
+    <div class="empty"><div class="ei">🗂️</div><p id="noDataTxt">لا توجد بيانات بعد — ارفع ملف الإكسل للبدء</p>
+    <small>أعمدة الملف المتوقع: ت — الوصول — التاريخ — الاسم — التفاصيل — مبلغ الصرف — مبلغ الإيراد</small></div>
   </section>
 
   <div id="dashArea" hidden>
   <section class="kpis">
-    <div class="kpi k-in"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 19V5m0 0l-6 6m6-6l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="v" id="kInToday">0</div><div class="l">إيرادات اليوم (د.ع.)</div></div></div>
-    <div class="kpi k-out"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 5v14m0 0l-6-6m6 6l6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="v" id="kOutToday">0</div><div class="l">صرفيات اليوم (د.ع.)</div></div></div>
-    <div class="kpi k-net"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 17l5-5 4 3 7-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="v" id="kNetToday">0</div><div class="l">صافي اليوم (د.ع.)</div></div></div>
-    <div class="kpi k-netm"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="5" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M4 10h16M9 3v4M15 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><div class="v" id="kNetMonth">0</div><div class="l">صافي هذا الشهر (د.ع.)</div></div></div>
+    <div class="kpi k-in"><div class="ic">↑</div><div><div class="v" id="kInToday">0</div><div class="l">إيرادات اليوم (د.ع.)</div></div></div>
+    <div class="kpi k-out"><div class="ic">↓</div><div><div class="v" id="kOutToday">0</div><div class="l">صرفيات اليوم (د.ع.)</div></div></div>
+    <div class="kpi k-net"><div class="ic">≈</div><div><div class="v" id="kNetToday">0</div><div class="l">صافي اليوم (د.ع.)</div></div></div>
+    <div class="kpi k-netm"><div class="ic">▦</div><div><div class="v" id="kNetMonth">0</div><div class="l">صافي هذا الشهر (د.ع.)</div></div></div>
   </section>
 
   <section class="panel">
@@ -360,8 +290,8 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
         <input type="text" id="searchIn" placeholder="بحث بالاسم أو التفاصيل…">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </div>
-      <button class="iconbtn no-print" id="csvBtn" title="تصدير العرض الحالي CSV"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <button class="iconbtn no-print" id="printBtn" title="طباعة التقرير"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M7 8V3h10v5M7 17H4a1 1 0 01-1-1v-6a1 1 0 011-1h16a1 1 0 011 1v6a1 1 0 01-1 1h-3m-10-2h10v6H7v-6z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="iconbtn no-print" id="csvBtn" title="تصدير CSV"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0l-4-4m4 4l4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="iconbtn no-print" id="printBtn" title="طباعة"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M7 8V3h10v5M7 17H4a1 1 0 01-1-1v-6a1 1 0 011-1h16a1 1 0 011 1v6a1 1 0 01-1 1h-3m-10-2h10v6H7v-6z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="caption">
       <span id="capTitle"><b>—</b></span>
@@ -374,13 +304,12 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
       <table>
         <thead><tr>
           <th class="c-rcpt">الوصول</th>
-          <th class="c-date">التاريخ</th>
           <th>الاسم</th>
           <th class="c-amt" style="text-align:left" id="thAmt">مبلغ الصرف (د.ع.)</th>
         </tr></thead>
         <tbody id="tbody"></tbody>
         <tfoot><tr>
-          <td colspan="3">المجموع (د.ع.) — <span id="ftCount">0</span> سجل</td>
+          <td colspan="2">المجموع (د.ع.) — <span id="ftCount">0</span> سجل</td>
           <td style="text-align:left"><span class="amt" id="ftTotal">0</span></td>
         </tr></tfoot>
       </table>
@@ -388,19 +317,16 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
   </section>
 
   <section class="chart-card">
-    <div class="ch-head">
-      <h3>حركة آخر 7 أيام</h3>
+    <div class="ch-head"><h3>حركة آخر 7 أيام</h3>
       <div class="legend"><span><i style="background:var(--green-600)"></i>إيرادات</span><span><i style="background:var(--red-600)"></i>صرفيات</span></div>
     </div>
     <div class="bars" id="barsBox"></div>
   </section>
   </div>
-
   <p class="credits">نظام عرض التقارير — البيانات مصدرها ملف الإكسل المرفوع · نسق التاريخ: يوم-شهر-سنة</p>
 </main>
 </div>
 
-<!-- نافذة التفاصيل الكاملة عند النقر على صف -->
 <div class="ov" id="detOv">
   <div class="modal" style="width:min(480px,100%)">
     <div class="m-head" id="detHead"><span id="detTitle">تفاصيل</span><button class="m-x" id="detX">✕</button></div>
@@ -409,7 +335,6 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
   </div>
 </div>
 
-<!-- نافذة اختيار الورقة + ربط الأعمدة -->
 <div class="ov" id="mapOv">
   <div class="modal">
     <div class="m-head"><span>📑 <span id="mapFile">file</span></span><button class="m-x" id="mapCancel1">✕</button></div>
@@ -418,7 +343,7 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
         <label> اختر الورقة (Sheet) المراد قراءتها — الملف يحتوي على <span id="sheetCount">1</span> ورقة</label>
         <select id="mSheet"></select>
       </div>
-      <p style="font-size:13px;color:var(--muted)">تم العثور على <b id="mapRows" style="color:var(--pine-800)">0</b> صف بيانات في الورقة المختارة. تأكد من ربط الحقول بالأعمدة الصحيحة:</p>
+      <p style="font-size:13px;color:var(--muted)">تم العثور على <b id="mapRows" style="color:var(--pine-800)">0</b> صف بيانات. تأكد من ربط الحقول بالأعمدة الصحيحة:</p>
       <div class="map-grid">
         <div class="field"><label>ت (التسلسل)</label><select id="mSeq"></select></div>
         <div class="field"><label>الوصول (رقم الوصل)</label><select id="mReceipt"></select></div>
@@ -429,18 +354,14 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
         <div class="field"><label>مبلغ الإيراد</label><select id="mAmtIn"></select></div>
       </div>
       <div>
-        <label style="font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">معاينة أول صفوف الورقة المختارة:</label>
+        <label style="font-size:12px;font-weight:700;color:var(--muted);display:block;margin-bottom:6px">معاينة أول صفوف الورقة:</label>
         <div class="pv-wrap"><table id="pvTable"></table></div>
       </div>
     </div>
-    <div class="m-foot">
-      <button class="btn-c" id="mapCancel2">إلغاء</button>
-      <button class="btn-p" id="mapConfirm">اعتماد واستيراد ✓</button>
-    </div>
+    <div class="m-foot"><button class="btn-c" id="mapCancel2">إلغاء</button><button class="btn-p" id="mapConfirm">اعتماد واستيراد ✓</button></div>
   </div>
 </div>
 
-<!-- نافذة تأكيد -->
 <div class="ov" id="confirmOv">
   <div class="modal" style="width:min(420px,100%)">
     <div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div>
@@ -455,24 +376,19 @@ tfoot .amt{font-size:18px;color:var(--pine-800)}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-/* ══ الحسابات — عدّل هنا لإضافة مستخدمين أو تغيير كلمة السر ══
-   role: 'admin' مدير (يرفع الملف) | 'user' مستخدم (عرض فقط) */
+/* ══ الحسابات — عدّل هنا ══  role: 'admin' مدير | 'user' عرض فقط */
 const USERS = [
   { u:'حسين',   p:'1979', role:'admin', name:'حسين' },
   { u:'مستخدم', p:'1234', role:'user',  name:'مستخدم' }
 ];
 const CUR = 'د.ع.';
-
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const LS_DATA='cmpx_xldata_v4', SS_SESS='cmpx_sess_v1';
-
+const LS_DATA='cmpx_xldata_v5', SS_SESS='cmpx_sess_v1';
 let DB = JSON.parse(localStorage.getItem(LS_DATA)||'null');
 let session = JSON.parse(sessionStorage.getItem(SS_SESS)||'null');
 const state = { cat:'out', range:'today', month:ym(new Date()), q:'' };
-let WB=null, RAW=null, CUR_SHEET='', HEADERS=[], HEAD_DET=[], HROW=-1, PENDING_FILE='';
-let VIEW_ROWS=[]; // صفوف الجدول المعروض حاليًا (للتفاصيل عند النقر)
+let WB=null, RAW=null, CUR_SHEET='', HEADERS=[], HEAD_DET=[], HROW=-1, PENDING_FILE='', VIEW_ROWS=[];
 
-/* ── أدوات ─ */
 function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
 function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
@@ -488,13 +404,11 @@ function animNum(el,to){const from=parseFloat(el.dataset.v||0),t0=performance.no
     if(p<1)requestAnimationFrame(step);else el.dataset.v=to;}
   requestAnimationFrame(step);}
 
-/* ── الساعة ── */
 function tick(){const n=new Date();
   $('#clockNow').textContent=n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
   $('#dateNow').textContent=wdLong(dstr(n))+' '+fmtD(dstr(n));}
 tick();setInterval(tick,20000);
 
-/* ══ الدخول ══ */
 $('#eyeBtn').onclick=()=>{const i=$('#lp');i.type=i.type==='password'?'text':'password'};
 $('#loginForm').onsubmit=e=>{e.preventDefault();
   const u=$('#lu').value.trim(), p=$('#lp').value.trim();
@@ -504,7 +418,6 @@ $('#loginForm').onsubmit=e=>{e.preventDefault();
   session={name:acc.name,role:acc.role};sessionStorage.setItem(SS_SESS,JSON.stringify(session));
   enterApp();showToast('مرحبًا '+acc.name+' 👋');};
 $('#logoutBtn').onclick=()=>{sessionStorage.removeItem(SS_SESS);location.reload()};
-
 function enterApp(){
   $('#loginView').style.display='none';$('#appView').hidden=false;
   $('#uName').textContent=session.name;$('#uAvatar').textContent=session.name.slice(0,1);
@@ -513,7 +426,6 @@ function enterApp(){
   renderAll();
 }
 
-/* ══ رفع الملف ══ */
 const drop=$('#dropZone');
 drop.onclick=()=>$('#fileInput').click();
 $('#replaceBtn').onclick=()=>$('#fileInput').click();
@@ -541,7 +453,6 @@ function openSheet(name){
 }
 $('#mSheet').addEventListener('change',e=>openSheet(e.target.value));
 
-/* اكتشاف العناوين */
 const DICT={
   seq:[/^ت$/,/تسلسل/,/^م$/],
   receipt:[/الوصول/,/الوصل/,/رقم\s*(ال)?وصل/,/رقم\s*(ال)?سند/],
@@ -569,7 +480,7 @@ function detectColumns(){
   if(best<0||bScore<2){
     HROW=-1;HEADERS=[];HEAD_DET=[];
     $('#mapRows').textContent=0;
-    $('#pvTable').innerHTML='<tbody><tr><td style="padding:14px;color:var(--muted)">هذه الورقة فارغة أو لا تحتوي على عناوين معروفة — اختر ورقة أخرى من القائمة بالأعلى</td></tr></tbody>';
+    $('#pvTable').innerHTML='<tbody><tr><td style="padding:14px;color:var(--muted)">هذه الورقة فارغة أو بلا عناوين معروفة — اختر ورقة أخرى من الأعلى</td></tr></tbody>';
     ['mSeq','mReceipt','mDate','mName','mDetails','mAmtOut','mAmtIn'].forEach(id=>fillSelect($('#'+id),-1,id==='mDate'||id==='mName'));
     $('#mapFile').textContent=PENDING_FILE;
     showToast('لم يتم التعرف على عناوين ورقة "'+CUR_SHEET+'" — جرّب ورقة أخرى',1);
@@ -623,15 +534,11 @@ $('#mapConfirm').onclick=()=>{
     const aO=iAO>=0?parseAmount(row[iAO]):NaN;
     const aI=iAI>=0?parseAmount(row[iAI]):NaN;
     if((isNaN(aO)||aO<=0)&&(isNaN(aI)||aI<=0))continue;
-    const base={
-      seq:iS>=0?String(row[iS]??'').trim():String(r-HROW),
-      receipt:iR>=0?String(row[iR]??'').trim():'',
-      date,name,details
-    };
+    const base={seq:iS>=0?String(row[iS]??'').trim():String(r-HROW),receipt:iR>=0?String(row[iR]??'').trim():'',date,name,details};
     if(!isNaN(aO)&&aO>0)records.push(Object.assign({},base,{amount:aO,type:'out'}));
     if(!isNaN(aI)&&aI>0)records.push(Object.assign({},base,{amount:aI,type:'in'}));
   }
-  if(!records.length){showToast('لم يتم العثور على بيانات صالحة في هذه الورقة — راجع ربط الأعمدة',1);return;}
+  if(!records.length){showToast('لم يتم العثور على بيانات صالحة — راجع ربط الأعمدة',1);return;}
   const doSave=()=>{
     DB={records,meta:{file:PENDING_FILE,sheet:CUR_SHEET,at:Date.now(),by:session.name}};
     localStorage.setItem(LS_DATA,JSON.stringify(DB));
@@ -648,18 +555,17 @@ function parseDate(v){
   if(v instanceof Date&&!isNaN(v))return dstr(v);
   if(typeof v==='number'&&v>20000){return dstr(new Date(Math.round((v-25569)*86400000)));}
   let s=String(v??'').trim();if(!s)return null;
-  s=s.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+  s=s.replace(/[٠-٩]/g,d=>'٠١٢٤٥٦٧٨٩'.indexOf(d));
   let m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
   m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
   const d=new Date(s);return isNaN(d)?null:dstr(d);
 }
 function parseAmount(v){
   if(typeof v==='number')return v;
-  let s=String(v??'').replace(/[٠-٩]/g,d=>'٠١٣٤٥٧٨٩'.indexOf(d)).replace(/[^\d.\-]/g,'');
+  let s=String(v??'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d.\-]/g,'');
   const n=parseFloat(s);return isNaN(n)?NaN:n;
 }
 
-/* ══ العرض ══ */
 $('#tabIn').onclick=()=>{state.cat='in';renderAll()};
 $('#tabOut').onclick=()=>{state.cat='out';renderAll()};
 $$('.pill').forEach(p=>p.onclick=()=>{state.range=p.dataset.range;renderAll()});
@@ -667,157 +573,15 @@ $('#monthInput').value=state.month;
 $('#monthInput').onchange=e=>{state.month=e.target.value||ym(new Date());renderAll()};
 $('#searchIn').oninput=e=>{state.q=e.target.value.trim();renderTable()};
 
-/* النقر على صف → التفاصيل الكاملة */
 $('#tbody').addEventListener('click',e=>{
   const tr=e.target.closest('tr[data-i]');if(!tr)return;
   openDetail(VIEW_ROWS[+tr.dataset.i]);
 });
 function openDetail(r){
   if(!r)return;
-  $('#detHead').style.background = r.type==='in'
-    ? 'linear-gradient(135deg,#12503e,#177a54)'
-    : 'linear-gradient(135deg,#7e2d1c,#b2472f)';
+  $('#detHead').style.background = r.type==='in' ? 'linear-gradient(135deg,#12503e,#177a54)' : 'linear-gradient(135deg,#7e2d1c,#b2472f)';
   $('#detTitle').textContent=(r.type==='in'?'💰 إيراد':'💸 صرفية')+(r.receipt?' — وصل '+r.receipt:'');
   $('#detBody').innerHTML=`
     <div class="det-item"><small>التسلسل (ت)</small><b>${esc(r.seq)||'—'}</b></div>
     <div class="det-item"><small>رقم الوصول</small><b>${esc(r.receipt)||'—'}</b></div>
-    <div class="det-item"><small>التاريخ</small><b class="dt-ltr">${fmtD(r.date)}</b></div>
-    <div class="det-item"><small>اليوم</small><b>${wdLong(r.date)}</b></div>
-    <div class="det-item full"><small>الاسم</small><b>${esc(r.name)||'—'}</b></div>
-    <div class="det-item full"><small>المبلغ (${CUR}) — ${r.type==='in'?'إيراد':'صرف'}</small><b class="amt-big" style="color:${r.type==='in'?'var(--green-600)':'var(--red-600)'}">${money(r.amount)}</b></div>
-    <div class="det-item full"><small>التفاصيل الكاملة</small><p>${esc(r.details)||'لا توجد تفاصيل مسجلة لهذا الوصل.'}</p></div>`;
-  $('#detOv').classList.add('show');
-}
-$('#detX').onclick=$('#detClose').onclick=()=>$('#detOv').classList.remove('show');
-$('#detOv').addEventListener('click',e=>{if(e.target.id==='detOv')$('#detOv').classList.remove('show')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){$('#detOv').classList.remove('show');$('#mapOv').classList.remove('show');$('#confirmOv').classList.remove('show');}});
-
-function inRange(d){
-  if(state.range==='today')return d===TODAY;
-  if(state.range==='week'){const ws=dstr(startOfWeek(new Date()));return d>=ws&&d<=TODAY;}
-  return d.startsWith(state.month);
-}
-function sumWhere(fn){return (DB?.records||[]).filter(fn).reduce((s,r)=>s+r.amount,0)}
-
-function renderAll(){
-  const has=DB&&DB.records&&DB.records.length;
-  $('#dashArea').hidden=!has;$('#noData').hidden=!!has;
-  if(!has){
-    $('#fileInfo').hidden=true;
-    $('#noDataTxt').textContent=session.role==='admin'?'لا توجد بيانات بعد — ارفع ملف الإكسل للبدء':'لا توجد بيانات — بانتظار رفع الملف من قِبل المدير';
-    return;
-  }
-  renderFileInfo();renderTabs();renderPills();renderCaption();renderTable();renderKPIs();renderChart();
-}
-function renderFileInfo(){
-  $('#fileInfo').hidden=false;
-  $('#fiName').textContent=DB.meta.file;
-  const nIn=DB.records.filter(r=>r.type==='in').length;
-  $('#fiCount').textContent=DB.records.length;
-  $('#fiIn').textContent=nIn+' إيراد';$('#fiOut').textContent=(DB.records.length-nIn)+' صرف';
-  $('#fiSheet').textContent='📑 '+(DB.meta.sheet||'Sheet1');
-  const d=new Date(DB.meta.at);
-  $('#fiDate').textContent=fmtD(dstr(d))+' '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-  $('#fiBy').textContent='· بواسطة: '+DB.meta.by;
-  $('#dropTitle').textContent='📂 اضغط لرفع ملف آخر (سيستبدل الحالي)';
-}
-function renderTabs(){
-  const tIn=sumWhere(r=>r.type==='in'&&r.date===TODAY),tOut=sumWhere(r=>r.type==='out'&&r.date===TODAY);
-  $('#tbIn').textContent='اليوم: '+money(tIn);$('#tbOut').textContent='اليوم: '+money(tOut);
-  $('#tabIn').className='tab'+(state.cat==='in'?' on-in':'');
-  $('#tabOut').className='tab'+(state.cat==='out'?' on-out':'');
-  $('#subbar').classList.toggle('out',state.cat==='out');
-  $('#thAmt').textContent=state.cat==='in'?'مبلغ الإيراد ('+CUR+')':'مبلغ الصرف ('+CUR+')';
-}
-function inRangeW(d){const ws=dstr(startOfWeek(new Date()));return d>=ws&&d<=TODAY}
-function renderPills(){
-  const c=state.cat;
-  animNum($('#pToday'),sumWhere(r=>r.type===c&&r.date===TODAY));
-  animNum($('#pWeek'),sumWhere(r=>r.type===c&&inRangeW(r.date)));
-  animNum($('#pMonth'),sumWhere(r=>r.type===c&&r.date.startsWith(state.month)));
-  $$('.pill').forEach(p=>p.classList.toggle('on',p.dataset.range===state.range));
-  $('#monthPick').classList.toggle('show',state.range==='month');
-}
-function renderCaption(){
-  let per='';
-  if(state.range==='today')per=wdLong(TODAY)+' <span class="dt">'+fmtD(TODAY)+'</span>';
-  else if(state.range==='week'){const ws=dstr(startOfWeek(new Date()));per='من <span class="dt">'+fmtD(ws)+'</span> إلى <span class="dt">'+fmtD(TODAY)+'</span>';}
-  else per='الشهر <span class="dt">'+state.month.split('-')[1]+'-'+state.month.split('-')[0]+'</span>';
-  $('#capTitle').innerHTML='<b>'+(state.cat==='in'?'الإيرادات':'الصرفيات')+'</b> — '+per;
-}
-/* الجدول المختصر: وصول — تاريخ — اسم — مبلغ */
-function renderTable(){
-  if(!(DB&&DB.records))return;
-  const q=state.q;
-  VIEW_ROWS=DB.records.filter(r=>r.type===state.cat&&inRange(r.date)&&
-    (!q||r.name.includes(q)||r.details.includes(q)||String(r.receipt).includes(q)||String(r.seq).includes(q)));
-  const tb=$('#tbody');
-  if(!VIEW_ROWS.length){tb.innerHTML='<tr style="cursor:default"><td colspan="4"><div class="empty"><div class="ei">📭</div><p>لا توجد سجلات في هذه الفترة</p><small>جرّب فترة أخرى أو ابحث بكلمة مختلفة</small></div></td></tr>';}
-  else tb.innerHTML=VIEW_ROWS.map((r,i)=>`
-    <tr class="${r.type==='in'?'in-row':'out-row'}" data-i="${i}" title="انقر لعرض التفاصيل الكاملة" style="animation-delay:${Math.min(i*22,400)}ms">
-      <td><span class="rcpt">${esc(r.receipt)||'—'}</span></td>
-      <td><div class="dcell"><b>${fmtD(r.date)}</b><small>${wdLong(r.date)}</small></div></td>
-      <td class="nm" title="${esc(r.name)}">${esc(r.name)}</td>
-      <td style="text-align:left"><span class="amt">${money(r.amount)}</span></td>
-    </tr>`).join('');
-  const total=VIEW_ROWS.reduce((s,r)=>s+r.amount,0);
-  $('#ftCount').textContent=VIEW_ROWS.length;
-  animNum($('#ftTotal'),total);
-  $('#capCount').textContent='عدد الوصلات: '+VIEW_ROWS.length;
-}
-function renderKPIs(){
-  const iT=sumWhere(r=>r.type==='in'&&r.date===TODAY),oT=sumWhere(r=>r.type==='out'&&r.date===TODAY);
-  const cur=ym(new Date());
-  const iM=sumWhere(r=>r.type==='in'&&r.date.startsWith(cur)),oM=sumWhere(r=>r.type==='out'&&r.date.startsWith(cur));
-  animNum($('#kInToday'),iT);animNum($('#kOutToday'),oT);
-  animNum($('#kNetToday'),iT-oT);animNum($('#kNetMonth'),iM-oM);
-}
-function renderChart(){
-  const box=$('#barsBox');box.innerHTML='';
-  const days=[];let max=1;
-  for(let i=6;i>=0;i--){const d=addDays(new Date(),-i),ds=dstr(d);
-    const inS=sumWhere(r=>r.type==='in'&&r.date===ds),outS=sumWhere(r=>r.type==='out'&&r.date===ds);
-    max=Math.max(max,inS,outS);days.push({d,ds,inS,outS});}
-  days.forEach(({d,ds,inS,outS})=>{
-    const col=document.createElement('div');col.className='day'+(ds===TODAY?' today':'');
-    col.innerHTML=`<div class="cols">
-      <div class="bar in" title="إيرادات: ${money(inS)}"></div>
-      <div class="bar out" title="صرفيات: ${money(outS)}"></div></div>
-      <span>${new Intl.DateTimeFormat('ar',{weekday:'short'}).format(d)}</span>`;
-    box.appendChild(col);
-    requestAnimationFrame(()=>{requestAnimationFrame(()=>{
-      col.querySelector('.bar.in').style.height=(inS/max*100)+'%';
-      col.querySelector('.bar.out').style.height=(outS/max*100)+'%';});});
-  });
-}
-
-/* ── مسح البيانات ── */
-$('#wipeBtn').onclick=()=>confirmBox('سيتم مسح جميع البيانات المحفوظة نهائيًا. هل أنت متأكد؟',()=>{
-  localStorage.removeItem(LS_DATA);DB=null;renderAll();showToast('تم مسح البيانات');});
-
-/* ── تأكيد عام ── */
-let cfCb=null;
-function confirmBox(msg,cb){$('#cfMsg').textContent=msg;cfCb=cb;$('#confirmOv').classList.add('show')}
-$('#cfYes').onclick=()=>{$('#confirmOv').classList.remove('show');if(cfCb)cfCb();cfCb=null};
-$('#cfNo').onclick=$('#cfX').onclick=()=>$('#confirmOv').classList.remove('show');
-
-/* ── تصدير وطباعة (كاملة التفاصيل) ── */
-function currentRows(){return VIEW_ROWS.length||state.q||true ? VIEW_ROWS : VIEW_ROWS}
-$('#csvBtn').onclick=()=>{
-  const rows=VIEW_ROWS;if(!rows.length){showToast('لا توجد بيانات للتصدير',1);return;}
-  let csv='\uFEFFت,الوصول,التاريخ,الاسم,التفاصيل,المبلغ ('+CUR+'),النوع,الورقة\n';
-  rows.forEach(r=>{csv+=[r.seq,r.receipt,fmtD(r.date),r.name,r.details,r.amount,r.type==='in'?'إيراد':'صرف',DB.meta.sheet||''].map(x=>'"'+String(x??'').replace(/"/g,'""')+'"').join(',')+'\n';});
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download=(state.cat==='in'?'ايرادات':'صرفيات')+'-'+state.range+'.csv';a.click();showToast('تم تصدير الملف ✓');
-};
-$('#printBtn').onclick=()=>{
-  if(!VIEW_ROWS.length){showToast('لا توجد بيانات للطباعة',1);return;}
-  $('#printHead').textContent='كشف '+(state.cat==='in'?'الإيرادات':'الصرفيات')+' — '+$('#capTitle').textContent.replace(/<[^>]+>/g,'')+' — الورقة: '+(DB.meta.sheet||'')+'  (المبالغ: '+CUR+')';
-  window.print();
-};
-
-/* ── بدء ── */
-if(session)enterApp();
-</script>
-</body>
-</html>
+    <div class="det-item"><small>التاريخ
