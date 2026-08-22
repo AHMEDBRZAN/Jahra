@@ -1,7 +1,7 @@
 /* ═══ إعدادات ═══ */
 var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
 var CUR='د.ع.';
-var REPO='USERNAME/REPO'; /* ← ضع مستودعك هنا مثل: ahmedbrzan/complex */
+var REPO='AHMEDBRZAN/Jahra'; /* ← ضع مستودعك هنا مثل: ahmedbrzan/complex */
 var LS_DATA='cmpx_v11',SS_SESS='cmpx_sess_v11',LS_LAST='cmpx_last_v11';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
