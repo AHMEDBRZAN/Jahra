@@ -3,7 +3,7 @@ var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
 var KNOWN=['حسابات شركة الجوهرة 2026.xlsm']; /* أضف هنا اسم أي ملف جديد ترفعه للمستودع */
-var VERSION='v2.2';
+var VERSION='v2.3';
 var LS_DATA='cmpx_v20',SS_SESS='cmpx_sess_v20',LS_LAST='cmpx_last_v20';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -29,6 +29,26 @@ tick();setInterval(tick,20000);
 (function(){var b=document.querySelector('.brand small');if(b)b.innerHTML+=' · <b style="color:var(--go)">'+VERSION+'</b>';
 var l=document.querySelector('.l-top p');if(l)l.textContent+=' · '+VERSION;
 var c=document.querySelector('.credits');if(c)c.textContent+=' · '+VERSION;})();
+/* ═══ نوافذ النظام المرتبة (تأكيد / تسمية / ملفات محلية) ═══ */
+document.body.insertAdjacentHTML('beforeend','<style>.btn-p{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:Changa;font-size:15px;font-weight:700;cursor:pointer}.btn-p.red{background:linear-gradient(135deg,#7e2d1c,#b2472f)}.btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}.pin{width:100%;padding:12px;border:1.5px solid var(--lin);border-radius:12px;font-size:15px;background:#fbfcf9}.pin:focus{outline:none;border-color:var(--g6)}</style>'+
+'<div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>⚠️ تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div><div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div><div class="m-foot"><button class="btn-c" id="cfNo">إلغاء</button><button class="btn-p red" id="cfYes">نعم، متأكد</button></div></div></div>'+
+'<div class="ov" id="prOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head"><span>✏️ تغيير اسم الملف</span><button class="m-x" id="prX">✕</button></div><div class="m-body"><input class="pin" id="prIn" placeholder="الاسم الجديد…"></div><div class="m-foot"><button class="btn-c" id="prNo">إلغاء</button><button class="btn-p" id="prYes">حفظ الاسم</button></div></div></div>'+
+'<div class="ov" id="locOv"><div class="modal"><div class="m-head"><span>📍 الملفات المحفوظة محليًا</span><button class="m-x" id="locX">✕</button></div><div class="m-body" id="locBody"></div></div></div>');
+$('#locBody').appendChild($('#locList'));$('#locList').style.maxHeight='52vh';
+var HB=document.createElement('button');HB.className='btn-mini';HB.id='locOpen';HB.textContent='📁 الملفات (0)';
+$('#saveBtn').parentNode.insertBefore(HB,$('#saveBtn'));
+$('#locOpen').onclick=function(){renderLocal();showOv($('#locOv'))};
+$('#locX').onclick=function(){hideOv($('#locOv'))};
+var cfCb=null;
+function askConfirm(msg,cb){$('#cfMsg').textContent=msg;cfCb=cb;showOv($('#cfOv'))}
+$('#cfYes').onclick=function(){hideOv($('#cfOv'));var f=cfCb;cfCb=null;if(f)f()};
+$('#cfNo').onclick=$('#cfX').onclick=function(){hideOv($('#cfOv'));cfCb=null};
+var prCb=null;
+function askPrompt(val,cb){$('#prIn').value=val;prCb=cb;showOv($('#prOv'));setTimeout(function(){$('#prIn').focus()},150)}
+$('#prYes').onclick=function(){var v=$('#prIn').value.trim();hideOv($('#prOv'));var f=prCb;prCb=null;if(f&&v)f(v)};
+$('#prNo').onclick=$('#prX').onclick=function(){hideOv($('#prOv'));prCb=null};
+$('#prIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#prYes').click()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideOv($('#cfOv'));hideOv($('#prOv'));hideOv($('#locOv'))}});
 /* ═══ حفظ محلي IndexedDB (الأساسي) ═══ */
 function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-save2',1);q.onupgradeneeded=function(e){e.target.result.createObjectStore('save',{keyPath:'name'})};q.onsuccess=function(e){idbDB=e.target.result;res()};q.onerror=function(){rej(q.error)}})}
 function putLocal(name,blob){return new Promise(function(res,rej){if(!idbDB)return rej();var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
@@ -37,6 +57,7 @@ function allLocal(){return new Promise(function(res,rej){var tx=idbDB.transactio
 function delLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').delete(name);tx.oncomplete=res;tx.onerror=rej})}
 function renderLocal(){if(!idbDB){$('#locList').innerHTML='<span class="tag">التخزين غير متاح</span>';return}
 allLocal().then(function(list){list.sort(function(a,b){return (b.ts||0)-(a.ts||0)});
+if($('#locOpen'))$('#locOpen').textContent='📁 الملفات ('+list.length+')';
 $('#locList').innerHTML=list.map(function(r){var d=r.ts?new Date(r.ts):null;
 return '<div class="fchip local"><b>📍 '+esc(r.name)+(d?' <span class="tag">('+fmtD(dstr(d))+')</span>':'')+'</b>'+
 '<span style="display:flex;gap:4px;flex-shrink:0">'+
@@ -45,20 +66,20 @@ return '<div class="fchip local"><b>📍 '+esc(r.name)+(d?' <span class="tag">('
 '<button class="btn-mini" data-del="'+esc(r.name)+'" title="حذف" style="color:var(--r6)">🗑</button>'+
 '</span></div>'}).join('')||'<span class="tag">لا حفظ محلي بعد</span>'})}
 function openLocal(name){getLocal(name).then(function(rec){if(!rec)return;rec.blob.arrayBuffer().then(function(buf){setActive(rec.name,buf,false)});localStorage.setItem(LS_LAST,name);$('#fs').textContent='📍 محمّل من الحفظ المحلي: '+name})}
-function renLocal(oldName){var nn=prompt('الاسم الجديد للملف:',oldName);if(!nn)return;nn=nn.trim();if(!nn||nn===oldName)return;
+function renLocal(oldName){askPrompt(oldName,function(nn){if(nn===oldName)return;
 getLocal(oldName).then(function(rec){if(!rec)return;
 putLocal(nn,rec.blob).then(function(){return delLocal(oldName)}).then(function(){
-if(ACTIVE&&ACTIVE.name===oldName){ACTIVE.name=nn;if(DB){DB.meta.file=nn;localStorage.setItem(LS_DATA,JSON.stringify(DB))}}
+if(ACTIVE&&ACTIVE.name===oldName){ACTIVE.name=nn;if(DB){DB.meta.file=nn;localStorage.setItem(LS_DATA,JSON.stringify(DB));if(typeof renderFileInfo==='function')renderFileInfo()}}
 if(localStorage.getItem(LS_LAST)===oldName)localStorage.setItem(LS_LAST,nn);
-renderLocal();showToast('✏️ صار الاسم: '+nn,false,1800)})})}
-function delLocalConfirm(name){if(!confirm('حذف الملف المحفوظ «'+name+'» نهائيًا؟'))return;
+renderLocal();showToast('✏️ صار الاسم: '+nn,false,1800)})})})}
+function delLocalConfirm(name){askConfirm('حذف الملف المحفوظ «'+name+'» نهائيًا؟',function(){
 delLocal(name).then(function(){
 if(localStorage.getItem(LS_LAST)===name)localStorage.removeItem(LS_LAST);
-renderLocal();showToast('🗑 تم الحذف',false,1500)})}
+renderLocal();showToast('🗑 تم الحذف',false,1500)})})}
 $('#saveBtn').onclick=function(){if(!ACTIVE){showToast('افتح ملفًا أولًا ثم اضغط 💾',1);return}
 putLocal(ACTIVE.name,ACTIVE.blob).then(function(){renderLocal();showToast('💾 أصبح الملف محليًا أساسيًا',false,1800)}).catch(function(){showToast('التخزين غير متاح',1)})};
 $('#locList').addEventListener('click',function(e){
-var b=e.target.closest('[data-loc]');if(b){openLocal(b.getAttribute('data-loc'));return}
+var b=e.target.closest('[data-loc]');if(b){hideOv($('#locOv'));openLocal(b.getAttribute('data-loc'));return}
 var r=e.target.closest('[data-ren]');if(r){renLocal(r.getAttribute('data-ren'));return}
 var d=e.target.closest('[data-del]');if(d){delLocalConfirm(d.getAttribute('data-del'));return}});
 /* ═══ GitHub — تحميل مباشر بدون API ═══ */
@@ -168,4 +189,7 @@ localStorage.setItem(LS_DATA,JSON.stringify(DB));
 CUR_SHEET=name;$('#sheetSel').value=name;
 showToast('✓ '+tx.length+' حركة من «'+name+'»',false,2400);
 renderAll()}
-/* نهاية app.js — v2.2 ✅ */
+/* ═══ مسح البيانات (بنافذة مرتبة) ═══ */
+$('#wipeBtn').onclick=function(){askConfirm('سيتم مسح البيانات المحفوظة نهائيًا. متابعة؟',function(){
+localStorage.removeItem(LS_DATA);DB=null;renderAll();showToast('تم المسح',false,1800)})};
+/* نهاية app.js — v2.3 ✅ */
