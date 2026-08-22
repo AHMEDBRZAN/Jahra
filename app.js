@@ -68,12 +68,7 @@ $$('.admin-only').forEach(function(el){el.style.display=session.role==='admin'?'
 renderAll();
 if(!(DB&&DB.tx&&DB.tx.length)){var last=localStorage.getItem(LS_LAST);if(last&&idbDB)openLocal(last)}}
 /* ═══ رفع ملف ═══ */
-var drop=$('#dropZone');
-drop.onclick=function(){$('#fileInput').click()};
-['dragover','dragenter'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add('over')})});
-['dragleave','drop'].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove('over')})});
-drop.addEventListener('drop',function(e){var f=e.dataTransfer.files[0];if(f)handleFile(f)});
-$('#fileInput').onchange=function(e){var f=e.target.files[0];if(f){handleFile(f);e.target.value=''}};
+
 function handleFile(file){if(!/\.(xlsm|xlsx|xls)$/i.test(file.name)){showToast('⚠️ اختر ملف إكسل',1);return}
 if(session.role!=='admin'){showToast('الرفع للمدير فقط',1);return}
 var rd=new FileReader();rd.onload=function(){setActive(file.name,rd.result,true)};rd.readAsArrayBuffer(file)}
