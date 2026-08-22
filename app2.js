@@ -1,4 +1,4 @@
-/* ═══ app2.js — العرض والتفاصيل (v2) ═══ */
+/* ═══ app2.js — العرض والتفاصيل (v2.2) ═══ */
 var GLBL={in:'الإيرادات',out:'الصرفيات',w:'سحب المبالغ'};
 /* ═══ الفترة ═══ */
 function seg(b){var p=b.parentElement;p.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on')}
@@ -15,11 +15,11 @@ function inP(d){if(!P.start||!P.end)return true;return d&&d>=P.start&&d<=P.end}
 function periodLabel(){return P.start?(P.start===P.end?'اليوم: '+fmtD(P.start):'من '+fmtD(P.start)+' إلى '+fmtD(P.end)):'كامل الفترة'}
 function filteredTx(){return (DB&&DB.tx?DB.tx:[]).filter(function(r){return inP(r.date)})}
 function sumG(g){return filteredTx().filter(function(r){return r.group===g}).reduce(function(s,r){return s+r.amount},0)}
-/* ═══ العرض ══ */
+/* ═══ العرض ═══ */
 function renderAll(){
 var has=DB&&DB.tx&&DB.tx.length;
 $('#heroCard').hidden=!has;$('#catsCard').hidden=!has;$('#noData').hidden=!!has;
-if(!has){$('#fileInfo').hidden=true;$('#noDataTxt').textContent=session&&session.role==='admin'?'لا توجد بيانات — ارفع ملف الإكسل أو افتحه من GitHub':'لا توجد بيانات — بانتظار الملف';return}
+if(!has){$('#fileInfo').hidden=true;$('#noDataTxt').textContent=session&&session.role==='admin'?'لا توجد بيانات — افتح الملف من GitHub أو من الحفظ المحلي':'لا توجد بيانات — بانتظار الملف';return}
 renderFileInfo();renderHero();renderCats();
 $('#plabel').textContent=periodLabel()}
 function renderFileInfo(){$('#fileInfo').hidden=false;
@@ -39,7 +39,8 @@ var tot=gt.reduce(function(s,r){return s+r.amount},0);
 var cats={};gt.forEach(function(r){var k=r.cat||'بدون صنف';cats[k]=(cats[k]||0)+r.amount});
 html+='<div class="cat-sec"><div class="cat-h '+g+'"><span>💠 '+GLBL[g]+'</span><span class="tot">'+money(tot)+' د.ع.</span></div>';
 Object.keys(cats).sort(function(a,b){return cats[b]-cats[a]}).forEach(function(k){
-html+='<div class="cat-row" data-g="'+g+'" data-cat="'+esc(k)+'"><span class="n">'+esc(k)+' <span class="tag">('+gt.filter(function(r){return (r.cat||'بدون صنف')===k}).length+' حركة)</span></span><span class="v '+g+'">'+money(cats[k])+'</span></div>'});
+var cnt=gt.filter(function(r){return (r.cat||'بدون صنف')===k}).length;
+html+='<div class="cat-row" data-g="'+g+'" data-cat="'+esc(k)+'"><span class="n">'+esc(k)+' <span class="tag">('+cnt+' حركة)</span></span><span class="v '+g+'">'+money(cats[k])+'</span></div>'});
 html+='</div>'});
 $('#catsBox').innerHTML=html||'<div class="empty"><div class="ei">📭</div><p>لا حركات في هذه الفترة</p></div>'}
 $('#catsBox').addEventListener('click',function(e){var r=e.target.closest('.cat-row');if(!r)return;openCat(r.getAttribute('data-g'),r.getAttribute('data-cat'))});
@@ -48,8 +49,8 @@ var CURCAT=null;
 function openCat(g,cat){CURCAT={g:g,cat:cat};
 var rows=filteredTx().filter(function(r){return r.group===g&&(r.cat||'بدون صنف')===cat});
 $('#catHead').style.background=g==='in'?'linear-gradient(135deg,#12503e,#177a54)':g==='out'?'linear-gradient(135deg,#7e2d1c,#b2472f)':'linear-gradient(135deg,#92610a,#c98f26)';
-$('#catTitle').textContent=(g==='in'?'💰 ':g==='out'?'💸 ':'🏦 ')+cat+' — '+rows.length+' حركة';
-$('#catBody').innerHTML=rows.map(function(r,i){return '<tr data-i="'+i+'"><td>'+esc(r.receipt||'—')+'</td><td class="dt-ltr" style="direction:ltr">'+fmtD(r.date)+'</td><td>'+esc(r.name||'—')+'</td><td>'+esc(r.details||'—')+'</td><td><span class="amt">'+money(r.amount)+'</span></td></tr>'}).join('');
+$('#catTitle').textContent=(g==='in'?'💰 ':g==='out'?'💸 ':' ')+cat+' — '+rows.length+' حركة';
+$('#catBody').innerHTML=rows.map(function(r,i){return '<tr data-i="'+i+'"><td>'+esc(r.receipt||'—')+'</td><td style="direction:ltr">'+fmtD(r.date)+'</td><td>'+esc(r.name||'—')+'</td><td>'+esc(r.details||'—')+'</td><td><span class="amt">'+money(r.amount)+'</span></td></tr>'}).join('');
 var tot=rows.reduce(function(s,r){return s+r.amount},0);
 $('#catTotal').textContent=money(tot)+' د.ع.';
 CURCAT.rows=rows;showOv($('#catOv'))}
@@ -87,10 +88,10 @@ $('#catBody').innerHTML=rows.map(function(r){return '<tr><td>'+esc(r.receipt||'�
 $('#catTotal').textContent=money(rows.reduce(function(s,r){return s+r.amount},0))+' د.ع.';
 $('#printHead').textContent='كشف حسابات المجمع — '+periodLabel()+' — المبالغ ('+CUR+')';
 showOv($('#catOv'));setTimeout(function(){window.print()},350)};
-/* ═══ مسح ═══ */
+/* ═══ مسح ══ */
 $('#wipeBtn').onclick=function(){if(!confirm('سيتم مسح البيانات المحفوظة نهائيًا. متابعة؟'))return;
 localStorage.removeItem(LS_DATA);DB=null;renderAll();showToast('تم المسح',false,1800)};
 /* ═══ بدء التشغيل ═══ */
 idb().then(function(){renderLocal()}).catch(function(){renderLocal()});
 if(session)enterApp();
-/* نهاية app2.js — v2 ✅ */
+/* نهاية app2.js — v2.2 ✅ */
