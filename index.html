@@ -3,15 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>نظام المجمع السكني — الإيرادات والصرفيات</title>
+<title>نظام المجمع السكني — الحسابات العامة</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rinH:#dcefe0;--rout:#fbeceb;--routH:#f6ddd9}
+:root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
 *{margin:0;padding:0;box-sizing:border-box}html{touch-action:manipulation}
 body{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;background:var(--pap);color:var(--ink);min-height:100vh}
 body.locked{overflow:hidden}button,input,select{font:inherit}
 @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes fade{from{opacity:0}}@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
+@keyframes pop{from{opacity:0;transform:translateY(24px) scale(.97)}}
 @keyframes shk{20%,60%{transform:translateX(5px)}40%,80%{transform:translateX(-5px)}}
 @keyframes prog{from{width:100%}to{width:0}}
 .login-wrap{min-height:100vh;display:grid;place-items:center;padding:24px}
@@ -31,7 +31,7 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .btn-login{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:14px;border-radius:12px;font-family:'Changa';font-size:17px;font-weight:700;cursor:pointer}
 .l-note{font-size:11.5px;color:var(--mut);text-align:center}
 .topbar{background:linear-gradient(135deg,var(--p9),var(--p8));color:#fff;border-bottom:3px solid var(--go)}
-.tb-in{max-width:1200px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.tb-in{max-width:760px;margin:auto;padding:14px 20px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .logo{width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,var(--go),var(--go6));display:grid;place-items:center;font-size:22px}
 .brand{display:flex;align-items:center;gap:12px}.brand h1{font-family:'Changa';font-size:20px;font-weight:800}.brand small{color:#bcd3c5;font-size:11.5px}
 .tb-side{margin-inline-start:auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
@@ -40,205 +40,168 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--go),var(--go6));display:grid;place-items:center;font-family:'Changa';font-weight:800;color:var(--p9)}
 .user-chip .nm{font-size:13px;font-weight:700}.role-b{font-size:10px;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--go);color:var(--p9)}
 .btn-out{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:12.5px;font-weight:600}.btn-out:hover{background:var(--r6)}
-.wrap{max-width:1200px;margin:auto;padding:20px}
-.file-card{background:#fff;border:1px solid var(--lin);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(15,50,38,.07);display:flex;gap:16px;align-items:stretch;flex-wrap:wrap;animation:rise .4s both}
-.drop{flex:1;min-width:240px;border:2px dashed #c9d6c4;border-radius:14px;padding:18px;text-align:center;cursor:pointer;background:#fbfcf8}
-.drop:hover,.drop.over{border-color:var(--g6);background:#f2f8f1}
-.drop b{font-family:'Changa';font-size:15px;color:var(--p8);display:block;margin-bottom:4px}.drop small{color:var(--mut);font-size:11.5px}
-.srcs{flex:1;min-width:250px;display:flex;flex-direction:column;gap:6px}
-.src-h{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:800;color:var(--mut)}
-.flist{display:flex;flex-direction:column;gap:5px;max-height:110px;overflow:auto}
+.wrap{max-width:760px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
+.card2{background:#fff;border:1px solid var(--lin);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(15,50,38,.07);animation:rise .4s both}
+.src-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;color:var(--mut);margin-bottom:8px}
+.flist{display:flex;flex-direction:column;gap:5px;max-height:120px;overflow:auto}
 .fchip{display:flex;justify-content:space-between;align-items:center;gap:6px;background:#fbfcf8;border:1px solid var(--lin);border-radius:10px;padding:6px 10px;font-size:12px}
 .fchip b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fchip.local{border-color:#79b79555}
 .tag{font-size:11px;color:var(--mut)}
-.file-info{display:flex;flex-direction:column;gap:6px;font-size:13px;min-width:220px}
-.file-info .fn{font-family:'Changa';font-weight:700;font-size:16px;color:var(--p8)}
-.fi-row{color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.fi-row b{color:var(--ink)}
-.sel-mini{padding:4px 8px;border:1.5px solid var(--lin);border-radius:8px;background:#fff;font-size:12px;font-weight:700;color:var(--p9)}
-.badge-n{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px}
-.badge-n.in{background:var(--rin);color:var(--g6)}.badge-n.out{background:var(--rout);color:var(--r6)}
-.mini-actions{display:flex;gap:8px;align-items:flex-start}
 .btn-mini{padding:8px 12px;border-radius:10px;border:1px solid var(--lin);background:#fff;cursor:pointer;font-size:11.5px;font-weight:700;color:var(--p8)}
 .btn-mini:hover{background:var(--p9);color:#fff}
 .btn-mini.gold{background:linear-gradient(135deg,var(--go),var(--go6));border:none;color:var(--p9)}
-.panel{background:#fff;border:1px solid var(--lin);border-radius:18px;box-shadow:0 14px 40px rgba(15,50,38,.08);overflow:hidden;margin-top:18px;animation:rise .5s both}
-.tabs{display:flex;gap:8px;padding:14px 16px 0;border-bottom:1px solid var(--lin);background:linear-gradient(#fdfdfb,#f7f9f4);flex-wrap:wrap}
-.tab{border:none;background:transparent;padding:10px 20px;border-radius:12px 12px 0 0;font-family:'Changa';font-weight:700;font-size:17px;color:var(--mut);cursor:pointer;display:flex;align-items:center;gap:9px}
-.tab .bd{font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;background:#eef1ea;color:#5c6b62;font-family:'IBM Plex Sans Arabic'}
-.tab.on-in{background:var(--p9);color:#fff}.tab.on-in .bd{background:var(--go);color:var(--p9)}
-.tab.on-out{background:var(--r7);color:#fff}.tab.on-out .bd{background:#ffd9cd;color:var(--r7)}
-.subbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--lin)}
-.pills{display:flex;gap:6px;flex-wrap:wrap}
-.pill{min-width:108px;padding:7px 10px;border-radius:12px;border:1px solid var(--lin);background:#fbfcf9;cursor:pointer;text-align:center}
-.pill small{display:block;font-size:11px;color:var(--mut);font-weight:700}
-.pill b{font-family:'Changa';font-size:15px;direction:ltr;display:inline-block}
-.pill.on{background:var(--p9);border-color:var(--p9)}.pill.on small{color:#cfe0d4}.pill.on b{color:var(--go)}
-.subbar.out .pill.on{background:var(--r7);border-color:var(--r7)}
-.subbar.out .pill.on small{color:#f6d7cd}.subbar.out .pill.on b{color:#ffd9a3}
-.monthpick,.daypick{display:none;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--mut)}
-.monthpick.show,.daypick.show{display:inline-flex}
-.monthpick input,.daypick input{padding:7px 8px;border:1.5px solid var(--lin);border-radius:10px}
-.daypick .cur{background:#fbfcf9;border:1.5px solid var(--go);border-radius:10px;padding:6px 10px;font-size:11px;color:#7c6320;cursor:pointer;font-weight:700}
-.tools{display:flex;align-items:center;gap:6px;margin-inline-start:auto;flex-wrap:nowrap}
-.search{position:relative;min-width:0}
-.search input{width:clamp(105px,13vw,160px);padding:9px 38px 9px 30px;border:1.5px solid var(--lin);border-radius:11px;font-size:12.5px;transition:width .25s}
-.search input:focus{width:clamp(160px,20vw,230px);outline:none;border-color:var(--g6)}
-.search .s-icon{position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);color:var(--mut);pointer-events:none}
-.search .s-clear{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);border:none;background:none;color:var(--mut);cursor:pointer;padding:3px 6px;font-size:13px;display:none}
-.search .s-clear.show{display:block}
-.search input::-webkit-search-cancel-button{-webkit-appearance:none}
-.iconbtn{width:38px;height:38px;border-radius:11px;border:1px solid var(--lin);background:#fff;color:#41504a;display:grid;place-items:center;cursor:pointer;flex-shrink:0}
+.drop{border:2px dashed #c9d6c4;border-radius:14px;padding:14px;text-align:center;cursor:pointer;background:#fbfcf8;margin-bottom:10px}
+.drop:hover,.drop.over{border-color:var(--g6);background:#f2f8f1}
+.drop b{font-family:'Changa';font-size:14px;color:var(--p8);display:block;margin-bottom:2px}.drop small{color:var(--mut);font-size:11px}
+.file-info{margin-top:10px;border-top:1px dashed var(--lin);padding-top:10px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
+.file-info .fn{font-family:'Changa';font-weight:700;font-size:15px;color:var(--p8)}
+.fi-row{color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.fi-row b{color:var(--ink)}
+.sel-mini{padding:3px 6px;border:1.5px solid var(--lin);border-radius:8px;background:#fff;font-size:12px;font-weight:700}
+.seg{display:flex;background:#f0f3ec;border:1px solid var(--lin);border-radius:14px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;color:var(--mut);padding:10px 4px;border-radius:11px;font-weight:800;font-size:12px;cursor:pointer}
+.seg button.on{background:linear-gradient(135deg,var(--g6),#2fae7d);color:#fff}
+.dates{display:none;gap:8px;margin-top:10px;align-items:center;font-size:12px;color:var(--mut);flex-wrap:wrap}
+.dates.show{display:flex}
+.dates input{flex:1;min-width:120px;background:#fff;border:1.5px solid var(--lin);border-radius:10px;padding:8px;font-size:12px}
+.tools{display:flex;gap:6px}
+.iconbtn{width:36px;height:36px;border-radius:10px;border:1px solid var(--lin);background:#fff;color:#41504a;display:grid;place-items:center;cursor:pointer}
 .iconbtn:hover{border-color:var(--g6);color:var(--g6)}
-.caption{padding:12px 18px 0;font-size:13px;color:var(--mut);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
-.caption b{color:var(--p8);font-family:'Changa';font-size:15px}
-.caption .dt{direction:ltr;display:inline-block;unicode-bidi:embed}
-.hint{font-size:11px;color:var(--mut);background:#f4f6ef;border:1px dashed var(--lin);padding:3px 10px;border-radius:99px}
-.table-wrap{margin:10px 14px 14px;border:1px solid var(--lin);border-radius:12px;overflow:hidden;background:#fff}
-table{width:100%;border-collapse:collapse;table-layout:fixed}
-thead th{background:var(--p9);color:#e8efe9;font-size:12.5px;font-weight:600;padding:12px;text-align:center;white-space:nowrap;border-bottom:2px solid var(--go);border-inline-end:1px solid rgba(255,255,255,.18)}
+.hero{background:linear-gradient(160deg,#e7f4ec,#fdf6e3);border:1px solid #79b79566;border-radius:18px;padding:18px;text-align:center;animation:rise .4s both}
+.hero .lbl{font-size:12px;color:var(--mut);font-weight:700}
+.hero .net{font-family:'Changa';font-size:30px;font-weight:800;color:var(--g6);direction:ltr;margin:4px 0}
+.hero .chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.chip{background:#fff;border:1px solid var(--lin);border-radius:12px;padding:7px 10px;font-size:11px;color:var(--mut)}
+.chip b{color:var(--ink);direction:ltr;display:block;font-size:12.5px}
+.cat-sec{margin-top:12px}
+.cat-h{display:flex;justify-content:space-between;align-items:center;font-family:'Changa';font-weight:800;font-size:15px;padding:10px 12px;border-radius:12px}
+.cat-h .tot{direction:ltr;font-size:14px}
+.cat-h.in{background:var(--rin);color:var(--g6)}
+.cat-h.out{background:var(--rout);color:var(--r6)}
+.cat-h.w{background:var(--wout);color:var(--go6)}
+.cat-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 10px;border-bottom:1px dashed var(--lin);font-size:13px;cursor:pointer;border-radius:8px}
+.cat-row:hover{background:#f6f9f4}
+.cat-row:last-child{border-bottom:none}
+.cat-row .n{font-weight:600}
+.cat-row .v{font-family:'Changa';font-weight:800;direction:ltr;white-space:nowrap}
+.cat-row .v.in{color:var(--g6)}.cat-row .v.out{color:var(--r6)}.cat-row .v.w{color:var(--go6)}
+.empty{padding:40px 20px;text-align:center;color:var(--mut)}
+.empty .ei{font-size:40px;margin-bottom:8px}.empty p{font-weight:600}
+.credits{margin:6px 0 26px;text-align:center;font-size:11.5px;color:var(--mut)}
+.ov{position:fixed;inset:0;background:rgba(7,22,16,.6);display:none;place-items:center;z-index:50;padding:14px;overflow:auto;overscroll-behavior:contain}
+.ov.show{display:grid}
+.modal{width:min(640px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s}
+.m-head{padding:13px 18px;color:#fff;font-family:'Changa';font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--p8),#177a54);display:flex;justify-content:space-between;align-items:center;gap:10px}
+.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer}
+.m-body{padding:14px;max-height:72vh;overflow:auto}
+.tw{border:1px solid var(--lin);border-radius:12px;overflow:auto;max-height:58vh}
+table{width:100%;border-collapse:collapse;table-layout:fixed;min-width:520px}
+thead th{background:var(--p9);color:#e8efe9;font-size:11.5px;font-weight:600;padding:10px;text-align:center;border-inline-end:1px solid rgba(255,255,255,.18)}
 thead th:last-child{border-inline-end:none}
-tbody td{padding:11px 12px;font-size:14px;text-align:center;vertical-align:middle;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border-bottom:1px solid #cfd9cb;border-inline-end:1px solid #cfd9cb}
+tbody td{padding:9px 8px;font-size:12.5px;text-align:center;border-bottom:1px solid #cfd9cb;border-inline-end:1px solid #cfd9cb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 tbody td:last-child{border-inline-end:none}
-tbody tr{animation:rise .35s both;cursor:pointer}
-tr.in-row{background:var(--rin)}tr.in-row:hover{background:var(--rinH);box-shadow:inset 3px 0 0 var(--g6)}
-tr.out-row{background:var(--rout)}tr.out-row:hover{background:var(--routH);box-shadow:inset 3px 0 0 var(--r6)}
-tr:last-child td{border-bottom:none}
-.rcpt{font-family:'Changa';background:#fff;border:1px dashed #cbb878;color:#7c6320;padding:2px 10px;border-radius:8px;font-size:13px;font-weight:700}
-tr.out-row .rcpt{border-color:#e0a79b;color:#8f3524}
-td.nm{font-weight:600}
-.amt{font-family:'Changa';font-weight:800;font-size:15px;direction:ltr;display:inline-block;white-space:nowrap}
-.amt .cur{font-size:11px;font-weight:600;color:var(--mut);margin-inline-start:4px}
-tr.in-row .amt{color:var(--g6)}tr.out-row .amt{color:var(--r6)}
-tfoot td{background:#f4f6ef;font-weight:700;padding:14px 12px;border-top:2px solid var(--p9);font-size:13px;color:var(--p8);text-align:center;border-inline-end:1px solid var(--lin)}
-tfoot td:last-child{border-inline-end:none}
-tfoot .amt{font-size:clamp(13px,2.2vw,18px);word-break:break-all}
-tfoot .amt .cur{font-size:12px;font-weight:700;color:var(--p8)}
-tfoot .ft-lbl{font-size:12px;color:var(--mut);font-weight:600}
-.empty{padding:50px 20px;text-align:center;color:var(--mut)}
-.empty .ei{font-size:44px;margin-bottom:10px}.empty p{font-weight:600}.empty small{display:block;margin-top:6px;font-size:12px}
-mark{background:var(--go1);color:var(--p9);padding:0 3px;border-radius:3px;font-weight:700}
+tbody tr{cursor:pointer}
+tbody tr:nth-child(odd){background:#fbfcf9}
+tbody tr:hover{background:var(--rin)}
+.amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block}
+tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;font-size:12.5px}
 .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .det-item{background:#f7f9f4;border:1px solid var(--lin);border-radius:10px;padding:10px 12px;min-width:0}
 .det-item.full{grid-column:1/-1}
 .det-item small{display:block;font-size:11px;color:var(--mut);font-weight:700;margin-bottom:4px}
-.det-item b{font-size:14.5px;word-break:break-word}
+.det-item b{font-size:14px;word-break:break-word}
 .det-item .dt-ltr{direction:ltr;display:inline-block}
-.det-item .amt-big{font-family:'Changa';font-size:24px;font-weight:800}
-.det-item .amt-big .cur{font-size:13px;color:var(--mut);margin-inline-start:4px}
-.det-item p{font-size:13.5px;line-height:1.9;word-break:break-word;white-space:normal}
-.credits{margin:20px 0 30px;text-align:center;font-size:12px;color:var(--mut)}
-.ov{position:fixed;inset:0;background:rgba(7,22,16,.6);display:none;place-items:center;z-index:50;padding:16px;overflow:auto;overscroll-behavior:contain}
-.ov.show{display:grid;animation:fade .2s}
-.modal{width:min(600px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s}
-.m-head{padding:14px 20px;color:#fff;font-family:'Changa';font-size:17px;font-weight:700;background:linear-gradient(135deg,var(--p8),#177a54);display:flex;justify-content:space-between;align-items:center;gap:10px}
-.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer}
-.m-body{padding:18px 20px;display:grid;gap:14px;max-height:70vh;overflow:auto}
-.m-foot{display:flex;gap:10px;justify-content:flex-end;padding:0 20px 20px}
-.btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}
+.det-item .amt-big{font-family:'Changa';font-size:22px;font-weight:800}
+.det-item p{font-size:13px;line-height:1.9;word-break:break-word;white-space:normal}
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--p9);color:#fff;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.28);border-inline-start:4px solid var(--go);z-index:99;transition:.35s;max-width:90vw;opacity:0}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .toast.err{border-inline-start-color:var(--r6)}
 .toast .prog{position:absolute;bottom:0;left:0;height:3px;background:var(--go);width:0}
 .toast.show .prog{animation:prog linear forwards}
-.toast.err .prog{background:var(--r6)}
 #printHead{display:none}
-@media print{body{background:#fff}.topbar,.subbar,.tabs,.credits,.file-card,.no-print,.hint{display:none!important}.panel{box-shadow:none;border:none;margin:0}.table-wrap{margin:0;border:none}thead th{background:#fff;color:#000;border-bottom:2px solid #000;border-inline-end:1px solid #999}tbody td{border-bottom:1px solid #bbb;border-inline-end:1px solid #bbb}tbody tr{animation:none;cursor:default}#printHead{display:block;font-family:'Changa';font-size:20px;font-weight:800;margin-bottom:12px}}
-@media(max-width:900px){th.c-rcpt{width:110px}th.c-amt{width:150px}}
-@media(max-width:640px){.tools{width:100%;flex-wrap:wrap}.search{flex:1}.search input,.search input:focus{width:100%}}
-@media(max-width:560px){th.c-rcpt{width:90px}th.c-amt{width:130px}.det-grid{grid-template-columns:1fr}.pill{min-width:96px}.field input{font-size:16px}}
+@media print{body{background:#fff}.topbar,.card2,.credits,.no-print{display:none!important}.ov{position:static;background:none;display:block!important;padding:0}.modal{width:100%;box-shadow:none}.m-x{display:none}.tw{max-height:none;overflow:visible;border:none}thead th{background:#fff;color:#000;border-bottom:2px solid #000}#printHead{display:block;font-family:'Changa';font-size:18px;font-weight:800;margin-bottom:10px}}
+@media(max-width:560px){.det-grid{grid-template-columns:1fr}.field input{font-size:16px}}
 </style>
 </head>
 <body>
 <section class="login-wrap" id="loginView">
 <div class="login-card" id="loginCard">
-<div class="l-top"><div class="lg">🏢</div><h1>نظام المجمع السكني</h1><p>لوحة الإيرادات والصرفيات — الدينار العراقي</p></div>
+<div class="l-top"><div class="lg">🏢</div><h1>نظام المجمع السكني</h1><p>الحسابات العامة — الدينار العراقي</p></div>
 <form class="l-form" id="loginForm" autocomplete="off">
 <div class="field"><label>اسم المستخدم</label><input type="text" id="lu" required></div>
 <div class="field"><label>كلمة المرور</label><div class="pw-wrap"><input type="password" id="lp" required><button type="button" class="eye" id="eyeBtn" title="إظهار">👁</button></div></div>
 <div class="err" id="loginErr">اسم المستخدم أو كلمة المرور غير صحيحة</div>
 <button type="submit" class="btn-login">دخول النظام ←</button>
-<p class="l-note">البيانات تُحفظ محليًا على هذا الجهاز فقط</p>
+<p class="l-note">البيانات تُحفظ محليًا على هذا الجهاز</p>
 </form>
 </div>
 </section>
 <div id="appView" hidden>
 <header class="topbar"><div class="tb-in">
-<div class="brand"><div class="logo">🏢</div><div><h1>نظام المجمع السكني</h1><small>لوحة الإيرادات والصرفيات — (د.ع.)</small></div></div>
+<div class="brand"><div class="logo">🏢</div><div><h1>نظام المجمع السكني</h1><small>الحسابات العامة — (د.ع.)</small></div></div>
 <div class="tb-side">
 <div class="clock"><b id="dateNow"></b><span id="clockNow"></span></div>
 <div class="user-chip"><div class="avatar" id="uAvatar">ح</div><div class="nm" id="uName">—</div><span class="role-b" id="uRole">مدير</span></div>
-<button class="btn-out" id="logoutBtn">تسجيل خروج</button>
+<button class="btn-out" id="logoutBtn">خروج</button>
 </div>
 </div></header>
 <main class="wrap">
-<section class="file-card">
-<div class="drop admin-only" id="dropZone"><b id="dropTitle">📂 اسحب ملف الإكسل أو اضغط للاختيار</b><small>.xlsm / .xlsx — قراءة عميقة لورقة «رصيد قاسمة»</small></div>
-<div class="srcs">
+<section class="card2">
+<div class="drop admin-only" id="dropZone"><b>📂 اسحب ملف الإكسل أو اضغط للاختيار</b><small>.xlsm / .xlsx — قراءة ورقة Company accounts</small></div>
 <div class="src-h"><span>🌐 ملفات GitHub</span><button class="btn-mini" id="gitBtn">🔄 تحديث</button></div>
 <div class="flist" id="gitList"><span class="tag">—</span></div>
-<div class="src-h"><span>📍 محفوظ محليًا</span><button class="btn-mini gold" id="saveBtn">💾 حفظ الحالي</button></div>
+<div class="src-h" style="margin-top:10px"><span>📍 محفوظ محليًا (الأساسي)</span><button class="btn-mini gold" id="saveBtn">💾 حفظ الحالي</button></div>
 <div class="flist" id="locList"><span class="tag">—</span></div>
-</div>
+<div class="tag" id="fs" style="margin-top:8px"></div>
 <div class="file-info" id="fileInfo" hidden>
 <div class="fn">📊 <span id="fiName">—</span></div>
 <div class="fi-row">الورقة: <select id="sheetSel" class="sel-mini"></select></div>
-<div class="fi-row">السجلات: <b id="fiCount">0</b><span class="badge-n in" id="fiIn"></span><span class="badge-n out" id="fiOut"></span></div>
-<div class="fi-row">آخر تحديث: <b id="fiDate">—</b> <span id="fiBy"></span></div>
+<div class="fi-row">الحركات: <b id="fiCount">0</b> · آخر تحديث: <b id="fiDate">—</b></div>
 </div>
-<div class="mini-actions"><button class="btn-mini admin-only" id="wipeBtn" style="color:var(--r6)">🗑 مسح</button></div>
+<div style="margin-top:10px"><button class="btn-mini admin-only" id="wipeBtn" style="color:var(--r6)">🗑 مسح البيانات</button></div>
 </section>
-<section class="panel" id="noData" style="margin-top:18px" hidden>
-<div class="empty"><div class="ei">🗂️</div><p id="noDataTxt"></p>
-<small>هيكل الورقة: ت — الوصول — التاريخ — الاسم — التفاصيل — مبلغ الصرف — مبلغ الإيراد</small></div>
+<section class="card2">
+<div class="src-h"><span>🗓️ الفترة</span>
+<div class="tools no-print">
+<button class="iconbtn" id="csvBtn" title="تصدير CSV">⬇</button>
+<button class="iconbtn" id="printBtn" title="طباعة">🖨</button>
+</div></div>
+<div class="seg">
+<button id="segAll" class="on">الكل</button>
+<button id="segDay">📅 يوم محدد</button>
+<button id="segRange">📆 بين فترتين</button>
+</div>
+<div class="dates" id="dayBox">اليوم <input type="date" id="dDay"></div>
+<div class="dates" id="rangeBox">من <input type="date" id="d1"> إلى <input type="date" id="d2"></div>
+<div class="tag" id="plabel" style="margin-top:8px"></div>
 </section>
-<div id="dashArea" hidden>
-<section class="panel" style="margin-top:0">
-<div class="tabs">
-<button class="tab" id="tabIn">💰 الإيرادات <span class="bd" id="tbIn"></span></button>
-<button class="tab" id="tabOut">💸 الصرفيات <span class="bd" id="tbOut"></span></button>
+<section class="hero" id="heroCard" hidden>
+<div class="lbl" id="heroLbl">الصافي — كامل الفترة</div>
+<div class="net" id="heroNet">0</div>
+<div class="chips">
+<span class="chip">الإيرادات<b id="chipIn">0</b></span>
+<span class="chip">الصرفيات<b id="chipOut">0</b></span>
+<span class="chip">سحب المبالغ<b id="chipW">0</b></span>
 </div>
-<div class="subbar" id="subbar">
-<div class="pills">
-<button class="pill" data-range="today"><small>اليوم</small><b id="pToday">0</b></button>
-<button class="pill" data-range="day"><small>يوم محدد 📅</small><b id="pDay">0</b></button>
-<button class="pill" data-range="week"><small>الأسبوع</small><b id="pWeek">0</b></button>
-<button class="pill" data-range="month"><small>الشهر</small><b id="pMonth">0</b></button>
-</div>
-<label class="daypick" id="dayPick">📅 <input type="date" id="dayInput"><button class="cur" id="dayToday">اليوم</button></label>
-<label class="monthpick" id="monthPick">📅 <input type="month" id="monthInput"></label>
-<div class="tools">
-<div class="search">
-<svg class="s-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg>
-<input type="search" id="searchIn" placeholder="بحث ذكي…" inputmode="search" enterkeyhint="search" autocomplete="off" spellcheck="false">
-<button class="s-clear" id="searchClear" title="مسح">✕</button>
-</div>
-<button class="iconbtn no-print" id="csvBtn" title="تصدير CSV">⬇</button>
-<button class="iconbtn no-print" id="printBtn" title="طباعة">🖨</button>
-</div>
-</div>
-<div class="caption">
-<span id="capTitle"><b>—</b></span>
-<span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<span class="hint no-print">🖱 انقر على أي صف للتفاصيل</span>
-<span id="capCount"></span></span>
-</div>
-<div class="table-wrap"><table>
-<thead><tr><th class="c-rcpt">الوصول</th><th>الاسم</th><th class="c-amt" id="thAmt"></th></tr></thead>
-<tbody id="tbody"></tbody>
-<tfoot><tr>
-<td colspan="2"><span class="ft-lbl">المجموع</span> — <span id="ftCount">0</span> سجل</td>
-<td><span class="amt" id="ftTotal">0<span class="cur">د.ع.</span></span></td>
-</tr></tfoot>
-</table></div>
 </section>
-</div>
-<p class="credits">نظام عرض التقارير — نسق التاريخ: يوم-شهر-سنة</p>
+<section class="card2" id="catsCard" hidden><div id="catsBox"></div></section>
+<section class="card2" id="noData" hidden>
+<div class="empty"><div class="ei">🗂️</div><p id="noDataTxt">لا توجد بيانات — ارفع ملف الإكسل أو افتحه من GitHub</p></div>
+</section>
+<p class="credits">نظام عرض التقارير · نسق التاريخ: يوم-شهر-سنة</p>
 </main>
 </div>
+<div class="ov" id="catOv"><div class="modal">
+<div class="m-head" id="catHead"><span id="catTitle"></span><button class="m-x" id="catX">✕</button></div>
+<div class="m-body"><div class="tw"><table>
+<thead><tr><th style="width:70px">الوصل</th><th style="width:95px">التاريخ</th><th>الاسم</th><th>التفاصيل</th><th style="width:110px">المبلغ</th></tr></thead>
+<tbody id="catBody"></tbody>
+<tfoot><tr><td colspan="4">المجموع</td><td><span class="amt" id="catTotal">0</span></td></tr></tfoot>
+</table></div></div>
+</div></div>
 <div class="ov" id="detOv"><div class="modal" style="width:min(480px,100%)">
 <div class="m-head" id="detHead"><span id="detTitle"></span><button class="m-x" id="detX">✕</button></div>
 <div class="m-body"><div class="det-grid" id="detBody"></div></div>
-<div class="m-foot"><button class="btn-c" id="detClose">إغلاق</button></div>
 </div></div>
 <div class="toast" id="toast"><span id="toastMsg"></span><div class="prog"></div></div>
 <input type="file" id="fileInput" hidden accept=".xlsm,.xlsx,.xls">
