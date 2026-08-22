@@ -2,7 +2,8 @@
 var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
-var VERSION='v2.1';
+var KNOWN=['حسابات شركة الجوهرة 2026.xlsm']; /* أضف هنا اسم أي ملف جديد ترفعه للمستودع */
+var VERSION='v2.2';
 var LS_DATA='cmpx_v20',SS_SESS='cmpx_sess_v20',LS_LAST='cmpx_last_v20';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -33,13 +34,33 @@ function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-sav
 function putLocal(name,blob){return new Promise(function(res,rej){if(!idbDB)return rej();var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
 function getLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readonly');var q=tx.objectStore('save').get(name);q.onsuccess=function(){res(q.result)};q.onerror=rej})}
 function allLocal(){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readonly');var q=tx.objectStore('save').getAll();q.onsuccess=function(){res(q.result||[])};q.onerror=rej})}
+function delLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').delete(name);tx.oncomplete=res;tx.onerror=rej})}
 function renderLocal(){if(!idbDB){$('#locList').innerHTML='<span class="tag">التخزين غير متاح</span>';return}
 allLocal().then(function(list){list.sort(function(a,b){return (b.ts||0)-(a.ts||0)});
-$('#locList').innerHTML=list.map(function(r){return '<div class="fchip local"><b>📍 '+esc(r.name)+'</b><button class="btn-mini" data-loc="'+esc(r.name)+'">فتح</button></div>'}).join('')||'<span class="tag">لا حفظ محلي بعد</span>'})}
+$('#locList').innerHTML=list.map(function(r){var d=r.ts?new Date(r.ts):null;
+return '<div class="fchip local"><b>📍 '+esc(r.name)+(d?' <span class="tag">('+fmtD(dstr(d))+')</span>':'')+'</b>'+
+'<span style="display:flex;gap:4px;flex-shrink:0">'+
+'<button class="btn-mini" data-loc="'+esc(r.name)+'">فتح</button>'+
+'<button class="btn-mini" data-ren="'+esc(r.name)+'" title="تغيير الاسم">✏️</button>'+
+'<button class="btn-mini" data-del="'+esc(r.name)+'" title="حذف" style="color:var(--r6)">🗑</button>'+
+'</span></div>'}).join('')||'<span class="tag">لا حفظ محلي بعد</span>'})}
 function openLocal(name){getLocal(name).then(function(rec){if(!rec)return;rec.blob.arrayBuffer().then(function(buf){setActive(rec.name,buf,false)});localStorage.setItem(LS_LAST,name);$('#fs').textContent='📍 محمّل من الحفظ المحلي: '+name})}
+function renLocal(oldName){var nn=prompt('الاسم الجديد للملف:',oldName);if(!nn)return;nn=nn.trim();if(!nn||nn===oldName)return;
+getLocal(oldName).then(function(rec){if(!rec)return;
+putLocal(nn,rec.blob).then(function(){return delLocal(oldName)}).then(function(){
+if(ACTIVE&&ACTIVE.name===oldName){ACTIVE.name=nn;if(DB){DB.meta.file=nn;localStorage.setItem(LS_DATA,JSON.stringify(DB))}}
+if(localStorage.getItem(LS_LAST)===oldName)localStorage.setItem(LS_LAST,nn);
+renderLocal();showToast('✏️ صار الاسم: '+nn,false,1800)})})}
+function delLocalConfirm(name){if(!confirm('حذف الملف المحفوظ «'+name+'» نهائيًا؟'))return;
+delLocal(name).then(function(){
+if(localStorage.getItem(LS_LAST)===name)localStorage.removeItem(LS_LAST);
+renderLocal();showToast('🗑 تم الحذف',false,1500)})}
 $('#saveBtn').onclick=function(){if(!ACTIVE){showToast('افتح ملفًا أولًا ثم اضغط 💾',1);return}
 putLocal(ACTIVE.name,ACTIVE.blob).then(function(){renderLocal();showToast('💾 أصبح الملف محليًا أساسيًا',false,1800)}).catch(function(){showToast('التخزين غير متاح',1)})};
-$('#locList').addEventListener('click',function(e){var b=e.target.closest('[data-loc]');if(b)openLocal(b.getAttribute('data-loc'))});
+$('#locList').addEventListener('click',function(e){
+var b=e.target.closest('[data-loc]');if(b){openLocal(b.getAttribute('data-loc'));return}
+var r=e.target.closest('[data-ren]');if(r){renLocal(r.getAttribute('data-ren'));return}
+var d=e.target.closest('[data-del]');if(d){delLocalConfirm(d.getAttribute('data-del'));return}});
 /* ═══ GitHub — تحميل مباشر بدون API ═══ */
 function loadByName(name,upd){var parts=REPO.split('/');showToast('⏳ تحميل '+name+'…',false,1500);
 function tb(b){return fetch('https://raw.githubusercontent.com/'+parts[0]+'/'+parts[1]+'/'+b+'/'+encodeURIComponent(name)).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()})}
@@ -55,8 +76,8 @@ GITFILES=list.filter(function(x){return /\.(xlsx|xlsm|xls)$/i.test(x.name)});
 localStorage.setItem('cmpx_gitlist',JSON.stringify(GITFILES.map(function(f){return f.name})));
 renderGit()}).catch(function(e){
 var c=JSON.parse(localStorage.getItem('cmpx_gitlist')||'[]');
-if(c.length){GITFILES=c.map(function(n){return{name:n}});renderGit();showToast('⚠️ تعذّر جلب القائمة — عُرضت آخر قائمة محفوظة',1,2600)}
-else $('#gitList').innerHTML='<span class="tag">تعذّر جلب قائمة GitHub ('+(e.message||'')+') — زر تحديث ما زال يعمل للملف الحالي</span>'})}
+if(c.length){GITFILES=c.map(function(n){return{name:n}});renderGit()}
+else {GITFILES=KNOWN.map(function(n){return{name:n}});renderGit()}})}
 function renderGit(){$('#gitList').innerHTML=GITFILES.map(function(f,i){return '<div class="fchip"><b>📄 '+esc(f.name)+'</b><button class="btn-mini" data-git="'+i+'">فتح</button></div>'}).join('')||'<span class="tag">لا ملفات إكسل</span>'}
 function openGit(i,upd){if(GITFILES[i])loadByName(GITFILES[i].name,upd)}
 $('#gitBtn').onclick=refreshGit;
@@ -147,4 +168,4 @@ localStorage.setItem(LS_DATA,JSON.stringify(DB));
 CUR_SHEET=name;$('#sheetSel').value=name;
 showToast('✓ '+tx.length+' حركة من «'+name+'»',false,2400);
 renderAll()}
-/* نهاية app.js — v2.1 ✅ */
+/* نهاية app.js — v2.2 ✅ */
