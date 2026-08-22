@@ -2,7 +2,7 @@
 var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
-var VERSION='v2';
+var VERSION='v2.1';
 var LS_DATA='cmpx_v20',SS_SESS='cmpx_sess_v20',LS_LAST='cmpx_last_v20';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -40,18 +40,25 @@ function openLocal(name){getLocal(name).then(function(rec){if(!rec)return;rec.bl
 $('#saveBtn').onclick=function(){if(!ACTIVE){showToast('افتح ملفًا أولًا ثم اضغط 💾',1);return}
 putLocal(ACTIVE.name,ACTIVE.blob).then(function(){renderLocal();showToast('💾 أصبح الملف محليًا أساسيًا',false,1800)}).catch(function(){showToast('التخزين غير متاح',1)})};
 $('#locList').addEventListener('click',function(e){var b=e.target.closest('[data-loc]');if(b)openLocal(b.getAttribute('data-loc'))});
-/* ═══ GitHub + تحديث يجلب ويحفظ ═══ */
-function refreshGit(){if(REPO.indexOf('USERNAME')===0){$('#gitList').innerHTML='<span class="tag">ضع مستودعك في الكود</span>';return}
+/* ═══ GitHub — تحميل مباشر بدون API ═══ */
+function loadByName(name,upd){var parts=REPO.split('/');showToast('⏳ تحميل '+name+'…',false,1500);
+function tb(b){return fetch('https://raw.githubusercontent.com/'+parts[0]+'/'+parts[1]+'/'+b+'/'+encodeURIComponent(name)).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()})}
+tb('main').catch(function(){return tb('master')}).then(function(buf){
+setActive(name,buf,true);showToast(upd?'🔄 تم التحديث والحفظ محليًا ✓':'✅ فُتح وحُفظ محليًا',false,2200)})
+.catch(function(){showToast('فشل التحميل المباشر — تأكد أن الملف بالمستودع',1)})}
+function refreshGit(){
+if(ACTIVE)loadByName(ACTIVE.name,true);
+if(REPO.indexOf('USERNAME')===0){$('#gitList').innerHTML='<span class="tag">ضع مستودعك في الكود</span>';return}
 $('#gitList').innerHTML='<span class="tag">⏳ جلب القائمة…</span>';
-fetch('https://api.github.com/repos/'+REPO+'/contents/?t='+Date.now()).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
+fetch('https://api.github.com/repos/'+REPO+'/contents/?t='+Date.now()).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(list){
 GITFILES=list.filter(function(x){return /\.(xlsx|xlsm|xls)$/i.test(x.name)});
-$('#gitList').innerHTML=GITFILES.map(function(f,i){return '<div class="fchip"><b>📄 '+esc(f.name)+'</b><button class="btn-mini" data-git="'+i+'">فتح</button></div>'}).join('')||'<span class="tag">لا ملفات إكسل</span>';
-if(ACTIVE){for(var i=0;i<GITFILES.length;i++){if(GITFILES[i].name===ACTIVE.name){openGit(i,true);return}}}})
-.catch(function(){$('#gitList').innerHTML='<span class="tag">تعذّر جلب قائمة GitHub</span>'})}
-function openGit(i,upd){var f=GITFILES[i];if(!f)return;showToast('⏳ تحميل '+f.name+'…',false,1500);
-fetch(f.download_url).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()}).then(function(buf){
-setActive(f.name,buf,true);showToast(upd?'🔄 تم التحديث والحفظ محليًا ✓':'✅ فُتح من GitHub وحُفظ محليًا',false,2200)})
-.catch(function(){showToast('فشل التحميل من GitHub',1)})}
+localStorage.setItem('cmpx_gitlist',JSON.stringify(GITFILES.map(function(f){return f.name})));
+renderGit()}).catch(function(e){
+var c=JSON.parse(localStorage.getItem('cmpx_gitlist')||'[]');
+if(c.length){GITFILES=c.map(function(n){return{name:n}});renderGit();showToast('⚠️ تعذّر جلب القائمة — عُرضت آخر قائمة محفوظة',1,2600)}
+else $('#gitList').innerHTML='<span class="tag">تعذّر جلب قائمة GitHub ('+(e.message||'')+') — زر تحديث ما زال يعمل للملف الحالي</span>'})}
+function renderGit(){$('#gitList').innerHTML=GITFILES.map(function(f,i){return '<div class="fchip"><b>📄 '+esc(f.name)+'</b><button class="btn-mini" data-git="'+i+'">فتح</button></div>'}).join('')||'<span class="tag">لا ملفات إكسل</span>'}
+function openGit(i,upd){if(GITFILES[i])loadByName(GITFILES[i].name,upd)}
 $('#gitBtn').onclick=refreshGit;
 $('#gitList').addEventListener('click',function(e){var b=e.target.closest('[data-git]');if(b)openGit(+b.getAttribute('data-git'),false)});
 /* ═══ الدخول ═══ */
@@ -67,11 +74,6 @@ $('#uRole').textContent=session.role==='admin'?'مدير':'مستخدم';
 $$('.admin-only').forEach(function(el){el.style.display=session.role==='admin'?'':'none'});
 renderAll();
 if(!(DB&&DB.tx&&DB.tx.length)){var last=localStorage.getItem(LS_LAST);if(last&&idbDB)openLocal(last)}}
-/* ═══ رفع ملف ═══ */
-
-function handleFile(file){if(!/\.(xlsm|xlsx|xls)$/i.test(file.name)){showToast('⚠️ اختر ملف إكسل',1);return}
-if(session.role!=='admin'){showToast('الرفع للمدير فقط',1);return}
-var rd=new FileReader();rd.onload=function(){setActive(file.name,rd.result,true)};rd.readAsArrayBuffer(file)}
 /* ═══ قراءة ورقة Company accounts ═══ */
 function setActive(name,buf,save){try{ACTIVE={name:name,blob:new Blob([buf])};localStorage.setItem(LS_LAST,name);
 WB=XLSX.read(new Uint8Array(buf),{type:'array',cellDates:true});
@@ -88,12 +90,12 @@ $('#sheetSel').addEventListener('change',function(e){parseSheet(e.target.value)}
 function parseDate(v){if(v instanceof Date&&!isNaN(v))return dstr(v);
 if(typeof v==='number'&&v>20000)return dstr(new Date(Math.round((v-25569)*86400000)));
 var s=String(v==null?'':v).trim();if(!s)return null;
-s=s.replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)});
+s=s.replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)});
 var m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
 m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
 var d=new Date(s);return isNaN(d)?null:dstr(d)}
 function parseAmount(v){if(typeof v==='number')return v;
-var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٢٤٥٦٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
+var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
 var n=parseFloat(s);return isNaN(n)?NaN:n}
 function groupOf(cat){cat=String(cat||'');
 if(/سحب/.test(cat))return 'w';
@@ -145,4 +147,4 @@ localStorage.setItem(LS_DATA,JSON.stringify(DB));
 CUR_SHEET=name;$('#sheetSel').value=name;
 showToast('✓ '+tx.length+' حركة من «'+name+'»',false,2400);
 renderAll()}
-/* نهاية app.js — v2 · التالي app2.js */
+/* نهاية app.js — v2.1 ✅ */
