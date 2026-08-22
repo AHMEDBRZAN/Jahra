@@ -3,7 +3,7 @@ var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
 var KNOWN=['حسابات شركة الجوهرة 2026.xlsm']; /* أضف هنا اسم أي ملف جديد ترفعه للمستودع */
-var VERSION='v2.3';
+var VERSION='v2.4';
 var LS_DATA='cmpx_v20',SS_SESS='cmpx_sess_v20',LS_LAST='cmpx_last_v20';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -29,7 +29,7 @@ tick();setInterval(tick,20000);
 (function(){var b=document.querySelector('.brand small');if(b)b.innerHTML+=' · <b style="color:var(--go)">'+VERSION+'</b>';
 var l=document.querySelector('.l-top p');if(l)l.textContent+=' · '+VERSION;
 var c=document.querySelector('.credits');if(c)c.textContent+=' · '+VERSION;})();
-/* ═══ نوافذ النظام المرتبة (تأكيد / تسمية / ملفات محلية) ═══ */
+/* ═══ نوافذ النظام المرتبة ═══ */
 document.body.insertAdjacentHTML('beforeend','<style>.btn-p{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:Changa;font-size:15px;font-weight:700;cursor:pointer}.btn-p.red{background:linear-gradient(135deg,#7e2d1c,#b2472f)}.btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}.pin{width:100%;padding:12px;border:1.5px solid var(--lin);border-radius:12px;font-size:15px;background:#fbfcf9}.pin:focus{outline:none;border-color:var(--g6)}</style>'+
 '<div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>⚠️ تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div><div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div><div class="m-foot"><button class="btn-c" id="cfNo">إلغاء</button><button class="btn-p red" id="cfYes">نعم، متأكد</button></div></div></div>'+
 '<div class="ov" id="prOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head"><span>✏️ تغيير اسم الملف</span><button class="m-x" id="prX">✕</button></div><div class="m-body"><input class="pin" id="prIn" placeholder="الاسم الجديد…"></div><div class="m-foot"><button class="btn-c" id="prNo">إلغاء</button><button class="btn-p" id="prYes">حفظ الاسم</button></div></div></div>'+
@@ -49,7 +49,7 @@ $('#prYes').onclick=function(){var v=$('#prIn').value.trim();hideOv($('#prOv'));
 $('#prNo').onclick=$('#prX').onclick=function(){hideOv($('#prOv'));prCb=null};
 $('#prIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#prYes').click()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideOv($('#cfOv'));hideOv($('#prOv'));hideOv($('#locOv'))}});
-/* ═══ حفظ محلي IndexedDB (الأساسي) ═══ */
+/* ═══ حفظ محلي IndexedDB ═══ */
 function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-save2',1);q.onupgradeneeded=function(e){e.target.result.createObjectStore('save',{keyPath:'name'})};q.onsuccess=function(e){idbDB=e.target.result;res()};q.onerror=function(){rej(q.error)}})}
 function putLocal(name,blob){return new Promise(function(res,rej){if(!idbDB)return rej();var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
 function getLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readonly');var q=tx.objectStore('save').get(name);q.onsuccess=function(){res(q.result)};q.onerror=rej})}
@@ -82,7 +82,7 @@ $('#locList').addEventListener('click',function(e){
 var b=e.target.closest('[data-loc]');if(b){hideOv($('#locOv'));openLocal(b.getAttribute('data-loc'));return}
 var r=e.target.closest('[data-ren]');if(r){renLocal(r.getAttribute('data-ren'));return}
 var d=e.target.closest('[data-del]');if(d){delLocalConfirm(d.getAttribute('data-del'));return}});
-/* ═══ GitHub — تحميل مباشر بدون API ═══ */
+/* ═══ GitHub — تحميل مباشر ═══ */
 function loadByName(name,upd){var parts=REPO.split('/');showToast('⏳ تحميل '+name+'…',false,1500);
 function tb(b){return fetch('https://raw.githubusercontent.com/'+parts[0]+'/'+parts[1]+'/'+b+'/'+encodeURIComponent(name)).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()})}
 tb('main').catch(function(){return tb('master')}).then(function(buf){
@@ -132,7 +132,7 @@ $('#sheetSel').addEventListener('change',function(e){parseSheet(e.target.value)}
 function parseDate(v){if(v instanceof Date&&!isNaN(v))return dstr(v);
 if(typeof v==='number'&&v>20000)return dstr(new Date(Math.round((v-25569)*86400000)));
 var s=String(v==null?'':v).trim();if(!s)return null;
-s=s.replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)});
+s=s.replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)});
 var m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
 m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
 var d=new Date(s);return isNaN(d)?null:dstr(d)}
@@ -143,6 +143,14 @@ function groupOf(cat){cat=String(cat||'');
 if(/سحب/.test(cat))return 'w';
 if(/قبض|دفعات المستفيدين|تنازل|ايراد|إيراد/.test(cat))return 'in';
 return 'out'}
+/* قاعدة الإيرادات: قبض المبالغ ودفعات المستفيدين تُعتمد فقط إذا الملاحظات فيها «مستلم»،
+   وتُستبعد إذا فيها «واصل نقدا/نقدًا» أو «أبو مرتضى» */
+function inRule(cat,note){
+if(!(/قبض/.test(cat)||/دفعات\s*المستفيدين/.test(cat)))return true;
+if(note.indexOf('مستلم')<0)return false;
+if(/واصل\s*نقد[اأً]/.test(note))return false;
+if(/(أ|ا)?بو\s*مرتضى/.test(note))return false;
+return true}
 function parseSheet(name){if(!WB||!WB.Sheets[name]){showToast('الورقة غير موجودة',1);return}
 var RAW=XLSX.utils.sheet_to_json(WB.Sheets[name],{header:1,defval:null,raw:true})||[];
 var HROW=-1,HEAD=[];
@@ -167,29 +175,34 @@ if(iNo<0&&/الملاحظات|ملاحظة/.test(h))iNo=i;
 if(iA<0&&/المبلغ/.test(h))iA=i}}
 else{iQ=0;iR=1;iD=2;iC=3;iN=4;iDt=5;iM=6;iNo=7;iA=8;HROW=1}
 if(iA<0||iC<0){showToast('لم يتم التعرف على أعمدة الورقة (تحتاج: الصنف، المبلغ)',1);return}
-var tx=[],lastDate=null;
+var tx=[],lastDate=null,skipped=0;
 for(var rr=HROW+1;rr<RAW.length;rr++){var rw=RAW[rr]||[];
 var cat=String(rw[iC]==null?'':rw[iC]).trim();
 var amount=parseAmount(rw[iA]);
 if(isNaN(amount)||amount===0)continue;
 var name=iN>=0?String(rw[iN]==null?'':rw[iN]).trim():'';
 if(/اجمالي|إجمالي|مجموع|المجموع|total|رصيد/i.test(cat)||/اجمالي|إجمالي|مجموع|المجموع|total|رصيد/i.test(name))continue;
+var note=iNo>=0?String(rw[iNo]==null?'':rw[iNo]).trim():'';
+var grp=groupOf(cat);
+if(grp==='in'&&!inRule(cat,note)){skipped++;continue}
 var date=iD>=0?parseDate(rw[iD]):null;
 if(date)lastDate=date;else date=lastDate;
+if(!date)continue;
+if(!name)name='—';
 tx.push({seq:iQ>=0?String(rw[iQ]==null?'':rw[iQ]).trim():String(rr-HROW),
 receipt:iR>=0?String(rw[iR]==null?'':rw[iR]).trim():'',
 date:date,cat:cat,name:name,
 details:iDt>=0?String(rw[iDt]==null?'':rw[iDt]).trim():'',
 month:iM>=0?String(rw[iM]==null?'':rw[iM]).trim():'',
-note:iNo>=0?String(rw[iNo]==null?'':rw[iNo]).trim():'',
-amount:amount,group:groupOf(cat)})}
+note:note,
+amount:amount,group:grp})}
 if(!tx.length){showToast('لا حركات صالحة في الورقة',1);return}
 DB={tx:tx,meta:{file:ACTIVE?ACTIVE.name:'—',sheet:name,at:Date.now(),by:session?session.name:'—'}};
 localStorage.setItem(LS_DATA,JSON.stringify(DB));
 CUR_SHEET=name;$('#sheetSel').value=name;
-showToast('✓ '+tx.length+' حركة من «'+name+'»',false,2400);
+showToast('✓ '+tx.length+' حركة (مستبعد بالقاعدة: '+skipped+')',false,2600);
 renderAll()}
-/* ═══ مسح البيانات (بنافذة مرتبة) ═══ */
+/* ═══ مسح البيانات ═══ */
 $('#wipeBtn').onclick=function(){askConfirm('سيتم مسح البيانات المحفوظة نهائيًا. متابعة؟',function(){
 localStorage.removeItem(LS_DATA);DB=null;renderAll();showToast('تم المسح',false,1800)})};
-/* نهاية app.js — v2.3 ✅ */
+/* نهاية app.js — v2.4 ✅ */
