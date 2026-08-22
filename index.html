@@ -43,7 +43,7 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .wrap{max-width:760px;margin:auto;padding:16px;display:flex;flex-direction:column;gap:14px}
 .card2{background:#fff;border:1px solid var(--lin);border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(15,50,38,.07);animation:rise .4s both}
 .src-h{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:800;color:var(--mut);margin-bottom:8px}
-.flist{display:flex;flex-direction:column;gap:5px;max-height:120px;overflow:auto}
+.flist{display:flex;flex-direction:column;gap:5px;max-height:150px;overflow:auto}
 .fchip{display:flex;justify-content:space-between;align-items:center;gap:6px;background:#fbfcf8;border:1px solid var(--lin);border-radius:10px;padding:6px 10px;font-size:12px}
 .fchip b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fchip.local{border-color:#79b79555}
@@ -51,9 +51,6 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .btn-mini{padding:8px 12px;border-radius:10px;border:1px solid var(--lin);background:#fff;cursor:pointer;font-size:11.5px;font-weight:700;color:var(--p8)}
 .btn-mini:hover{background:var(--p9);color:#fff}
 .btn-mini.gold{background:linear-gradient(135deg,var(--go),var(--go6));border:none;color:var(--p9)}
-.drop{border:2px dashed #c9d6c4;border-radius:14px;padding:14px;text-align:center;cursor:pointer;background:#fbfcf8;margin-bottom:10px}
-.drop:hover,.drop.over{border-color:var(--g6);background:#f2f8f1}
-.drop b{font-family:'Changa';font-size:14px;color:var(--p8);display:block;margin-bottom:2px}.drop small{color:var(--mut);font-size:11px}
 .file-info{margin-top:10px;border-top:1px dashed var(--lin);padding-top:10px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
 .file-info .fn{font-family:'Changa';font-weight:700;font-size:15px;color:var(--p8)}
 .fi-row{color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.fi-row b{color:var(--ink)}
@@ -185,7 +182,7 @@ tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;f
 </section>
 <section class="card2" id="catsCard" hidden><div id="catsBox"></div></section>
 <section class="card2" id="noData" hidden>
-<div class="empty"><div class="ei">🗂️</div><p id="noDataTxt">لا توجد بيانات — ارفع ملف الإكسل أو افتحه من GitHub</p></div>
+<div class="empty"><div class="ei">🗂️</div><p id="noDataTxt">لا توجد بيانات — افتح الملف من GitHub أو من الحفظ المحلي</p></div>
 </section>
 <p class="credits">نظام عرض التقارير · نسق التاريخ: يوم-شهر-سنة</p>
 </main>
@@ -203,10 +200,9 @@ tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;f
 <div class="m-body"><div class="det-grid" id="detBody"></div></div>
 </div></div>
 <div class="toast" id="toast"><span id="toastMsg"></span><div class="prog"></div></div>
-<input type="file" id="fileInput" hidden accept=".xlsm,.xlsx,.xls">
 <div id="printHead"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="app.js"></script>
-<script src="app2.js"></script>
+<script src="app.js?v22"></script>
+<script src="app2.js?v22"></script>
 </body>
 </html>
