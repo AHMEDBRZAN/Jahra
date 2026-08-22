@@ -1,7 +1,8 @@
 /* ═══ إعدادات ═══ */
 var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
 var CUR='د.ع.';
-var REPO='AHMEDBRZAN/Jahra'; /* ← ضع مستودعك هنا مثل: ahmedbrzan/complex */
+var REPO='AHMEDBRZAN/Jahra'; /* مستودعك */
+var VERSION='v1'; /* رقم الإصدار — يزاد مع كل تحديث */
 var LS_DATA='cmpx_v11',SS_SESS='cmpx_sess_v11',LS_LAST='cmpx_last_v11';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -29,6 +30,14 @@ function showToast(msg,err,dur){dur=dur||2200;var t=$('#toast');$('#toastMsg').t
 function setNum(id,v){$(id).innerHTML=money(v,true)}
 function tick(){var n=new Date();$('#clockNow').textContent=n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});$('#dateNow').textContent=wdLong(dstr(n))+' '+fmtD(dstr(n))}
 tick();setInterval(tick,20000);
+/* ═══ إظهار الإصدار وتصحيح النصوص ═══ */
+(function(){
+var b=document.querySelector('.brand small');if(b)b.innerHTML+=' · <b style="color:var(--go)">'+VERSION+'</b>';
+var l=document.querySelector('.l-top p');if(l)l.textContent+=' · '+VERSION;
+var c=document.querySelector('.credits');if(c)c.textContent+=' · '+VERSION;
+var ds=document.querySelector('.drop small');if(ds)ds.textContent='.xlsm / .xlsx — قراءة عميقة لورقة «رصيد القاصه»';
+var ns=document.querySelector('#noData small');if(ns)ns.textContent='هيكل الورقة: ت — الوصول — التاريخ — الاسم — التفاصيل — مبلغ الصرف — مبلغ الإيراد (ورقة رصيد القاصه)';
+})();
 /* ═══ حفظ محلي IndexedDB ═══ */
 function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-save',1);q.onupgradeneeded=function(e){e.target.result.createObjectStore('save',{keyPath:'name'})};q.onsuccess=function(e){idbDB=e.target.result;res()};q.onerror=function(){rej(q.error)}})}
 function putLocal(name,blob){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
@@ -75,7 +84,7 @@ $('#fileInput').onchange=function(e){var f=e.target.files[0];if(f){handleFile(f)
 function handleFile(file){if(!/\.(xlsm|xlsx|xls)$/i.test(file.name)){showToast('⚠️ اختر ملف إكسل .xlsm أو .xlsx',1);return}
 if(session.role!=='admin'){showToast('رفع الملفات للمدير فقط',1);return}
 var rd=new FileReader();rd.onload=function(){setActive(file.name,rd.result)};rd.readAsArrayBuffer(file)}
-/* ═══ القراءة العميقة ═══ */
+/* ═══ القراءة العميقة (ورقة رصيد القاصه) ═══ */
 function setActive(name,buf){try{ACTIVE={name:name,blob:new Blob([buf])};localStorage.setItem(LS_LAST,name);
 WB=XLSX.read(new Uint8Array(buf),{type:'array',cellDates:true});
 var s=$('#sheetSel');s.innerHTML='';WB.SheetNames.forEach(function(n){s.add(new Option(n,n))});
@@ -144,4 +153,4 @@ CUR_SHEET=name;$('#sheetSel').value=name;
 var nIn=records.filter(function(x){return x.type==='in'}).length;
 showToast('✓ '+records.length+' سجل من «'+name+'» ('+nIn+' إيراد / '+(records.length-nIn)+' صرف)',false,2400);
 renderAll()}
-/* نهاية الجزء الأول — انتظر «التالي» للجزء الثاني app2.js */
+/* نهاية app.js — الإصدار v1 */
