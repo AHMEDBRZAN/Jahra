@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>نظام المجمع السكني — الحسابات العامة</title>
+<title>نظام المجمع السكني — الحسابات العامة v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
@@ -54,7 +54,6 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .file-info{margin-top:10px;border-top:1px dashed var(--lin);padding-top:10px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
 .file-info .fn{font-family:'Changa';font-weight:700;font-size:15px;color:var(--p8)}
 .fi-row{color:var(--mut);display:flex;gap:6px;align-items:center;flex-wrap:wrap}.fi-row b{color:var(--ink)}
-.sel-mini{padding:3px 6px;border:1.5px solid var(--lin);border-radius:8px;background:#fff;font-size:12px;font-weight:700}
 .seg{display:flex;background:#f0f3ec;border:1px solid var(--lin);border-radius:14px;padding:4px;gap:4px}
 .seg button{flex:1;border:0;background:transparent;color:var(--mut);padding:10px 4px;border-radius:11px;font-weight:800;font-size:12px;cursor:pointer}
 .seg button.on{background:linear-gradient(135deg,var(--g6),#2fae7d);color:#fff}
@@ -73,12 +72,9 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .cat-sec{margin-top:12px}
 .cat-h{display:flex;justify-content:space-between;align-items:center;font-family:'Changa';font-weight:800;font-size:15px;padding:10px 12px;border-radius:12px}
 .cat-h .tot{direction:ltr;font-size:14px}
-.cat-h.in{background:var(--rin);color:var(--g6)}
-.cat-h.out{background:var(--rout);color:var(--r6)}
-.cat-h.w{background:var(--wout);color:var(--go6)}
+.cat-h.in{background:var(--rin);color:var(--g6)}.cat-h.out{background:var(--rout);color:var(--r6)}.cat-h.w{background:var(--wout);color:var(--go6)}
 .cat-row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:11px 10px;border-bottom:1px dashed var(--lin);font-size:13px;cursor:pointer;border-radius:8px}
-.cat-row:hover{background:#f6f9f4}
-.cat-row:last-child{border-bottom:none}
+.cat-row:hover{background:#f6f9f4}.cat-row:last-child{border-bottom:none}
 .cat-row .n{font-weight:600}
 .cat-row .v{font-family:'Changa';font-weight:800;direction:ltr;white-space:nowrap}
 .cat-row .v.in{color:var(--g6)}.cat-row .v.out{color:var(--r6)}.cat-row .v.w{color:var(--go6)}
@@ -97,9 +93,7 @@ thead th{background:var(--p9);color:#e8efe9;font-size:11.5px;font-weight:600;pad
 thead th:last-child{border-inline-end:none}
 tbody td{padding:9px 8px;font-size:12.5px;text-align:center;border-bottom:1px solid #cfd9cb;border-inline-end:1px solid #cfd9cb;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 tbody td:last-child{border-inline-end:none}
-tbody tr{cursor:pointer}
-tbody tr:nth-child(odd){background:#fbfcf9}
-tbody tr:hover{background:var(--rin)}
+tbody tr{cursor:pointer}tbody tr:nth-child(odd){background:#fbfcf9}tbody tr:hover{background:var(--rin)}
 .amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block}
 tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;font-size:12.5px}
 .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -151,7 +145,6 @@ tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;f
 <div class="tag" id="fs" style="margin-top:8px"></div>
 <div class="file-info" id="fileInfo" hidden>
 <div class="fn">📊 <span id="fiName">—</span></div>
-<div class="fi-row">الورقة: <select id="sheetSel" class="sel-mini"></select></div>
 <div class="fi-row">الحركات: <b id="fiCount">0</b> · آخر تحديث: <b id="fiDate">—</b></div>
 </div>
 <div style="margin-top:10px"><button class="btn-mini admin-only" id="wipeBtn" style="color:var(--r6)">🗑 مسح البيانات</button></div>
@@ -202,7 +195,56 @@ tfoot td{background:#f4f6ef;font-weight:700;padding:11px 8px;text-align:center;f
 <div class="toast" id="toast"><span id="toastMsg"></span><div class="prog"></div></div>
 <div id="printHead"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-<script src="app.js?v22"></script>
-<script src="app2.js?v22"></script>
-</body>
-</html>
+<script>
+/* ═══ إعدادات ═══ */
+var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
+var CUR='د.ع.';
+var REPO='AHMEDBRZAN/Jahra';
+var KNOWN=['حسابات شركة الجوهرة 2026.xlsm','تدقيق حسابات الجوهره.xlsx'];
+var VERSION='v3';
+var LS_DATA='cmpx_v30',SS_SESS='cmpx_sess_v30',LS_LAST='cmpx_last_v30';
+function $(s){return document.querySelector(s)}
+function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+var DB=JSON.parse(localStorage.getItem(LS_DATA)||'null');
+var session=JSON.parse(sessionStorage.getItem(SS_SESS)||'null');
+var P={start:null,end:null};
+var WB=null,ACTIVE=null,GITFILES=[],idbDB=null;
+function ym(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+var TODAY=dstr(new Date());
+function fmtD(iso){if(!iso)return '—';var p=iso.split('-');return p[2]+'-'+p[1]+'-'+p[0]}
+function money(n){return (Number(n)||0).toLocaleString('en-US',{maximumFractionDigits:2})}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function wdLong(ds){try{return new Intl.DateTimeFormat('ar',{weekday:'long'}).format(new Date(ds+'T00:00:00'))}catch(e){return ''}}
+function showOv(el){el.classList.add('show');document.body.classList.add('locked')}
+function hideOv(el){el.classList.remove('show');if(!document.querySelector('.ov.show'))document.body.classList.remove('locked')}
+var toastTimer=null;
+function showToast(msg,err,dur){dur=dur||2200;var t=$('#toast');$('#toastMsg').textContent=msg;t.classList.toggle('err',!!err);t.querySelector('.prog').style.animationDuration=dur+'ms';t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove('show')},dur)}
+function tick(){var n=new Date();$('#clockNow').textContent=n.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});$('#dateNow').textContent=wdLong(dstr(n))+' '+fmtD(dstr(n))}
+tick();setInterval(tick,20000);
+(function(){var b=document.querySelector('.brand small');if(b)b.innerHTML+=' · <b style="color:var(--go)">'+VERSION+'</b>';
+var l=document.querySelector('.l-top p');if(l)l.textContent+=' · '+VERSION;
+var c=document.querySelector('.credits');if(c)c.textContent+=' · '+VERSION;})();
+/* ═══ نوافذ مرتبة ═══ */
+document.body.insertAdjacentHTML('beforeend','<style>.btn-p{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:Changa;font-size:15px;font-weight:700;cursor:pointer}.btn-p.red{background:linear-gradient(135deg,#7e2d1c,#b2472f)}.btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}.pin{width:100%;padding:12px;border:1.5px solid var(--lin);border-radius:12px;font-size:15px;background:#fbfcf9}.pin:focus{outline:none;border-color:var(--g6)}</style>'+
+'<div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>⚠️ تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div><div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div><div class="m-foot"><button class="btn-c" id="cfNo">إلغاء</button><button class="btn-p red" id="cfYes">نعم، متأكد</button></div></div></div>'+
+'<div class="ov" id="prOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head"><span>✏️ تغيير اسم الملف</span><button class="m-x" id="prX">✕</button></div><div class="m-body"><input class="pin" id="prIn" placeholder="الاسم الجديد…"></div><div class="m-foot"><button class="btn-c" id="prNo">إلغاء</button><button class="btn-p" id="prYes">حفظ الاسم</button></div></div></div>'+
+'<div class="ov" id="locOv"><div class="modal"><div class="m-head"><span>📍 الملفات المحفوظة محليًا</span><button class="m-x" id="locX">✕</button></div><div class="m-body" id="locBody"></div></div></div>');
+$('#locBody').appendChild($('#locList'));$('#locList').style.maxHeight='52vh';
+var HB=document.createElement('button');HB.className='btn-mini';HB.id='locOpen';HB.textContent='📁 الملفات (0)';
+$('#saveBtn').parentNode.insertBefore(HB,$('#saveBtn'));
+$('#locOpen').onclick=function(){renderLocal();showOv($('#locOv'))};
+$('#locX').onclick=function(){hideOv($('#locOv'))};
+var cfCb=null;
+function askConfirm(msg,cb){$('#cfMsg').textContent=msg;cfCb=cb;showOv($('#cfOv'))}
+$('#cfYes').onclick=function(){hideOv($('#cfOv'));var f=cfCb;cfCb=null;if(f)f()};
+$('#cfNo').onclick=$('#cfX').onclick=function(){hideOv($('#cfOv'));cfCb=null};
+var prCb=null;
+function askPrompt(val,cb){$('#prIn').value=val;prCb=cb;showOv($('#prOv'));setTimeout(function(){$('#prIn').focus()},150)}
+$('#prYes').onclick=function(){var v=$('#prIn').value.trim();hideOv($('#prOv'));var f=prCb;prCb=null;if(f&&v)f(v)};
+$('#prNo').onclick=$('#prX').onclick=function(){hideOv($('#prOv'));prCb=null};
+$('#prIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#prYes').click()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideOv($('#cfOv'));hideOv($('#prOv'));hideOv($('#locOv'))}});
+</script>
+<script>
+/* ═══ الجزء الثاني من المنطق يبدأ هنا ═══ */
