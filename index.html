@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>نظام المجمع السكني — الحسابات العامة v3.1</title>
+<title>نظام المجمع السكني — الحسابات العامة v3.2</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
@@ -87,24 +87,26 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .modal{width:min(640px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s}
 .m-head{padding:13px 18px;color:#fff;font-family:'Changa';font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--p8),#177a54);display:flex;justify-content:space-between;align-items:center;gap:10px}
 .m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer}
-.m-body{padding:14px;max-height:72vh;overflow:auto}
-.tw{border:1px solid var(--lin);border-radius:12px;overflow:visible}
+.m-body{padding:14px}
+/* ══ جدول الحركات: مخطط، غامق، بدون تمرير داخلي ══ */
+.tw{border:1px solid #9fb2a4;border-radius:12px;overflow:visible;background:#fff}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
-thead th{background:var(--p9);color:#e8efe9;font-size:11.5px;font-weight:600;padding:10px;text-align:center;border-inline-end:1px solid rgba(255,255,255,.18)}
-thead th:last-child{border-inline-end:none}
-tbody td{padding:9px 8px;font-size:12.5px;text-align:center;border-bottom:1px solid #cfd9cb;border-inline-end:1px solid #cfd9cb;vertical-align:top}
-tbody td:last-child{border-inline-end:none}
-tbody tr{cursor:pointer}tbody tr:nth-child(odd){background:#fbfcf9}tbody tr:hover{background:var(--rin)}
-.amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block}
-.tot-big{font-size:20px;font-weight:800;color:var(--p8)}
-tfoot td{background:#f4f6ef;font-weight:700;padding:12px 8px;text-align:center;font-size:13px}
+thead th{background:var(--p9);color:#fff;font-size:12px;font-weight:700;padding:10px;text-align:center;border:1px solid #0b2e24}
+tbody td{padding:9px 8px;font-size:13px;text-align:center;border:1px solid #9fb2a4;vertical-align:middle;color:#141f19;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+tbody tr{cursor:pointer}
+tbody tr:nth-child(odd){background:#f4f8f3}
+tbody tr:hover{background:var(--rin)}
+.amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block;color:#141f19}
+tr.in-row .amt{color:var(--g6)}
+.tot-big{font-size:14px;font-weight:800;color:var(--p8)}
+tfoot td{background:#eef3ec;font-weight:800;padding:10px 8px;text-align:center;font-size:13px;border:1px solid #9fb2a4;color:var(--p8)}
 .det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .det-item{background:#f7f9f4;border:1px solid var(--lin);border-radius:10px;padding:10px 12px;min-width:0}
 .det-item.full{grid-column:1/-1}
 .det-item small{display:block;font-size:11px;color:var(--mut);font-weight:700;margin-bottom:4px}
 .det-item b{font-size:14px;word-break:break-word}
 .det-item .dt-ltr{direction:ltr;display:inline-block}
-.det-item .amt-big{font-family:'Changa';font-size:22px;font-weight:800}
+.det-item .amt-big{font-family:'Changa';font-size:20px;font-weight:800}
 .det-item p{font-size:13px;line-height:1.9;word-break:break-word;white-space:normal}
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--p9);color:#fff;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.28);border-inline-start:4px solid var(--go);z-index:99;transition:.35s;max-width:90vw;opacity:0}
 .toast.show{transform:translate(-50%,0);opacity:1}
@@ -117,9 +119,9 @@ tfoot td{background:#f4f6ef;font-weight:700;padding:12px 8px;text-align:center;f
 #catOv{position:static;display:block!important;background:none;padding:0;overflow:visible;z-index:auto}
 #catOv .modal{width:100%;box-shadow:none;animation:none;border-radius:0}
 #catOv .m-x{display:none}
-#catOv .m-body{max-height:none;overflow:visible;padding:0}
-.tw{border:none;max-height:none;overflow:visible}
-table{min-width:0;width:100%;table-layout:auto}
+#catOv .m-body{padding:0}
+.tw{border:none}
+table{table-layout:auto}
 thead th{background:#fff;color:#000;border:1px solid #999}
 tbody td{border:1px solid #bbb;white-space:normal}
 #printHead{display:block;font-family:'Changa';font-size:18px;font-weight:800;margin-bottom:10px}}
@@ -194,7 +196,7 @@ tbody td{border:1px solid #bbb;white-space:normal}
 <div class="ov" id="catOv"><div class="modal">
 <div class="m-head" id="catHead"><span id="catTitle"></span><button class="m-x" id="catX">✕</button></div>
 <div class="m-body"><div class="tw"><table>
-<thead><tr><th style="width:92px">التاريخ</th><th>الاسم والتفاصيل</th><th style="width:110px">المبلغ</th></tr></thead>
+<thead><tr><th style="width:92px">التاريخ</th><th>الاسم</th><th style="width:110px">المبلغ</th></tr></thead>
 <tbody id="catBody"></tbody>
 <tfoot><tr><td colspan="2">المجموع</td><td><span class="amt tot-big" id="catTotal">0</span></td></tr></tfoot>
 </table></div></div>
@@ -212,7 +214,7 @@ var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
 var KNOWN=['حسابات شركة الجوهرة 2026.xlsm','تدقيق حسابات الجوهره.xlsx'];
-var VERSION='v3.1';
+var VERSION='v3.2';
 var LS_DATA='cmpx_v30',SS_SESS='cmpx_sess_v30',LS_LAST='cmpx_last_v30';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -330,12 +332,12 @@ if(save)putLocal(name,ACTIVE.blob).then(renderLocal).catch(function(){});
 function parseDate(v){if(v instanceof Date&&!isNaN(v))return dstr(v);
 if(typeof v==='number'&&v>20000)return dstr(new Date(Math.round((v-25569)*86400000)));
 var s=String(v==null?'':v).trim();if(!s)return null;
-s=s.replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)});
+s=s.replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)});
 var m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
 m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
 var d=new Date(s);return isNaN(d)?null:dstr(d)}
 function parseAmount(v){if(typeof v==='number')return v;
-var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٢٤٥٦٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
+var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
 var n=parseFloat(s);return isNaN(n)?NaN:n}
 function bigNum(v){var s=String(v==null?'':v);if(!/\d[\d,]{3,}/.test(s))return NaN;var n=parseAmount(s);return n>0?n:NaN}
 function cleanReceipt(v){var s=String(v==null?'':v).trim();var m=s.match(/\d{2,6}/);return m?m[0]:(s?s.split(/\s/)[0]:'')}
@@ -447,7 +449,7 @@ function openCat(g,cat){CURCAT={g:g,cat:cat};
 var rows=filteredTx().filter(function(r){return r.group===g&&(r.cat||'بدون صنف')===cat});
 $('#catHead').style.background=g==='in'?'linear-gradient(135deg,#12503e,#177a54)':g==='out'?'linear-gradient(135deg,#7e2d1c,#b2472f)':'linear-gradient(135deg,#92610a,#c98f26)';
 $('#catTitle').textContent=(g==='in'?'💰 ':g==='out'?'💸 ':'🏦 ')+cat+' — '+rows.length+' حركة';
-$('#catBody').innerHTML=rows.map(function(r,i){return '<tr data-i="'+i+'"><td style="direction:ltr">'+fmtD(r.date)+'</td><td style="text-align:right"><b>'+esc(r.name||'—')+'</b><br><small style="color:var(--mut)">'+esc(r.details||'')+(r.note?' · '+esc(r.note):'')+'</small></td><td><span class="amt">'+money(r.amount)+'</span></td></tr>'}).join('');
+$('#catBody').innerHTML=rows.map(function(r,i){return '<tr data-i="'+i+'"><td style="direction:ltr">'+fmtD(r.date)+'</td><td style="text-align:right">'+esc(r.name||'—')+'</td><td><span class="amt">'+money(r.amount)+'</span></td></tr>'}).join('');
 $('#catTotal').textContent=money(rows.reduce(function(s,r){return s+r.amount},0))+' د.ع.';
 CURCAT.rows=rows;showOv($('#catOv'))}
 $('#catX').onclick=function(){hideOv($('#catOv'))};
