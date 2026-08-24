@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>نظام المجمع السكني — الحسابات العامة v3.2</title>
+<title>نظام المجمع السكني — الحسابات العامة v3.3</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
@@ -81,33 +81,32 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .empty{padding:40px 20px;text-align:center;color:var(--mut)}
 .empty .ei{font-size:40px;margin-bottom:8px}.empty p{font-weight:600}
 .credits{margin:6px 0 26px;text-align:center;font-size:11.5px;color:var(--mut)}
-.ov{position:fixed;inset:0;background:rgba(7,22,16,.6);display:none;place-items:center;z-index:50;padding:14px;overflow:auto;overscroll-behavior:contain}
-.ov.show{display:grid}
-#cfOv,#prOv{z-index:80}
-.modal{width:min(640px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s}
-.m-head{padding:13px 18px;color:#fff;font-family:'Changa';font-size:16px;font-weight:700;background:linear-gradient(135deg,var(--p8),#177a54);display:flex;justify-content:space-between;align-items:center;gap:10px}
-.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer}
-.m-body{padding:14px}
-/* ══ جدول الحركات: مخطط، غامق، بدون تمرير داخلي ══ */
-.tw{border:1px solid #9fb2a4;border-radius:12px;overflow:visible;background:#fff}
+/* ═══ نوافذ: تمرير كامل من الأعلى + توسيط ذكي ═══ */
+.ov{position:fixed;inset:0;background:rgba(7,22,16,.6);display:none;z-index:50;padding:14px;overflow:auto;overscroll-behavior:contain}
+.ov.show{display:flex}
+.modal{margin:auto;width:min(640px,100%);background:#fff;border-radius:16px;overflow:hidden;animation:pop .3s}
+.m-head{padding:12px 16px;color:#fff;font-family:'Changa';font-size:15px;font-weight:700;background:linear-gradient(135deg,var(--p8),#177a54);display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;z-index:5}
+.m-x{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;flex-shrink:0}
+.m-body{padding:12px}
+/* ═══ جدول الحركات: صفوف أصغر ومتناسقة ═══ */
+.tw{border:1px solid #9fb2a4;border-radius:10px;overflow:visible;background:#fff}
 table{width:100%;border-collapse:collapse;table-layout:fixed}
-thead th{background:var(--p9);color:#fff;font-size:12px;font-weight:700;padding:10px;text-align:center;border:1px solid #0b2e24}
-tbody td{padding:9px 8px;font-size:13px;text-align:center;border:1px solid #9fb2a4;vertical-align:middle;color:#141f19;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+thead th{background:var(--p9);color:#fff;font-size:11px;font-weight:700;padding:8px 6px;text-align:center;border:1px solid #0b2e24}
+tbody td{padding:7px 6px;font-size:12px;text-align:center;border:1px solid #9fb2a4;vertical-align:middle;color:#141f19;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 tbody tr{cursor:pointer}
 tbody tr:nth-child(odd){background:#f4f8f3}
 tbody tr:hover{background:var(--rin)}
-.amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block;color:#141f19}
-tr.in-row .amt{color:var(--g6)}
+.amt{font-family:'Changa';font-weight:800;direction:ltr;display:inline-block;color:#141f19;font-size:12.5px}
 .tot-big{font-size:14px;font-weight:800;color:var(--p8)}
-tfoot td{background:#eef3ec;font-weight:800;padding:10px 8px;text-align:center;font-size:13px;border:1px solid #9fb2a4;color:var(--p8)}
-.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.det-item{background:#f7f9f4;border:1px solid var(--lin);border-radius:10px;padding:10px 12px;min-width:0}
+tfoot td{background:#eef3ec;font-weight:800;padding:9px 6px;text-align:center;font-size:12px;border:1px solid #9fb2a4;color:var(--p8)}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.det-item{background:#f7f9f4;border:1px solid var(--lin);border-radius:10px;padding:9px 10px;min-width:0}
 .det-item.full{grid-column:1/-1}
-.det-item small{display:block;font-size:11px;color:var(--mut);font-weight:700;margin-bottom:4px}
-.det-item b{font-size:14px;word-break:break-word}
+.det-item small{display:block;font-size:10.5px;color:var(--mut);font-weight:700;margin-bottom:3px}
+.det-item b{font-size:13.5px;word-break:break-word}
 .det-item .dt-ltr{direction:ltr;display:inline-block}
 .det-item .amt-big{font-family:'Changa';font-size:20px;font-weight:800}
-.det-item p{font-size:13px;line-height:1.9;word-break:break-word;white-space:normal}
+.det-item p{font-size:12.5px;line-height:1.8;word-break:break-word;white-space:normal}
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,80px);background:var(--p9);color:#fff;padding:12px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.28);border-inline-start:4px solid var(--go);z-index:99;transition:.35s;max-width:90vw;opacity:0}
 .toast.show{transform:translate(-50%,0);opacity:1}
 .toast.err{border-inline-start-color:var(--r6)}
@@ -117,8 +116,9 @@ tfoot td{background:#eef3ec;font-weight:800;padding:10px 8px;text-align:center;f
 @media print{body{background:#fff}body.locked{overflow:visible}
 .topbar,.card2,.credits,.toast,.no-print,#detOv,#cfOv,#prOv,#locOv,.login-wrap{display:none!important}
 #catOv{position:static;display:block!important;background:none;padding:0;overflow:visible;z-index:auto}
-#catOv .modal{width:100%;box-shadow:none;animation:none;border-radius:0}
+#catOv .modal{width:100%;box-shadow:none;animation:none;border-radius:0;margin:0}
 #catOv .m-x{display:none}
+#catOv .m-head{position:static}
 #catOv .m-body{padding:0}
 .tw{border:none}
 table{table-layout:auto}
@@ -196,7 +196,7 @@ tbody td{border:1px solid #bbb;white-space:normal}
 <div class="ov" id="catOv"><div class="modal">
 <div class="m-head" id="catHead"><span id="catTitle"></span><button class="m-x" id="catX">✕</button></div>
 <div class="m-body"><div class="tw"><table>
-<thead><tr><th style="width:92px">التاريخ</th><th>الاسم</th><th style="width:110px">المبلغ</th></tr></thead>
+<thead><tr><th style="width:88px">التاريخ</th><th>الاسم</th><th style="width:105px">المبلغ</th></tr></thead>
 <tbody id="catBody"></tbody>
 <tfoot><tr><td colspan="2">المجموع</td><td><span class="amt tot-big" id="catTotal">0</span></td></tr></tfoot>
 </table></div></div>
@@ -214,7 +214,7 @@ var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم
 var CUR='د.ع.';
 var REPO='AHMEDBRZAN/Jahra';
 var KNOWN=['حسابات شركة الجوهرة 2026.xlsm','تدقيق حسابات الجوهره.xlsx'];
-var VERSION='v3.2';
+var VERSION='v3.3';
 var LS_DATA='cmpx_v30',SS_SESS='cmpx_sess_v30',LS_LAST='cmpx_last_v30';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -240,8 +240,8 @@ var l=document.querySelector('.l-top p');if(l)l.textContent+=' · '+VERSION;
 var c=document.querySelector('.credits');if(c)c.textContent+=' · '+VERSION;})();
 /* ═══ نوافذ مرتبة ═══ */
 document.body.insertAdjacentHTML('beforeend','<style>.btn-p{background:linear-gradient(135deg,var(--p8),var(--g6));color:#fff;border:none;padding:11px 22px;border-radius:11px;font-family:Changa;font-size:15px;font-weight:700;cursor:pointer}.btn-p.red{background:linear-gradient(135deg,#7e2d1c,#b2472f)}.btn-c{background:#fff;border:1px solid var(--lin);padding:11px 20px;border-radius:11px;cursor:pointer;font-weight:600;color:var(--mut)}.pin{width:100%;padding:12px;border:1.5px solid var(--lin);border-radius:12px;font-size:15px;background:#fbfcf9}.pin:focus{outline:none;border-color:var(--g6)}</style>'+
-'<div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>⚠️ تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div><div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div><div class="m-foot"><button class="btn-c" id="cfNo">إلغاء</button><button class="btn-p red" id="cfYes">نعم، متأكد</button></div></div></div>'+
-'<div class="ov" id="prOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head"><span>✏️ تغيير اسم الملف</span><button class="m-x" id="prX">✕</button></div><div class="m-body"><input class="pin" id="prIn" placeholder="الاسم الجديد…"></div><div class="m-foot"><button class="btn-c" id="prNo">إلغاء</button><button class="btn-p" id="prYes">حفظ الاسم</button></div></div></div>'+
+'<div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head" style="background:linear-gradient(135deg,#7e2d1c,#b2472f)"><span>⚠️ تأكيد العملية</span><button class="m-x" id="cfX">✕</button></div><div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div><div class="m-foot" style="display:flex;gap:10px;justify-content:flex-end;padding:0 14px 14px"><button class="btn-c" id="cfNo">إلغاء</button><button class="btn-p red" id="cfYes">نعم، متأكد</button></div></div></div>'+
+'<div class="ov" id="prOv"><div class="modal" style="width:min(400px,100%)"><div class="m-head"><span>✏️ تغيير اسم الملف</span><button class="m-x" id="prX">✕</button></div><div class="m-body"><input class="pin" id="prIn" placeholder="الاسم الجديد…"></div><div class="m-foot" style="display:flex;gap:10px;justify-content:flex-end;padding:0 14px 14px"><button class="btn-c" id="prNo">إلغاء</button><button class="btn-p" id="prYes">حفظ الاسم</button></div></div></div>'+
 '<div class="ov" id="locOv"><div class="modal"><div class="m-head"><span>📍 الملفات المحفوظة محليًا</span><button class="m-x" id="locX">✕</button></div><div class="m-body" id="locBody"></div></div></div>');
 $('#locBody').appendChild($('#locList'));$('#locList').style.maxHeight='52vh';
 var HB=document.createElement('button');HB.className='btn-mini';HB.id='locOpen';HB.textContent='📁 الملفات (0)';
@@ -260,7 +260,7 @@ $('#prIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#prYes')
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideOv($('#cfOv'));hideOv($('#prOv'));hideOv($('#locOv'))}});
 </script>
 <script>
-/* ═══ حفظ محلي IndexedDB ═══ */
+/* ══/* ═══ حفظ محلي IndexedDB ═══ */
 function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-save2',1);q.onupgradeneeded=function(e){e.target.result.createObjectStore('save',{keyPath:'name'})};q.onsuccess=function(e){idbDB=e.target.result;res()};q.onerror=function(){rej(q.error)}})}
 function putLocal(name,blob){return new Promise(function(res,rej){if(!idbDB)return rej();var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
 function getLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readonly');var q=tx.objectStore('save').get(name);q.onsuccess=function(){res(q.result)};q.onerror=rej})}
@@ -332,12 +332,12 @@ if(save)putLocal(name,ACTIVE.blob).then(renderLocal).catch(function(){});
 function parseDate(v){if(v instanceof Date&&!isNaN(v))return dstr(v);
 if(typeof v==='number'&&v>20000)return dstr(new Date(Math.round((v-25569)*86400000)));
 var s=String(v==null?'':v).trim();if(!s)return null;
-s=s.replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)});
+s=s.replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)});
 var m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
 m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
 var d=new Date(s);return isNaN(d)?null:dstr(d)}
 function parseAmount(v){if(typeof v==='number')return v;
-var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
+var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
 var n=parseFloat(s);return isNaN(n)?NaN:n}
 function bigNum(v){var s=String(v==null?'':v);if(!/\d[\d,]{3,}/.test(s))return NaN;var n=parseAmount(s);return n>0?n:NaN}
 function cleanReceipt(v){var s=String(v==null?'':v).trim();var m=s.match(/\d{2,6}/);return m?m[0]:(s?s.split(/\s/)[0]:'')}
@@ -448,7 +448,7 @@ var CURCAT=null;
 function openCat(g,cat){CURCAT={g:g,cat:cat};
 var rows=filteredTx().filter(function(r){return r.group===g&&(r.cat||'بدون صنف')===cat});
 $('#catHead').style.background=g==='in'?'linear-gradient(135deg,#12503e,#177a54)':g==='out'?'linear-gradient(135deg,#7e2d1c,#b2472f)':'linear-gradient(135deg,#92610a,#c98f26)';
-$('#catTitle').textContent=(g==='in'?'💰 ':g==='out'?'💸 ':'🏦 ')+cat+' — '+rows.length+' حركة';
+$('#catTitle').textContent=(g==='in'?'💰 ':g==='out'?'💸 ':' ')+cat+' — '+rows.length+' حركة';
 $('#catBody').innerHTML=rows.map(function(r,i){return '<tr data-i="'+i+'"><td style="direction:ltr">'+fmtD(r.date)+'</td><td style="text-align:right">'+esc(r.name||'—')+'</td><td><span class="amt">'+money(r.amount)+'</span></td></tr>'}).join('');
 $('#catTotal').textContent=money(rows.reduce(function(s,r){return s+r.amount},0))+' د.ع.';
 CURCAT.rows=rows;showOv($('#catOv'))}
@@ -458,15 +458,12 @@ function openDetail(r){if(!r)return;
 $('#detHead').style.background=r.group==='in'?'linear-gradient(135deg,#12503e,#177a54)':r.group==='out'?'linear-gradient(135deg,#7e2d1c,#b2472f)':'linear-gradient(135deg,#92610a,#c98f26)';
 $('#detTitle').textContent=(r.group==='in'?'💰 إيراد':r.group==='out'?'💸 صرفية':'🏦 سحب')+' — '+r.cat;
 $('#detBody').innerHTML=
-'<div class="det-item"><small>التسلسل (ت)</small><b>'+esc(r.seq)+'</b></div>'+
 '<div class="det-item"><small>رقم الوصل</small><b>'+esc(r.receipt||'—')+'</b></div>'+
 '<div class="det-item"><small>التاريخ</small><b class="dt-ltr">'+fmtD(r.date)+'</b></div>'+
 '<div class="det-item"><small>اليوم</small><b>'+wdLong(r.date)+'</b></div>'+
 '<div class="det-item"><small>النوع</small><b>'+esc(r.cat)+'</b></div>'+
-'<div class="det-item"><small>الشهر</small><b>'+(r.date?r.date.slice(5,7)+'-'+r.date.slice(0,4):'—')+'</b></div>'+
 '<div class="det-item full"><small>الاسم</small><b>'+esc(r.name||'—')+'</b></div>'+
 '<div class="det-item full"><small>التفاصيل</small><p>'+esc(r.details||'—')+'</p></div>'+
-'<div class="det-item full"><small>الملاحظات</small><p>'+esc(r.note||'—')+'</p></div>'+
 '<div class="det-item full"><small>المبلغ ('+CUR+')</small><b class="amt-big" style="color:'+(r.group==='in'?'var(--g6)':r.group==='out'?'var(--r6)':'var(--go6)')+'">'+money(r.amount)+' د.ع.</b></div>';
 showOv($('#detOv'))}
 $('#detX').onclick=function(){hideOv($('#detOv'))};
