@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>نظام المجمع السكني — الحسابات العامة v3.5</title>
+<title>نظام المجمع السكني — الحسابات العامة v3.6</title>
 <link href="https://fonts.googleapis.com/css2?family=Changa:wght@600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--r7:#7e2d1c;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
+:root{--p9:#0b2e24;--p8:#0e3b2e;--g6:#147a54;--r6:#b2472f;--go:#e0a63c;--go6:#c98f26;--go1:#f6efdc;--pap:#eef1ea;--lin:#dde4d9;--ink:#1e2b26;--mut:#6b7a72;--rin:#e9f4ea;--rout:#fbeceb;--wout:#fff7e0}
 *{margin:0;padding:0;box-sizing:border-box}html{touch-action:manipulation}
 body{font-family:'IBM Plex Sans Arabic',system-ui,sans-serif;background:var(--pap);color:var(--ink);min-height:100vh}
 body.locked{overflow:hidden}button,input,select{font:inherit}
@@ -63,7 +63,6 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .dp-area{margin-top:10px;display:none;gap:8px;flex-wrap:wrap;align-items:center}
 .dp-area.show{display:flex}
 .dp-btn{padding:9px 14px;border-radius:10px;border:1.5px solid var(--lin);background:#fff;cursor:pointer;font-size:12px;font-weight:700;color:var(--p8);min-width:100px;text-align:center}
-.dp-btn:hover{border-color:var(--g6)}
 .dp-btn.active{border-color:var(--g6);background:var(--rin)}
 .dp-lbl{font-size:11.5px;color:var(--mut);font-weight:700}
 .dp-panel{position:relative;margin-top:6px;background:#fff;border:1.5px solid var(--g6);border-radius:14px;padding:10px;box-shadow:0 10px 30px rgba(0,0,0,.12);display:none;animation:rise .2s}
@@ -73,7 +72,6 @@ body.locked{overflow:hidden}button,input,select{font:inherit}
 .dp-months button.on{background:var(--g6);color:#fff;border-color:var(--g6)}
 .dp-days{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:4px}
 .dp-days button{padding:7px 4px;border-radius:8px;border:1px solid var(--lin);background:#fbfcf9;cursor:pointer;font-size:12px;font-weight:700;color:var(--ink);text-align:center}
-.dp-days button:hover{background:var(--rin);border-color:var(--g6)}
 .dp-days button.on{background:var(--g6);color:#fff;border-color:var(--g6)}
 .dp-days button.off{opacity:.4}
 .hero{background:linear-gradient(160deg,#e7f4ec,#fdf6e3);border:1px solid #79b79566;border-radius:18px;padding:18px;text-align:center;animation:rise .4s both}
@@ -211,7 +209,7 @@ tbody td{border:1px solid #bbb;white-space:normal}
 <section class="card2" id="noData" hidden>
 <div class="empty"><div class="ei">🗂️</div><p id="noDataTxt">لا توجد بيانات — افتح الملف من GitHub أو من الحفظ المحلي</p></div>
 </section>
-<p class="credits">نظام عرض التقارير · v3.5</p>
+<p class="credits">نظام عرض التقارير · v3.6</p>
 </main>
 </div>
 <div class="ov" id="catOv"><div class="modal">
@@ -233,7 +231,7 @@ tbody td{border:1px solid #bbb;white-space:normal}
 var USERS=[{u:'حسين',p:'1979',role:'admin',name:'حسين'},{u:'مستخدم',p:'1234',role:'user',name:'مستخدم'}];
 var CUR='د.ع.';var REPO='AHMEDBRZAN/Jahra';
 var KNOWN=['حسابات شركة الجوهرة 2026.xlsm','تدقيق حسابات الجوهره.xlsx'];
-var VERSION='v3.5';
+var VERSION='v3.6';
 var LS_DATA='cmpx_v30',SS_SESS='cmpx_sess_v30',LS_LAST='cmpx_last_v30';
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
@@ -273,9 +271,7 @@ $('#prYes').onclick=function(){var v=$('#prIn').value.trim();hideOv($('#prOv'));
 $('#prNo').onclick=$('#prX').onclick=function(){hideOv($('#prOv'));prCb=null};
 $('#prIn').addEventListener('keydown',function(e){if(e.key==='Enter')$('#prYes').click()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideOv($('#cfOv'));hideOv($('#prOv'));hideOv($('#locOv'))}});
-</script>
-<script>
-/* ═══ حفظ محلي IndexedDB ═══ */
+/* ═══ حفظ محلي ═══ */
 function idb(){return new Promise(function(res,rej){var q=indexedDB.open('cx-save2',1);q.onupgradeneeded=function(e){e.target.result.createObjectStore('save',{keyPath:'name'})};q.onsuccess=function(e){idbDB=e.target.result;res()};q.onerror=function(){rej(q.error)}})}
 function putLocal(name,blob){return new Promise(function(res,rej){if(!idbDB)return rej();var tx=idbDB.transaction('save','readwrite');tx.objectStore('save').put({name:name,blob:blob,ts:Date.now()});tx.oncomplete=res;tx.onerror=rej})}
 function getLocal(name){return new Promise(function(res,rej){var tx=idbDB.transaction('save','readonly');var q=tx.objectStore('save').get(name);q.onsuccess=function(){res(q.result)};q.onerror=rej})}
@@ -352,7 +348,7 @@ var m=s.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);if(m)return m[1]+'-'+m[2].
 m=s.match(/^(\d{1,2})[-\/.](\d{1,2})[-\/.](\d{4})/);if(m)return m[3]+'-'+m[2].padStart(2,'0')+'-'+m[1].padStart(2,'0');
 var d=new Date(s);return isNaN(d)?null:dstr(d)}
 function parseAmount(v){if(typeof v==='number')return v;
-var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٣٤٥٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
+var s=String(v==null?'':v).replace(/[٠-٩]/g,function(d){return '٠١٢٣٤٥٦٧٨٩'.indexOf(d)}).replace(/[^\d.\-]/g,'');
 var n=parseFloat(s);return isNaN(n)?NaN:n}
 function bigNum(v){var s=String(v==null?'':v);if(!/\d[\d,]{3,}/.test(s))return NaN;var n=parseAmount(s);return n>0?n:NaN}
 function cleanReceipt(v){var s=String(v==null?'':v).trim();var m=s.match(/\d{2,6}/);return m?m[0]:(s?s.split(/\s/)[0]:'')}
@@ -414,7 +410,7 @@ DB={tx:tx,meta:{file:ACTIVE?ACTIVE.name:'—',sheet:name,at:Date.now(),by:sessio
 localStorage.setItem(LS_DATA,JSON.stringify(DB));
 showToast('✓ '+tx.length+' حركة (مستبعد: '+skipped+')',false,2600);
 renderAll()}
-/* ═══ منتقي التاريخ — تقويم كامل مرتّب ═══ */
+/* ═══ منتقي التاريخ ═══ */
 var dpTarget=null,dpMonth='',dpTimer=null;
 function allDates(){var s={};(DB&&DB.tx?DB.tx:[]).forEach(function(r){if(r.date)s[r.date]=1});return Object.keys(s).sort()}
 function yearOf(){var d=allDates();return d.length?d[0].slice(0,4):String(new Date().getFullYear())}
@@ -478,7 +474,7 @@ html+='<div class="cat-row" data-g="'+g+'" data-cat="'+esc(k)+'"><span class="n"
 html+='</div>'});
 var i=sumG('in'),o=sumG('out'),w=sumG('w');
 var totOut=o+w,net=i-totOut;
-html+='<div class="cat-sec"><div class="cat-h out"><span>🧾 مجموع الصرفيات (المصاريف + السحب)</span><span class="tot">'+money(totOut)+' د.ع.</span></div></div>';
+html+='<div class="cat-sec"><div class="cat-h out"><span>🧾 مجموع الصرفيات الكلية</span><span class="tot">'+money(totOut)+' د.ع.</span></div></div>';
 html+='<div class="cat-sec"><div class="cat-h '+(net>=0?'in':'out')+'"><span>'+(net>=0?'✅ فائض الفترة':'⛔ خسارة الفترة')+'</span><span class="tot">'+money(Math.abs(net))+' د.ع.</span></div></div>';
 $('#catsBox').innerHTML=html||'<div class="empty"><div class="ei">📭</div><p>لا حركات في هذه الفترة</p></div>'}
 $('#catsBox').addEventListener('click',function(e){var r=e.target.closest('.cat-row');if(!r)return;openCat(r.getAttribute('data-g'),r.getAttribute('data-cat'))});
@@ -525,4 +521,3 @@ if(session)enterApp();
 </script>
 </body>
 </html>
-
