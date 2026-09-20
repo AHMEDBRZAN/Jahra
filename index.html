@@ -245,11 +245,12 @@ function showToast(msg,dur){dur=dur||2200;var t=$('#toast');$('#toastMsg').textC
 function sum(t){var s=0;for(var i=0;i<TX.length;i++)if(TX[i].type===t)s+=(+TX[i].amount||0);return s}
 function desc(){return TX.slice().sort(function(a,b){return b.id-a.id})}
 function findTx(id){for(var i=0;i<TX.length;i++)if(TX[i].id==id)return TX[i];return null}
-function tableHTML(list,emptyMsg){
+function serialMap(){var m={};for(var i=0;i<TX.length;i++)m[TX[i].id]=i+1;return m}
+function tableHTML(list,emptyMsg,ser){
 if(!list.length)return '<div class="empty" style="border:none;box-shadow:none"><div class="ei">💎</div><p>'+emptyMsg+'</p></div>';
 var h='<table class="tbl"><thead><tr><th style="width:30px">ت</th><th style="width:86px">التاريخ</th><th style="width:74px">النوع</th><th>اسم المستلم</th><th style="width:92px">المبلغ</th></tr></thead><tbody>';
 for(var i=0;i<list.length;i++){var r=list[i];
-h+='<tr data-id="'+r.id+'" data-ser="'+(i+1)+'"><td>'+(i+1)+'</td>'
+h+='<tr data-id="'+r.id+'" data-ser="'+(ser[r.id]||'')+'"><td>'+(ser[r.id]||'')+'</td>'
 +'<td class="dtc">'+fmtD(r.date)+'</td>'
 +'<td><span class="pill '+r.type+'">'+(r.type==='site'?'صرفيات':'سلفة')+'</span></td>'
 +'<td><b>'+esc(r.name)+'</b>'+(r.details?'<div class="de">'+esc(r.details)+'</div>':'')+'</td>'
@@ -262,7 +263,7 @@ $('#sAll').textContent=money(sum('site')+sum('salaf'));
 $('#sCnt').textContent=TX.length;
 var list=desc().slice(0,5);
 $('#homeHint').textContent=TX.length?('آخر '+list.length+' من '+TX.length):'';
-$('#homeWrap').innerHTML=tableHTML(list,'لا توجد حركات بعد — اضغط زر + للإضافة');
+$('#homeWrap').innerHTML=tableHTML(list,'لا توجد حركات بعد — اضغط زر + للإضافة',serialMap());
 $('#moreBtn').style.display=TX.length?'block':'none'}
 function fillDays(){var cur=$('#pgDay').value;var days=[],seen={};
 TX.forEach(function(r){if(!seen[r.date]){seen[r.date]=1;days.push(r.date)}});
@@ -276,7 +277,7 @@ return desc().filter(function(r){return filter==='all'||r.type===filter})
 function renderPage(){fillDays();
 var rows=pageRows();
 $('#pgCount').textContent=rows.length+' حركة معروضة';
-$('#pgWrap').innerHTML=tableHTML(rows,'لا نتائج مطابقة');
+$('#pgWrap').innerHTML=tableHTML(rows,'لا نتائج مطابقة',serialMap());
 var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});
 var day=$('#pgDay').value;
 if(day){var dl='<span class="dl">'+fmtD(day)+'</span>';
@@ -327,7 +328,7 @@ if(isNaN(am)||am<=0){showToast('⚠️ أدخل مبلغًا صحيحًا');$('#
 if(!iso){showToast('⚠️ أدخل تاريخًا صحيحًا (2026-09-20)');$('#fDate').focus();return}
 var rec={type:$('#fType').value,name:nm,details:$('#fDet').value.trim(),amount:am,date:iso};
 if(editId){for(var i=0;i<TX.length;i++)if(TX[i].id==editId){rec.id=editId;TX[i]=rec}showToast('✅ تم التعديل')}
-else{rec.id=Date.now();TX.push(rec);showToast('✅ تمت الإضافة: '+nm+' — '+money(am)+' د.ع.')}
+else{rec.id=Date.now();TX.push(rec);showToast('✅ تمت الإضافة: '+nm+' — تسلسلها '+TX.length+' — '+money(am)+' د.ع.')}
 save();renderHome();if($('#page').classList.contains('show'))renderPage();hideOv($('#formOv'))};
 $('#fDelete').onclick=function(){var id=editId;hideOv($('#formOv'));askDelete(id)};
 $('#cfYes').onclick=function(){hideOv($('#cfOv'));if(cfCb)cfCb();cfCb=null};
@@ -342,7 +343,7 @@ if(e.key==='Enter'&&$('#formOv').classList.contains('show')){var ae=document.act
 ['fName','fDet','fAmt','fDate'].forEach(function(id,i,arr){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(i<arr.length-1)$('#'+arr[i+1]).focus();else $('#fSave').click()}})});
 function reportRows(){return pageRows()}
 function sums(rows){var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});return{ss:ss,sl:sl}}
-function buildReportHTML(rows){var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
+function buildReportHTML(rows){var S=sums(rows);var ser=serialMap();var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
 var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوهره</title><style>'
 +'body{font-family:Tahoma,Arial,sans-serif;text-align:center;background:#fff;margin:14px}'
 +'.t{font-size:20px;font-weight:bold;color:#0f2a6b}.s{font-size:11px;color:#64748b;margin-bottom:10px}'
@@ -358,7 +359,7 @@ var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوه�
 +'<div class="s">كشف الصرفيات والسلف — '+lbl+' — عدد الحركات: '+rows.length+'</div>'
 +'<table><thead><tr><th>ت</th><th>التاريخ</th><th>النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th>المبلغ (د.ع.)</th></tr></thead><tbody>';
 for(var i=0;i<rows.length;i++){var r=rows[i];
-h+='<tr><td>'+(i+1)+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
+h+='<tr><td>'+(ser[r.id]||'')+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
 h+='<tr class="sum"><td colspan="5">مجموع الصرفيات</td><td class="amt">'+moneyFull(S.ss)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">مجموع السلف</td><td class="amt">'+moneyFull(S.sl)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">الإجمالي الكلي</td><td class="amt">'+moneyFull(S.ss+S.sl)+'</td></tr>';
@@ -376,11 +377,11 @@ document.body.appendChild(a);a.click();document.body.removeChild(a);
 setTimeout(function(){URL.revokeObjectURL(a.href)},100);
 showToast('✅ تم التصدير ملوّنًا — يفتح في Excel')};
 $('#printBtn').onclick=function(){var rows=reportRows();if(!rows.length){showToast('⚠️ لا بيانات للطباعة');return}
-var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
+var S=sums(rows);var ser=serialMap();var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
 var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">كشف الصرفيات والسلف — '+lbl+'</div></div>'
 +'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:86px">التاريخ</th><th style="width:80px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
 for(var i=0;i<rows.length;i++){var r=rows[i];
-html+='<tr><td>'+(i+1)+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'}
+html+='<tr><td>'+(ser[r.id]||'')+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'}
 html+='</tbody></table>'
 +'<div class="pr-sum"><div><small>مجموع الصرفيات</small><b>'+moneyFull(S.ss)+'</b></div><div><small>مجموع السلف</small><b>'+moneyFull(S.sl)+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(S.ss+S.sl)+'</b></div></div>'
 +'<div class="pr-foot">العنوان: الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة · م: 07866994044 · aljwhrtshrkt9@gmail.com</div>';
