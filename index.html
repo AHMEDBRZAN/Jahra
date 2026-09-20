@@ -66,7 +66,8 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .seg{display:flex;background:var(--sil);border:1px solid var(--sil2);border-radius:13px;padding:3px;gap:3px;flex:1;min-width:170px}
 .seg button{flex:1;border:0;background:transparent;color:var(--mut);padding:9px 4px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer}
 .seg button.on{background:linear-gradient(135deg,var(--n2),var(--n3));color:#fff}
-.day-sel{flex:1;min-width:140px;padding:10px;border:1.5px solid var(--sil2);border-radius:12px;background:#fbfcff;font-weight:700;color:var(--n1)}
+.day-sel{flex:1;min-width:140px;padding:10px;border:1.5px solid var(--sil2);border-radius:12px;background:#fbfcff;font-weight:700;color:var(--n1);direction:ltr;text-align:right}
+.day-sel option{direction:ltr;text-align:right}
 .srch{flex:1;min-width:150px;position:relative}
 .srch input{width:100%;padding:10px 34px 10px 12px;border:1.5px solid var(--sil2);border-radius:12px;background:#fbfcff}
 .srch input:focus{outline:none;border-color:var(--n3)}
@@ -128,6 +129,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 .pr-table{width:100%;border-collapse:collapse;font-size:11px}
 .pr-table th{background:var(--n1);color:#fff;padding:7px 5px;border:1px solid var(--n1);font-size:10.5px;text-align:center}
 .pr-table td{padding:6px 5px;border:1px solid #bbb;text-align:center;vertical-align:middle}
+.pr-table td.dtc{direction:ltr;unicode-bidi:isolate}
 .pr-table tr:nth-child(even){background:#f8fafc}
 .pr-sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;padding:10px;background:var(--sil);border:1px solid var(--sil2);border-radius:10px;text-align:center}
 .pr-sum b{display:block;font-family:'Changa';direction:ltr;color:var(--n1)}
@@ -143,7 +145,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 </defs></svg>
 <header><div class="h-in">
 <svg class="dia"><use href="#dia"/></svg>
-<div class="h-t"><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><small>نظام الصرفيات والسلف — إدارة الاستثمارية (٢٠٢ / ٣٢٨)</small></div>
+<div class="h-t"><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><small>نظام الصرفيات والسلف — إدارة الاستثمارية (٢٠٢٨ / ٣٢٨)</small></div>
 <div class="h-x">
 <button class="iconbtn" id="csvBtn" title="تصدير ملوّن">⬇</button>
 <button class="iconbtn" id="printBtn" title="طباعة">🖨</button>
@@ -277,11 +279,11 @@ $('#pgCount').textContent=rows.length+' حركة معروضة';
 $('#pgWrap').innerHTML=tableHTML(rows,'لا نتائج مطابقة');
 var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});
 var day=$('#pgDay').value;
-var dl=day?'<span class="dl">'+fmtD(day)+'</span>':'كل الأيام';
+if(day){var dl='<span class="dl">'+fmtD(day)+'</span>';
 $('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — يوم '+dl+'</small><b>'+money(ss)+'</b></div>'
 +'<div class="b s2"><small>سلف — يوم '+dl+'</small><b>'+money(sl)+'</b></div>'
-+'<div class="b s3"><small>الإجمالي — يوم '+dl+'</small><b>'+money(ss+sl)+'</b></div>';
-if(!day){$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — كل الأيام</small><b>'+money(ss)+'</b></div>'
++'<div class="b s3"><small>الإجمالي — يوم '+dl+'</small><b>'+money(ss+sl)+'</b></div>'}
+else{$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — كل الأيام</small><b>'+money(ss)+'</b></div>'
 +'<div class="b s2"><small>سلف — كل الأيام</small><b>'+money(sl)+'</b></div>'
 +'<div class="b s3"><small>الإجمالي — كل الأيام</small><b>'+money(ss+sl)+'</b></div>'}}
 function openPage(){renderPage();$('#page').classList.add('show');lock()}
@@ -296,7 +298,7 @@ $('#detHead').style.background=r.type==='site'?'linear-gradient(135deg,#0f2a6b,#
 $('#detBody').innerHTML=
 '<div class="d-it"><small>التسلسل (ت)</small><b>'+ser+'</b></div>'
 +'<div class="d-it"><small>النوع</small><span class="pill '+r.type+'">'+typeName(r.type)+'</span></div>'
-+'<div class="d-it full"><small>التاريخ</small><b class="dtc" style="direction:ltr">'+fmtD(r.date)+'</b></div>'
++'<div class="d-it full"><small>التاريخ</small><b class="dtc" style="direction:ltr;unicode-bidi:isolate">'+fmtD(r.date)+'</b></div>'
 +'<div class="d-it full"><small>اسم المستلم</small><b>'+esc(r.name)+'</b></div>'
 +'<div class="d-it full"><small>التفاصيل</small><b>'+esc(r.details||'—')+'</b></div>'
 +'<div class="d-it full"><small>المبلغ (د.ع.)</small><span class="big">'+money(r.amount)+'</span></div>';
@@ -347,6 +349,7 @@ var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوه�
 +'table{border-collapse:collapse;width:100%}'
 +'th{background:#1e40af;color:#fff;border:1px solid #1e40af;padding:8px 6px;text-align:center;font-size:12px}'
 +'td{border:1px solid #9fb2a4;padding:7px 6px;text-align:center;font-size:12px;vertical-align:middle}'
++'td.dtc{direction:ltr;unicode-bidi:isolate}'
 +'tr:nth-child(even) td{background:#f8fafc}'
 +'.sum td{background:#eef2f7;font-weight:bold;color:#0f2a6b}'
 +'.amt{direction:ltr;font-weight:bold}'
@@ -355,7 +358,7 @@ var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوه�
 +'<div class="s">كشف الصرفيات والسلف — '+lbl+' — عدد الحركات: '+rows.length+'</div>'
 +'<table><thead><tr><th>ت</th><th>التاريخ</th><th>النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th>المبلغ (د.ع.)</th></tr></thead><tbody>';
 for(var i=0;i<rows.length;i++){var r=rows[i];
-h+='<tr><td>'+(i+1)+'</td><td>'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
+h+='<tr><td>'+(i+1)+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
 h+='<tr class="sum"><td colspan="5">مجموع الصرفيات</td><td class="amt">'+moneyFull(S.ss)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">مجموع السلف</td><td class="amt">'+moneyFull(S.sl)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">الإجمالي الكلي</td><td class="amt">'+moneyFull(S.ss+S.sl)+'</td></tr>';
@@ -377,7 +380,7 @@ var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'ك
 var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">كشف الصرفيات والسلف — '+lbl+'</div></div>'
 +'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:86px">التاريخ</th><th style="width:80px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
 for(var i=0;i<rows.length;i++){var r=rows[i];
-html+='<tr><td>'+(i+1)+'</td><td>'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'}
+html+='<tr><td>'+(i+1)+'</td><td class="dtc">'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'}
 html+='</tbody></table>'
 +'<div class="pr-sum"><div><small>مجموع الصرفيات</small><b>'+moneyFull(S.ss)+'</b></div><div><small>مجموع السلف</small><b>'+moneyFull(S.sl)+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(S.ss+S.sl)+'</b></div></div>'
 +'<div class="pr-foot">العنوان: الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة · م: 07866994044 · aljwhrtshrkt9@gmail.com</div>';
