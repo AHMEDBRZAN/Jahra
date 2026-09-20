@@ -45,7 +45,7 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .tbl tbody tr:active td{background:#e8eef8}
 .tbl td .de{font-size:11px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
 .tbl .am{font-family:'Changa';font-weight:800;direction:ltr;color:var(--n1);white-space:nowrap}
-.tbl .dtc{direction:ltr;white-space:nowrap;color:var(--mut);font-weight:700;font-size:11.5px}
+.tbl .dtc{direction:ltr;unicode-bidi:isolate;white-space:nowrap;color:var(--mut);font-weight:700;font-size:11.5px}
 .pill{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
 .pill.site{background:rgba(59,130,246,.12);color:var(--n2)}
 .pill.salaf{background:rgba(100,116,139,.15);color:#475569}
@@ -75,6 +75,7 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .pg-sum .b{background:#fff;border:1px solid var(--sil2);border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 12px rgba(15,42,107,.06)}
 .pg-sum .b b{display:block;font-family:'Changa';font-size:16px;direction:ltr}
 .pg-sum .b small{font-size:10.5px;color:var(--mut);font-weight:700}
+.pg-sum .b .dl{direction:ltr;unicode-bidi:isolate;font-weight:800;color:var(--n1)}
 .pg-sum .b.s1 b{color:var(--n2)}.pg-sum .b.s2 b{color:#475569}.pg-sum .b.s3 b{color:var(--n1)}
 .ov{position:fixed;inset:0;background:rgba(11,21,48,.55);backdrop-filter:blur(4px);display:none;z-index:200;padding:14px;overflow:auto}
 .ov.show{display:flex}
@@ -142,7 +143,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 </defs></svg>
 <header><div class="h-in">
 <svg class="dia"><use href="#dia"/></svg>
-<div class="h-t"><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><small>نظام الصرفيات والسلف — إدارة الاستثمارية (٢٠٢٨ / ٣٢٨)</small></div>
+<div class="h-t"><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><small>نظام الصرفيات والسلف — إدارة الاستثمارية (٢٠٢ / ٣٢٨)</small></div>
 <div class="h-x">
 <button class="iconbtn" id="csvBtn" title="تصدير ملوّن">⬇</button>
 <button class="iconbtn" id="printBtn" title="طباعة">🖨</button>
@@ -275,10 +276,14 @@ var rows=pageRows();
 $('#pgCount').textContent=rows.length+' حركة معروضة';
 $('#pgWrap').innerHTML=tableHTML(rows,'لا نتائج مطابقة');
 var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});
-var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
-$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — '+lbl+'</small><b>'+money(ss)+'</b></div>'
-+'<div class="b s2"><small>سلف — '+lbl+'</small><b>'+money(sl)+'</b></div>'
-+'<div class="b s3"><small>الإجمالي — '+lbl+'</small><b>'+money(ss+sl)+'</b></div>'}
+var day=$('#pgDay').value;
+var dl=day?'<span class="dl">'+fmtD(day)+'</span>':'كل الأيام';
+$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — يوم '+dl+'</small><b>'+money(ss)+'</b></div>'
++'<div class="b s2"><small>سلف — يوم '+dl+'</small><b>'+money(sl)+'</b></div>'
++'<div class="b s3"><small>الإجمالي — يوم '+dl+'</small><b>'+money(ss+sl)+'</b></div>';
+if(!day){$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — كل الأيام</small><b>'+money(ss)+'</b></div>'
++'<div class="b s2"><small>سلف — كل الأيام</small><b>'+money(sl)+'</b></div>'
++'<div class="b s3"><small>الإجمالي — كل الأيام</small><b>'+money(ss+sl)+'</b></div>'}}
 function openPage(){renderPage();$('#page').classList.add('show');lock()}
 function closePage(){$('#page').classList.remove('show');unlock()}
 $('#moreBtn').onclick=openPage;
