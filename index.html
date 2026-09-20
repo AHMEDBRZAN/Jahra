@@ -41,7 +41,6 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .tbl th{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;font-size:11px;padding:10px 6px;font-weight:700;text-align:center;white-space:nowrap}
 .tbl td{padding:9px 6px;font-size:12.5px;border-top:1px solid var(--sil2);text-align:center;vertical-align:middle}
 .tbl tbody tr:nth-child(even) td{background:#f8fafc}
-.tbl td.nm-c{text-align:right}
 .tbl td .de{font-size:11px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
 .tbl .am{font-family:'Changa';font-weight:800;direction:ltr;color:var(--n1);white-space:nowrap}
 .tbl .dtc{direction:ltr;white-space:nowrap;color:var(--mut);font-weight:700;font-size:11.5px}
@@ -66,13 +65,19 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .pg-head .c{font-size:11px;opacity:.85;display:block}
 .pg-body{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
 .pg-bar{background:#fff;border:1px solid var(--sil2);border-radius:16px;padding:10px;display:flex;gap:8px;flex-wrap:wrap}
-.seg{display:flex;background:var(--sil);border:1px solid var(--sil2);border-radius:13px;padding:3px;gap:3px;flex:1;min-width:190px}
+.seg{display:flex;background:var(--sil);border:1px solid var(--sil2);border-radius:13px;padding:3px;gap:3px;flex:1;min-width:170px}
 .seg button{flex:1;border:0;background:transparent;color:var(--mut);padding:9px 4px;border-radius:10px;font-weight:700;font-size:12px;cursor:pointer}
 .seg button.on{background:linear-gradient(135deg,var(--n2),var(--n3));color:#fff}
+.day-sel{flex:1;min-width:140px;padding:10px;border:1.5px solid var(--sil2);border-radius:12px;background:#fbfcff;font-weight:700;color:var(--n1)}
 .srch{flex:1;min-width:150px;position:relative}
 .srch input{width:100%;padding:10px 34px 10px 12px;border:1.5px solid var(--sil2);border-radius:12px;background:#fbfcff}
 .srch input:focus{outline:none;border-color:var(--n3)}
 .srch svg{position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);color:var(--mut);pointer-events:none}
+.pg-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.pg-sum .b{background:#fff;border:1px solid var(--sil2);border-radius:14px;padding:10px;text-align:center;box-shadow:0 4px 12px rgba(15,42,107,.06)}
+.pg-sum .b b{display:block;font-family:'Changa';font-size:16px;direction:ltr}
+.pg-sum .b small{font-size:10.5px;color:var(--mut);font-weight:700}
+.pg-sum .b.s1 b{color:var(--n2)}.pg-sum .b.s2 b{color:#475569}.pg-sum .b.s3 b{color:var(--n1)}
 .ov{position:fixed;inset:0;background:rgba(11,21,48,.55);backdrop-filter:blur(4px);display:none;z-index:200;padding:14px;overflow:auto}
 .ov.show{display:flex}
 .modal{margin:auto;width:min(480px,100%);background:#fff;border-radius:22px;overflow:hidden;animation:pop .3s;box-shadow:0 24px 60px rgba(11,21,48,.35)}
@@ -98,23 +103,22 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .toast .prog{position:absolute;bottom:0;left:0;height:3px;background:var(--n4);width:0}
 .toast.show .prog{animation:prog linear forwards}
 .pr-wrap{display:none}
-@media(max-width:560px){.stats{grid-template-columns:1fr}.foot{flex-direction:column;text-align:center;gap:5px}.tbl td .de{max-width:120px}.tbl th,.tbl td{padding:8px 4px;font-size:11.5px}}
+@media(max-width:560px){.stats{grid-template-columns:1fr}.foot{flex-direction:column;text-align:center;gap:5px}.tbl td .de{max-width:120px}.tbl th,.tbl td{padding:8px 4px;font-size:11.5px}.pg-sum{grid-template-columns:1fr}}
 @media print{
 @page{size:A4;margin:12mm}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
 body{background:#fff!important}
 header,.wrap,#fab,.toast,.page,.ov{display:none!important}
-.pr-wrap{display:block!important}
+.pr-wrap{display:block!important;text-align:center}
 .pr-head{text-align:center;border-bottom:3px double var(--n2);padding-bottom:12px;margin-bottom:14px}
 .pr-head .dia{margin:0 auto 6px;width:60px;height:60px}
 .pr-head h1{font-family:'Changa';font-size:21px;color:var(--n1)}
 .pr-head .en{font-size:10px;letter-spacing:2px;color:var(--n2)}
 .pr-head .sub{font-size:11px;color:var(--mut);margin-top:4px}
 .pr-table{width:100%;border-collapse:collapse;font-size:11px}
-.pr-table th{background:var(--n1);color:#fff;padding:7px 5px;border:1px solid var(--n1);font-size:10.5px}
-.pr-table td{padding:6px 5px;border:1px solid #bbb;text-align:center}
+.pr-table th{background:var(--n1);color:#fff;padding:7px 5px;border:1px solid var(--n1);font-size:10.5px;text-align:center}
+.pr-table td{padding:6px 5px;border:1px solid #bbb;text-align:center;vertical-align:middle}
 .pr-table tr:nth-child(even){background:#f8fafc}
-.pr-table .ltr{direction:ltr}
 .pr-sum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;padding:10px;background:var(--sil);border:1px solid var(--sil2);border-radius:10px;text-align:center}
 .pr-sum b{display:block;font-family:'Changa';direction:ltr;color:var(--n1)}
 .pr-sum small{font-size:10px;color:var(--mut)}
@@ -131,7 +135,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 <svg class="dia"><use href="#dia"/></svg>
 <div class="h-t"><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><small>نظام الصرفيات والسلف — إدارة الاستثمارية (٢٠٢٨ / ٣٢٨)</small></div>
 <div class="h-x">
-<button class="iconbtn" id="csvBtn" title="تصدير CSV">⬇</button>
+<button class="iconbtn" id="csvBtn" title="تصدير ملوّن">⬇</button>
 <button class="iconbtn" id="printBtn" title="طباعة">🖨</button>
 </div>
 </div></header>
@@ -159,15 +163,17 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 <div class="pg-bar">
 <div class="seg">
 <button data-f="all" class="on">الكل</button>
-<button data-f="site">صرفيات الموقع</button>
-<button data-f="salaf">السلف</button>
+<button data-f="site">صرفيات</button>
+<button data-f="salaf">سلف</button>
 </div>
+<select id="pgDay" class="day-sel"></select>
 <div class="srch">
 <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" stroke-width="2"/></svg>
-<input id="pgQ" type="search" placeholder="بحث بالاسم أو التفاصيل…">
+<input id="pgQ" type="search" placeholder="بحث…">
 </div>
 </div>
 <div class="tw2" id="pgWrap"></div>
+<div class="pg-sum" id="pgSum"></div>
 </div>
 </div>
 <button id="fab" type="button" title="إضافة">+</button>
@@ -227,7 +233,7 @@ var h='<table class="tbl"><thead><tr><th style="width:34px">ت</th><th style="wi
 for(var i=0;i<list.length;i++){var r=list[i];
 h+='<tr><td>'+ser[r.id]+'</td>'
 +'<td class="dtc">'+fmtD(r.date)+'</td>'
-+'<td class="nm-c"><b>'+esc(r.name)+'</b><span class="badge '+r.type+'">'+(r.type==='site'?'صرفيات':'سلفة')+'</span>'+(r.details?'<div class="de">'+esc(r.details)+'</div>':'')+'</td>'
++'<td><b>'+esc(r.name)+'</b><span class="badge '+r.type+'">'+(r.type==='site'?'صرفيات':'سلفة')+'</span>'+(r.details?'<div class="de">'+esc(r.details)+'</div>':'')+'</td>'
 +'<td><span class="am">'+money(r.amount)+'</span></td>'
 +'<td><button class="mini" data-e="'+r.id+'" type="button" title="تعديل">✏️</button></td></tr>'}
 return h+'</tbody></table>'}
@@ -240,16 +246,30 @@ var ser=serialMap();var list=desc().slice(0,5);
 $('#homeHint').textContent=TX.length?('آخر '+list.length+' من '+TX.length):'';
 $('#homeWrap').innerHTML=tableHTML(list,ser,'لا توجد حركات بعد — اضغط زر + للإضافة');
 $('#moreBtn').style.display=TX.length?'block':'none'}
-function renderPage(){
-var ser=serialMap();
-var rows=desc().filter(function(r){return filter==='all'||r.type===filter}).filter(function(r){if(!q)return true;return ((r.name||'')+' '+(r.details||'')).toLowerCase().indexOf(q)>=0});
+function fillDays(){var cur=$('#pgDay').value;var days=[],seen={};
+TX.forEach(function(r){if(!seen[r.date]){seen[r.date]=1;days.push(r.date)}});
+days.sort(function(a,b){return b.localeCompare(a)});
+$('#pgDay').innerHTML='<option value="">كل الأيام</option>'+days.map(function(d){return '<option value="'+d+'">'+fmtD(d)+'</option>'}).join('');
+$('#pgDay').value=cur||''}
+function pageRows(){var day=$('#pgDay').value;
+return desc().filter(function(r){return filter==='all'||r.type===filter})
+.filter(function(r){return day?r.date===day:true})
+.filter(function(r){if(!q)return true;return ((r.name||'')+' '+(r.details||'')).toLowerCase().indexOf(q)>=0})}
+function renderPage(){fillDays();
+var rows=pageRows();var ser=serialMap();
 $('#pgCount').textContent=rows.length+' حركة معروضة';
-$('#pgWrap').innerHTML=tableHTML(rows,ser,'لا نتائج مطابقة')}
+$('#pgWrap').innerHTML=tableHTML(rows,ser,'لا نتائج مطابقة');
+var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});
+var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
+$('#pgSum').innerHTML='<div class="b s1"><small>صرفيات — '+lbl+'</small><b>'+money(ss)+'</b></div>'
++'<div class="b s2"><small>سلف — '+lbl+'</small><b>'+money(sl)+'</b></div>'
++'<div class="b s3"><small>الإجمالي — '+lbl+'</small><b>'+money(ss+sl)+'</b></div>'}
 function openPage(){renderPage();$('#page').classList.add('show');lock()}
 function closePage(){$('#page').classList.remove('show');unlock()}
 $('#moreBtn').onclick=openPage;
 $('#backBtn').onclick=closePage;
 $$('.seg button').forEach(function(b){b.onclick=function(){$$('.seg button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');filter=b.getAttribute('data-f');renderPage()}});
+$('#pgDay').onchange=renderPage;
 $('#pgQ').addEventListener('input',function(){q=this.value.trim().toLowerCase();renderPage()});
 $('#homeWrap').addEventListener('click',function(e){var b=e.target.closest('[data-e]');if(b)openEdit(+b.getAttribute('data-e'))});
 $('#pgWrap').addEventListener('click',function(e){var b=e.target.closest('[data-e]');if(b)openEdit(+b.getAttribute('data-e'))});
@@ -268,11 +288,11 @@ if(!iso){showToast('⚠️ أدخل تاريخًا صحيحًا (20-9-2026)');$(
 var rec={type:$('#fType').value,name:nm,details:$('#fDet').value.trim(),amount:am,date:iso};
 if(editId){for(var i=0;i<TX.length;i++)if(TX[i].id==editId){rec.id=editId;TX[i]=rec}showToast('✅ تم التعديل')}
 else{rec.id=Date.now();TX.push(rec);showToast('✅ تمت الإضافة: '+nm+' — '+money(am)+' د.ع.')}
-save();renderHome();renderPage();hideOv($('#formOv'))};
+save();renderHome();if($('#page').classList.contains('show'))renderPage();hideOv($('#formOv'))};
 $('#fDelete').onclick=function(){
 var id=editId;var r=null;for(var i=0;i<TX.length;i++)if(TX[i].id==id)r=TX[i];if(!r)return;
 $('#cfMsg').textContent='حذف حركة «'+r.name+'» بمبلغ '+money(r.amount)+' د.ع. نهائيًا؟';
-cfCb=function(){TX=TX.filter(function(x){return x.id!=id});save();renderHome();renderPage();hideOv($('#formOv'));showToast('🗑 تم الحذف')};
+cfCb=function(){TX=TX.filter(function(x){return x.id!=id});save();renderHome();if($('#page').classList.contains('show'))renderPage();hideOv($('#formOv'));showToast('🗑 تم الحذف')};
 showOv($('#cfOv'))};
 $('#cfYes').onclick=function(){hideOv($('#cfOv'));if(cfCb)cfCb();cfCb=null};
 $('#cfNo').onclick=function(){hideOv($('#cfOv'));cfCb=null};
@@ -283,17 +303,47 @@ else if($('#formOv').classList.contains('show'))hideOv($('#formOv'))
 else if($('#page').classList.contains('show'))closePage()}
 if(e.key==='Enter'&&$('#formOv').classList.contains('show')){var ae=document.activeElement;if(ae&&ae.tagName!=='BUTTON')$('#fSave').click()}});
 ['fName','fDet','fAmt','fDate'].forEach(function(id,i,arr){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(i<arr.length-1)$('#'+arr[i+1]).focus();else $('#fSave').click()}})});
-$('#csvBtn').onclick=function(){if(!TX.length){showToast('⚠️ لا بيانات للتصدير');return}
-var ser=serialMap();var csv='\uFEFFت,التاريخ,النوع,اسم المستلم,التفاصيل,المبلغ (د.ع.)\n';
-TX.slice().forEach(function(r){csv+=[ser[r.id],fmtD(r.date),r.type==='site'?'صرفيات الموقع':'سلفة',r.name,r.details||'',r.amount].map(function(x){return '"'+String(x==null?'':x).replace(/"/g,'""').replace(/\n/g,' ')+'"'}).join(',')+'\n'});
-var blob=new Blob([csv],{type:'text/csv;charset=utf-8'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='الجوهره-الصرفيات-والسلف-'+dstr(new Date())+'.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(a.href)},100);showToast('✅ تم التصدير')};
-$('#printBtn').onclick=function(){if(!TX.length){showToast('⚠️ لا بيانات للطباعة');return}
-var ser=serialMap();var rows=TX.slice();
-var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">إدارة الاستثمارية (٢٠٢٨ / ٣٢٨) — كشف الصرفيات والسلف</div></div>'
+function reportRows(){return pageRows()}
+function sums(rows){var ss=0,sl=0;rows.forEach(function(r){if(r.type==='site')ss+=(+r.amount||0);else sl+=(+r.amount||0)});return{ss:ss,sl:sl}}
+function buildReportHTML(rows,ser){var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
+var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوهره</title><style>'
++'body{font-family:Tahoma,Arial,sans-serif;text-align:center;background:#fff;margin:14px}'
++'.t{font-size:20px;font-weight:bold;color:#0f2a6b}.s{font-size:11px;color:#64748b;margin-bottom:10px}'
++'table{border-collapse:collapse;width:100%}'
++'th{background:#1e40af;color:#fff;border:1px solid #1e40af;padding:8px 6px;text-align:center;font-size:12px}'
++'td{border:1px solid #9fb2a4;padding:7px 6px;text-align:center;font-size:12px;vertical-align:middle}'
++'tr:nth-child(even) td{background:#f8fafc}'
++'.sum td{background:#eef2f7;font-weight:bold;color:#0f2a6b}'
++'.amt{direction:ltr;font-weight:bold}'
++'</style></head><body>'
++'<div class="t">مجمع الجوهره السكني — AL JAWHARA RESIDENTIAL COMPLEX</div>'
++'<div class="s">كشف الصرفيات والسلف — '+lbl+' — عدد الحركات: '+rows.length+'</div>'
++'<table><thead><tr><th>ت</th><th>التاريخ</th><th>النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th>المبلغ (د.ع.)</th></tr></thead><tbody>';
+for(var i=0;i<rows.length;i++){var r=rows[i];
+h+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+(r.type==='site'?'صرفيات':'سلفة')+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
+h+='<tr class="sum"><td colspan="5">مجموع الصرفيات</td><td class="amt">'+moneyFull(S.ss)+'</td></tr>';
+h+='<tr class="sum"><td colspan="5">مجموع السلف</td><td class="amt">'+moneyFull(S.sl)+'</td></tr>';
+h+='<tr class="sum"><td colspan="5">الإجمالي الكلي</td><td class="amt">'+moneyFull(S.ss+S.sl)+'</td></tr>';
+h+='</tbody></table>'
++'<div class="s" style="margin-top:12px">العنوان: الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة · م: 07866994044 · aljwhrtshrkt9@gmail.com</div>'
++'</body></html>';
+return h}
+$('#csvBtn').onclick=function(){var rows=reportRows();if(!rows.length){showToast('⚠️ لا بيانات للتصدير');return}
+var ser=serialMap();var html=buildReportHTML(rows,ser);
+var blob=new Blob(['\uFEFF'+html],{type:'application/vnd.ms-excel;charset=utf-8'});
+var a=document.createElement('a');a.href=URL.createObjectURL(blob);
+var day=$('#pgDay').value;
+a.download='تقرير-الجوهره-'+(day?fmtD(day):'الكل')+'.xls';
+document.body.appendChild(a);a.click();document.body.removeChild(a);
+setTimeout(function(){URL.revokeObjectURL(a.href)},100);
+showToast('✅ تم التصدير ملوّنًا — يفتح في Excel')};
+$('#printBtn').onclick=function(){var rows=reportRows();if(!rows.length){showToast('⚠️ لا بيانات للطباعة');return}
+var ser=serialMap();var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
+var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">كشف الصرفيات والسلف — '+lbl+'</div></div>'
 +'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:80px">التاريخ</th><th style="width:70px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
-rows.forEach(function(r){html+='<tr><td>'+ser[r.id]+'</td><td class="ltr">'+fmtD(r.date)+'</td><td>'+(r.type==='site'?'صرفيات':'سلفة')+'</td><td style="text-align:right">'+esc(r.name)+'</td><td style="text-align:right">'+esc(r.details||'—')+'</td><td class="ltr">'+moneyFull(r.amount)+'</td></tr>'});
+rows.forEach(function(r){html+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+(r.type==='site'?'صرفيات':'سلفة')+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'});
 html+='</tbody></table>'
-+'<div class="pr-sum"><div><small>صرفيات الموقع</small><b>'+moneyFull(sum('site'))+'</b></div><div><small>السلف</small><b>'+moneyFull(sum('salaf'))+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(sum('site')+sum('salaf'))+'</b></div></div>'
++'<div class="pr-sum"><div><small>مجموع الصرفيات</small><b>'+moneyFull(S.ss)+'</b></div><div><small>مجموع السلف</small><b>'+moneyFull(S.sl)+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(S.ss+S.sl)+'</b></div></div>'
 +'<div class="pr-foot">العنوان: الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة · م: 07866994044 · aljwhrtshrkt9@gmail.com</div>';
 $('#prWrap').innerHTML=html;setTimeout(function(){window.print()},200)};
 window.addEventListener('afterprint',function(){$('#prWrap').innerHTML=''});
