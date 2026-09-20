@@ -200,7 +200,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 <div class="field"><label>التفاصيل</label><input id="fDet" type="text" placeholder="التفاصيل…" autocomplete="off" enterkeyhint="next"></div>
 <div class="field"><label>المبلغ (د.ع.)</label><input id="fAmt" class="amt-in" type="text" inputmode="numeric" placeholder="0" enterkeyhint="next"></div>
 <div class="field"><label>التاريخ (يوم-شهر-سنة)</label>
-<div class="date-row"><input id="fDate" type="text" inputmode="numeric" placeholder="20-9-2026" enterkeyhint="done"><button class="today-btn" id="fToday" type="button">اليوم</button></div></div>
+<div class="date-row"><input id="fDate" type="text" inputmode="numeric" placeholder="20-09-2026" enterkeyhint="done"><button class="today-btn" id="fToday" type="button">اليوم</button></div></div>
 <button class="btn-save" id="fSave" type="button">💾 حفظ</button>
 <button class="btn-del" id="fDelete" type="button">🗑 حذف هذه الحركة</button>
 </div>
@@ -222,7 +222,7 @@ function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
 function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 var TODAY=dstr(new Date());
-function fmtD(iso){if(!iso)return '—';var p=String(iso).split('-');if(p.length!==3)return '—';return (+p[2])+'-'+(+p[1])+'-'+p[0]}
+function fmtD(iso){if(!iso)return '—';var p=String(iso).split('-');if(p.length!==3)return '—';return p[2]+'-'+p[1]+'-'+p[0]}
 function parseDateTxt(s){var t=String(s||'').trim().replace(/[\/.\s]/g,'-').split('-').filter(Boolean);if(t.length<3)return null;var a=+t[0],b=+t[1],c=+t[2],y,m,d;
 if(t[0].length===4){y=a;m=b;d=c}else{y=(t[2].length===2?2000+c:c);m=b;d=a}
 if(!y||y<2000||y>2100||m<1||m>12||d<1||d>31)return null;
@@ -245,7 +245,7 @@ function desc(){return TX.slice().sort(function(a,b){return b.id-a.id})}
 function findTx(id){for(var i=0;i<TX.length;i++)if(TX[i].id==id)return TX[i];return null}
 function tableHTML(list,ser,emptyMsg){
 if(!list.length)return '<div class="empty" style="border:none;box-shadow:none"><div class="ei">💎</div><p>'+emptyMsg+'</p></div>';
-var h='<table class="tbl"><thead><tr><th style="width:30px">ت</th><th style="width:82px">التاريخ</th><th style="width:74px">النوع</th><th>اسم المستلم</th><th style="width:92px">المبلغ</th></tr></thead><tbody>';
+var h='<table class="tbl"><thead><tr><th style="width:30px">ت</th><th style="width:86px">التاريخ</th><th style="width:74px">النوع</th><th>اسم المستلم</th><th style="width:92px">المبلغ</th></tr></thead><tbody>';
 for(var i=0;i<list.length;i++){var r=list[i];
 h+='<tr data-id="'+r.id+'"><td>'+ser[r.id]+'</td>'
 +'<td class="dtc">'+fmtD(r.date)+'</td>'
@@ -318,7 +318,7 @@ var nm=$('#fName').value.trim();var dAmt=digitsOnly($('#fAmt').value);var am=dAm
 var iso=parseDateTxt($('#fDate').value);
 if(!nm){showToast('⚠️ أدخل اسم المستلم');$('#fName').focus();return}
 if(isNaN(am)||am<=0){showToast('⚠️ أدخل مبلغًا صحيحًا');$('#fAmt').focus();return}
-if(!iso){showToast('⚠️ أدخل تاريخًا صحيحًا (20-9-2026)');$('#fDate').focus();return}
+if(!iso){showToast('⚠️ أدخل تاريخًا صحيحًا (20-09-2026)');$('#fDate').focus();return}
 var rec={type:$('#fType').value,name:nm,details:$('#fDet').value.trim(),amount:am,date:iso};
 if(editId){for(var i=0;i<TX.length;i++)if(TX[i].id==editId){rec.id=editId;TX[i]=rec}showToast('✅ تم التعديل')}
 else{rec.id=Date.now();TX.push(rec);showToast('✅ تمت الإضافة: '+nm+' — '+money(am)+' د.ع.')}
@@ -371,7 +371,7 @@ showToast('✅ تم التصدير ملوّنًا — يفتح في Excel')};
 $('#printBtn').onclick=function(){var rows=reportRows();if(!rows.length){showToast('⚠️ لا بيانات للطباعة');return}
 var ser=serialMap();var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
 var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">كشف الصرفيات والسلف — '+lbl+'</div></div>'
-+'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:80px">التاريخ</th><th style="width:80px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
++'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:86px">التاريخ</th><th style="width:80px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
 rows.forEach(function(r){html+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'});
 html+='</tbody></table>'
 +'<div class="pr-sum"><div><small>مجموع الصرفيات</small><b>'+moneyFull(S.ss)+'</b></div><div><small>مجموع السلف</small><b>'+moneyFull(S.sl)+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(S.ss+S.sl)+'</b></div></div>'
