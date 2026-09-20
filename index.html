@@ -38,19 +38,17 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .sec-t span{font-size:11px;color:var(--mut);font-family:'IBM Plex Sans Arabic';font-weight:600}
 .tw2{border-radius:16px;overflow:hidden;border:1px solid var(--sil2);box-shadow:0 6px 18px rgba(15,42,107,.08);background:#fff}
 .tbl{width:100%;border-collapse:collapse}
-.tbl th{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;font-size:11px;padding:10px 6px;font-weight:700;text-align:center;white-space:nowrap}
-.tbl td{padding:9px 6px;font-size:12.5px;border-top:1px solid var(--sil2);text-align:center;vertical-align:middle}
+.tbl th{background:linear-gradient(135deg,var(--n1),var(--n2));color:#fff;font-size:11px;padding:10px 5px;font-weight:700;text-align:center;white-space:nowrap}
+.tbl td{padding:9px 5px;font-size:12.5px;border-top:1px solid var(--sil2);text-align:center;vertical-align:middle}
+.tbl tbody tr{cursor:pointer}
 .tbl tbody tr:nth-child(even) td{background:#f8fafc}
-.tbl td .de{font-size:11px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+.tbl tbody tr:active td{background:#e8eef8}
+.tbl td .de{font-size:11px;color:var(--mut);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:200px}
 .tbl .am{font-family:'Changa';font-weight:800;direction:ltr;color:var(--n1);white-space:nowrap}
 .tbl .dtc{direction:ltr;white-space:nowrap;color:var(--mut);font-weight:700;font-size:11.5px}
-.badge{font-size:9.5px;font-weight:700;padding:2px 7px;border-radius:99px;margin-inline-start:4px}
-.badge.site{background:rgba(59,130,246,.12);color:var(--n2)}
-.badge.salaf{background:rgba(100,116,139,.14);color:#475569}
-.mini{width:34px;height:34px;border-radius:10px;border:1px solid var(--sil2);background:#fbfcff;cursor:pointer;font-size:14px;display:grid;place-items:center}
-.mini:active{background:var(--sil);transform:scale(.92)}
-.more{width:100%;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--n2),var(--n4));color:#fff;font-family:'Changa';font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(30,64,175,.3)}
-.more:active{transform:scale(.98)}
+.pill{display:inline-block;font-size:10px;font-weight:700;padding:3px 9px;border-radius:99px;white-space:nowrap}
+.pill.site{background:rgba(59,130,246,.12);color:var(--n2)}
+.pill.salaf{background:rgba(100,116,139,.15);color:#475569}
 .empty{background:#fff;border:1px dashed var(--sil2);border-radius:18px;padding:36px;text-align:center;color:var(--mut)}
 .empty .ei{font-size:40px;margin-bottom:8px}
 .foot{background:linear-gradient(135deg,var(--n2),var(--n3));color:#fff;border-radius:18px;padding:13px 16px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;font-size:10.5px}
@@ -84,6 +82,17 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .m-head{padding:15px 16px;color:#fff;font-family:'Changa';font-size:16px;font-weight:800;background:linear-gradient(135deg,var(--n1),var(--n2) 60%,var(--n3));display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--sil2)}
 .m-x{background:rgba(255,255,255,.16);border:none;color:#fff;width:32px;height:32px;border-radius:10px;cursor:pointer;font-size:16px}
 .m-body{padding:16px;display:grid;gap:13px}
+.m-foot{display:flex;gap:8px;padding:0 16px 16px}
+.m-foot button{flex:1;border:none;border-radius:12px;padding:12px;font-weight:700;cursor:pointer;font-size:13px}
+#dEdit{background:linear-gradient(135deg,var(--n2),var(--n3));color:#fff}
+#dDel{background:linear-gradient(135deg,#b91c1c,var(--red));color:#fff}
+#dClose{background:#fff;border:1.5px solid var(--sil2);color:var(--mut)}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.d-it{background:#f8fafc;border:1px solid var(--sil2);border-radius:12px;padding:10px;text-align:center}
+.d-it.full{grid-column:1/-1}
+.d-it small{display:block;font-size:10.5px;color:var(--mut);font-weight:700;margin-bottom:4px}
+.d-it b{font-size:13.5px;word-break:break-word}
+.d-it .big{font-family:'Changa';font-size:21px;font-weight:800;color:var(--n1);direction:ltr}
 .logo-c{display:flex;align-items:center;gap:10px;justify-content:center;font-family:'Changa';font-weight:800;font-size:15px;color:var(--n2)}
 .logo-c .dia{width:38px;height:38px}
 .field label{display:block;font-size:12px;font-weight:700;color:var(--mut);margin-bottom:5px}
@@ -95,7 +104,7 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .today-btn{flex-shrink:0;padding:0 14px;border:1.5px solid var(--sil2);border-radius:13px;background:var(--sil);color:var(--n2);font-weight:700;font-size:12px;cursor:pointer}
 .btn-save{width:100%;padding:14px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--n2),var(--n4));color:#fff;font-family:'Changa';font-size:16px;font-weight:800;cursor:pointer}
 .btn-del{width:100%;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,#b91c1c,var(--red));color:#fff;font-family:'Changa';font-size:15px;font-weight:800;cursor:pointer;display:none}
-.m-foot{display:flex;gap:10px;justify-content:flex-end;padding:0 16px 16px}
+.cf-foot{display:flex;gap:10px;justify-content:flex-end;padding:0 16px 16px}
 .btn-c{background:#fff;border:1.5px solid var(--sil2);padding:11px 20px;border-radius:12px;cursor:pointer;font-weight:600;color:var(--mut)}
 .btn-d{background:linear-gradient(135deg,#b91c1c,var(--red));color:#fff;border:none;padding:11px 22px;border-radius:12px;font-weight:700;cursor:pointer}
 .toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,90px);background:var(--n1);color:#fff;padding:12px 20px;border-radius:14px;font-size:13px;font-weight:600;box-shadow:0 14px 34px rgba(0,0,0,.3);border-inline-start:4px solid var(--n4);z-index:999;transition:.35s;max-width:90vw;opacity:0;pointer-events:none}
@@ -103,7 +112,7 @@ header{background:linear-gradient(135deg,var(--n1),var(--n2) 55%,var(--n3));colo
 .toast .prog{position:absolute;bottom:0;left:0;height:3px;background:var(--n4);width:0}
 .toast.show .prog{animation:prog linear forwards}
 .pr-wrap{display:none}
-@media(max-width:560px){.stats{grid-template-columns:1fr}.foot{flex-direction:column;text-align:center;gap:5px}.tbl td .de{max-width:120px}.tbl th,.tbl td{padding:8px 4px;font-size:11.5px}.pg-sum{grid-template-columns:1fr}}
+@media(max-width:560px){.stats{grid-template-columns:1fr}.foot{flex-direction:column;text-align:center;gap:5px}.tbl td .de{max-width:110px}.tbl th,.tbl td{padding:8px 3px;font-size:11px}.pg-sum{grid-template-columns:1fr}.d-grid{grid-template-columns:1fr}}
 @media print{
 @page{size:A4;margin:12mm}
 *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
@@ -147,7 +156,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 </section>
 <div class="sec-t"><b>آخر الإضافات</b><span id="homeHint"></span></div>
 <div class="tw2" id="homeWrap"></div>
-<button class="more" id="moreBtn" type="button">عرض المزيد — البيانات</button>
+<button class="more" id="moreBtn" type="button" style="width:100%;padding:13px;border:none;border-radius:14px;background:linear-gradient(135deg,var(--n2),var(--n4));color:#fff;font-family:'Changa';font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(30,64,175,.3)">عرض المزيد — البيانات</button>
 <div class="foot">
 <span><b>العنوان:</b> الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة</span>
 <span><b>E-mail:</b> aljwhrtshrkt9@gmail.com</span>
@@ -177,6 +186,11 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 </div>
 </div>
 <button id="fab" type="button" title="إضافة">+</button>
+<div class="ov" id="detOv"><div class="modal" style="width:min(440px,100%)">
+<div class="m-head" id="detHead"><span>📄 تفاصيل الحركة</span><button class="m-x" id="detX" type="button">✕</button></div>
+<div class="m-body"><div class="d-grid" id="detBody"></div></div>
+<div class="m-foot"><button id="dClose" type="button">إغلاق</button><button id="dDel" type="button">🗑 حذف</button><button id="dEdit" type="button">✏️ تعديل</button></div>
+</div></div>
 <div class="ov" id="formOv"><div class="modal">
 <div class="m-head"><span id="formTitle">➕ إضافة حركة جديدة</span><button class="m-x" id="formX" type="button">✕</button></div>
 <div class="m-body">
@@ -194,7 +208,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 <div class="ov" id="cfOv"><div class="modal" style="width:min(400px,100%)">
 <div class="m-head" style="background:linear-gradient(135deg,#b91c1c,#dc2626)"><span>⚠️ تأكيد الحذف</span><button class="m-x" id="cfX" type="button">✕</button></div>
 <div class="m-body"><p id="cfMsg" style="font-size:14px;line-height:1.9"></p></div>
-<div class="m-foot"><button class="btn-c" id="cfNo" type="button">إلغاء</button><button class="btn-d" id="cfYes" type="button">نعم، احذف</button></div>
+<div class="cf-foot"><button class="btn-c" id="cfNo" type="button">إلغاء</button><button class="btn-d" id="cfYes" type="button">نعم، احذف</button></div>
 </div></div>
 <div class="pr-wrap" id="prWrap"></div>
 <div class="toast" id="toast"><span id="toastMsg"></span><div class="prog"></div></div>
@@ -203,7 +217,7 @@ header,.wrap,#fab,.toast,.page,.ov{display:none!important}
 'use strict';
 var KEY='jawhara_v3';
 var TX=[];try{var raw=localStorage.getItem(KEY);if(raw){var p=JSON.parse(raw);if(Array.isArray(p))TX=p;}}catch(e){TX=[]}
-var filter='all',q='',editId=null,cfCb=null,toastTimer=null;
+var filter='all',q='',editId=null,detId=null,cfCb=null,toastTimer=null;
 function $(s){return document.querySelector(s)}
 function $$(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
 function dstr(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
@@ -218,6 +232,7 @@ function moneyFull(n){return (Number(n)||0).toLocaleString('en-US',{maximumFract
 function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function digitsOnly(s){return String(s==null?'':s).replace(/[^\d]/g,'')}
 function fmtNum(s){var d=digitsOnly(s);if(!d)return '';return (+d).toLocaleString('en-US')}
+function typeName(t){return t==='site'?'صرفيات الموقع':'سلفة'}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(TX))}catch(e){showToast('⚠️ فشل الحفظ',3000)}}
 function lock(){document.body.classList.add('locked')}
 function unlock(){if(!document.querySelector('.ov.show')&&!$('#page').classList.contains('show'))document.body.classList.remove('locked')}
@@ -227,15 +242,16 @@ function showToast(msg,dur){dur=dur||2200;var t=$('#toast');$('#toastMsg').textC
 function sum(t){var s=0;for(var i=0;i<TX.length;i++)if(TX[i].type===t)s+=(+TX[i].amount||0);return s}
 function serialMap(){var m={};for(var i=0;i<TX.length;i++)m[TX[i].id]=i+1;return m}
 function desc(){return TX.slice().sort(function(a,b){return b.id-a.id})}
+function findTx(id){for(var i=0;i<TX.length;i++)if(TX[i].id==id)return TX[i];return null}
 function tableHTML(list,ser,emptyMsg){
 if(!list.length)return '<div class="empty" style="border:none;box-shadow:none"><div class="ei">💎</div><p>'+emptyMsg+'</p></div>';
-var h='<table class="tbl"><thead><tr><th style="width:34px">ت</th><th style="width:86px">التاريخ</th><th>اسم المستلم</th><th style="width:96px">المبلغ</th><th style="width:44px">تعديل</th></tr></thead><tbody>';
+var h='<table class="tbl"><thead><tr><th style="width:30px">ت</th><th style="width:82px">التاريخ</th><th style="width:74px">النوع</th><th>اسم المستلم</th><th style="width:92px">المبلغ</th></tr></thead><tbody>';
 for(var i=0;i<list.length;i++){var r=list[i];
-h+='<tr><td>'+ser[r.id]+'</td>'
+h+='<tr data-id="'+r.id+'"><td>'+ser[r.id]+'</td>'
 +'<td class="dtc">'+fmtD(r.date)+'</td>'
-+'<td><b>'+esc(r.name)+'</b><span class="badge '+r.type+'">'+(r.type==='site'?'صرفيات':'سلفة')+'</span>'+(r.details?'<div class="de">'+esc(r.details)+'</div>':'')+'</td>'
-+'<td><span class="am">'+money(r.amount)+'</span></td>'
-+'<td><button class="mini" data-e="'+r.id+'" type="button" title="تعديل">✏️</button></td></tr>'}
++'<td><span class="pill '+r.type+'">'+(r.type==='site'?'صرفيات':'سلفة')+'</span></td>'
++'<td><b>'+esc(r.name)+'</b>'+(r.details?'<div class="de">'+esc(r.details)+'</div>':'')+'</td>'
++'<td><span class="am">'+money(r.amount)+'</span></td></tr>'}
 return h+'</tbody></table>'}
 function renderHome(){
 $('#sSite').textContent=money(sum('site'));
@@ -271,12 +287,30 @@ $('#backBtn').onclick=closePage;
 $$('.seg button').forEach(function(b){b.onclick=function(){$$('.seg button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');filter=b.getAttribute('data-f');renderPage()}});
 $('#pgDay').onchange=renderPage;
 $('#pgQ').addEventListener('input',function(){q=this.value.trim().toLowerCase();renderPage()});
-$('#homeWrap').addEventListener('click',function(e){var b=e.target.closest('[data-e]');if(b)openEdit(+b.getAttribute('data-e'))});
-$('#pgWrap').addEventListener('click',function(e){var b=e.target.closest('[data-e]');if(b)openEdit(+b.getAttribute('data-e'))});
+function openDetail(id){var r=findTx(id);if(!r)return;detId=id;var ser=serialMap();
+$('#detHead').style.background=r.type==='site'?'linear-gradient(135deg,#0f2a6b,#1e40af)':'linear-gradient(135deg,#475569,#8fa0bb)';
+$('#detBody').innerHTML=
+'<div class="d-it"><small>التسلسل (ت)</small><b>'+ser[id]+'</b></div>'
++'<div class="d-it"><small>النوع</small><span class="pill '+r.type+'">'+typeName(r.type)+'</span></div>'
++'<div class="d-it full"><small>التاريخ</small><b class="dtc" style="direction:ltr">'+fmtD(r.date)+'</b></div>'
++'<div class="d-it full"><small>اسم المستلم</small><b>'+esc(r.name)+'</b></div>'
++'<div class="d-it full"><small>التفاصيل</small><b>'+esc(r.details||'—')+'</b></div>'
++'<div class="d-it full"><small>المبلغ (د.ع.)</small><span class="big">'+money(r.amount)+'</span></div>';
+showOv($('#detOv'))}
+$('#homeWrap').addEventListener('click',function(e){var tr=e.target.closest('tr[data-id]');if(tr)openDetail(+tr.getAttribute('data-id'))});
+$('#pgWrap').addEventListener('click',function(e){var tr=e.target.closest('tr[data-id]');if(tr)openDetail(+tr.getAttribute('data-id'))});
+$('#detX').onclick=function(){hideOv($('#detOv'))};
+$('#dClose').onclick=function(){hideOv($('#detOv'))};
+$('#dEdit').onclick=function(){hideOv($('#detOv'));openEdit(detId)};
+$('#dDel').onclick=function(){var id=detId;var r=findTx(id);if(!r)return;hideOv($('#detOv'));askDelete(id)};
+function askDelete(id){var r=findTx(id);if(!r)return;
+$('#cfMsg').textContent='حذف حركة «'+r.name+'» بمبلغ '+money(r.amount)+' د.ع. نهائيًا؟';
+cfCb=function(){TX=TX.filter(function(x){return x.id!=id});save();renderHome();if($('#page').classList.contains('show'))renderPage();showToast('🗑 تم الحذف')};
+showOv($('#cfOv'))}
 $('#fAmt').addEventListener('input',function(){this.value=fmtNum(this.value)});
 $('#fToday').onclick=function(){$('#fDate').value=fmtD(TODAY)};
 function openAdd(){editId=null;$('#formTitle').textContent='➕ إضافة حركة جديدة';$('#fDelete').style.display='none';$('#fType').value='site';$('#fName').value='';$('#fDet').value='';$('#fAmt').value='';$('#fDate').value=fmtD(TODAY);showOv($('#formOv'));setTimeout(function(){$('#fName').focus()},200)}
-function openEdit(id){var r=null;for(var i=0;i<TX.length;i++)if(TX[i].id==id)r=TX[i];if(!r)return;editId=id;$('#formTitle').textContent='✏️ تعديل حركة';$('#fDelete').style.display='block';$('#fType').value=r.type;$('#fName').value=r.name;$('#fDet').value=r.details;$('#fAmt').value=fmtNum(r.amount);$('#fDate').value=fmtD(r.date);showOv($('#formOv'))}
+function openEdit(id){var r=findTx(id);if(!r)return;editId=id;$('#formTitle').textContent='✏️ تعديل حركة';$('#fDelete').style.display='block';$('#fType').value=r.type;$('#fName').value=r.name;$('#fDet').value=r.details;$('#fAmt').value=fmtNum(r.amount);$('#fDate').value=fmtD(r.date);showOv($('#formOv'))}
 $('#fab').onclick=function(e){e.preventDefault();openAdd()};
 $('#formX').onclick=function(){hideOv($('#formOv'))};
 $('#fSave').onclick=function(){
@@ -289,17 +323,14 @@ var rec={type:$('#fType').value,name:nm,details:$('#fDet').value.trim(),amount:a
 if(editId){for(var i=0;i<TX.length;i++)if(TX[i].id==editId){rec.id=editId;TX[i]=rec}showToast('✅ تم التعديل')}
 else{rec.id=Date.now();TX.push(rec);showToast('✅ تمت الإضافة: '+nm+' — '+money(am)+' د.ع.')}
 save();renderHome();if($('#page').classList.contains('show'))renderPage();hideOv($('#formOv'))};
-$('#fDelete').onclick=function(){
-var id=editId;var r=null;for(var i=0;i<TX.length;i++)if(TX[i].id==id)r=TX[i];if(!r)return;
-$('#cfMsg').textContent='حذف حركة «'+r.name+'» بمبلغ '+money(r.amount)+' د.ع. نهائيًا؟';
-cfCb=function(){TX=TX.filter(function(x){return x.id!=id});save();renderHome();if($('#page').classList.contains('show'))renderPage();hideOv($('#formOv'));showToast('🗑 تم الحذف')};
-showOv($('#cfOv'))};
+$('#fDelete').onclick=function(){var id=editId;hideOv($('#formOv'));askDelete(id)};
 $('#cfYes').onclick=function(){hideOv($('#cfOv'));if(cfCb)cfCb();cfCb=null};
 $('#cfNo').onclick=function(){hideOv($('#cfOv'));cfCb=null};
 $('#cfX').onclick=function(){hideOv($('#cfOv'));cfCb=null};
 document.addEventListener('keydown',function(e){
 if(e.key==='Escape'){if($('#cfOv').classList.contains('show')){hideOv($('#cfOv'));cfCb=null}
 else if($('#formOv').classList.contains('show'))hideOv($('#formOv'))
+else if($('#detOv').classList.contains('show'))hideOv($('#detOv'))
 else if($('#page').classList.contains('show'))closePage()}
 if(e.key==='Enter'&&$('#formOv').classList.contains('show')){var ae=document.activeElement;if(ae&&ae.tagName!=='BUTTON')$('#fSave').click()}});
 ['fName','fDet','fAmt','fDate'].forEach(function(id,i,arr){$('#'+id).addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(i<arr.length-1)$('#'+arr[i+1]).focus();else $('#fSave').click()}})});
@@ -320,7 +351,7 @@ var h='<html dir="rtl"><head><meta charset="utf-8"><title>تقرير الجوه�
 +'<div class="s">كشف الصرفيات والسلف — '+lbl+' — عدد الحركات: '+rows.length+'</div>'
 +'<table><thead><tr><th>ت</th><th>التاريخ</th><th>النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th>المبلغ (د.ع.)</th></tr></thead><tbody>';
 for(var i=0;i<rows.length;i++){var r=rows[i];
-h+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+(r.type==='site'?'صرفيات':'سلفة')+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
+h+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td class="amt">'+moneyFull(r.amount)+'</td></tr>'}
 h+='<tr class="sum"><td colspan="5">مجموع الصرفيات</td><td class="amt">'+moneyFull(S.ss)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">مجموع السلف</td><td class="amt">'+moneyFull(S.sl)+'</td></tr>';
 h+='<tr class="sum"><td colspan="5">الإجمالي الكلي</td><td class="amt">'+moneyFull(S.ss+S.sl)+'</td></tr>';
@@ -340,8 +371,8 @@ showToast('✅ تم التصدير ملوّنًا — يفتح في Excel')};
 $('#printBtn').onclick=function(){var rows=reportRows();if(!rows.length){showToast('⚠️ لا بيانات للطباعة');return}
 var ser=serialMap();var S=sums(rows);var day=$('#pgDay').value;var lbl=day?('يوم '+fmtD(day)):'كل الأيام';
 var html='<div class="pr-head"><svg class="dia"><use href="#dia"/></svg><h1>مجمع الجوهره السكني</h1><span class="en">AL JAWHARA RESIDENTIAL COMPLEX</span><div class="sub">كشف الصرفيات والسلف — '+lbl+'</div></div>'
-+'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:80px">التاريخ</th><th style="width:70px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
-rows.forEach(function(r){html+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+(r.type==='site'?'صرفيات':'سلفة')+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'});
++'<table class="pr-table"><thead><tr><th style="width:30px">ت</th><th style="width:80px">التاريخ</th><th style="width:80px">النوع</th><th>اسم المستلم</th><th>التفاصيل</th><th style="width:95px">المبلغ (د.ع.)</th></tr></thead><tbody>';
+rows.forEach(function(r){html+='<tr><td>'+ser[r.id]+'</td><td>'+fmtD(r.date)+'</td><td>'+typeName(r.type)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.details||'—')+'</td><td>'+moneyFull(r.amount)+'</td></tr>'});
 html+='</tbody></table>'
 +'<div class="pr-sum"><div><small>مجموع الصرفيات</small><b>'+moneyFull(S.ss)+'</b></div><div><small>مجموع السلف</small><b>'+moneyFull(S.sl)+'</b></div><div><small>الإجمالي الكلي</small><b>'+moneyFull(S.ss+S.sl)+'</b></div></div>'
 +'<div class="pr-foot">العنوان: الناصرية - ذي قار - تقاطع المنصورية - دورة القضاة · م: 07866994044 · aljwhrtshrkt9@gmail.com</div>';
